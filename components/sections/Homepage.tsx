@@ -19,9 +19,10 @@ interface Home {
   id: number;
   title: string;
   subtitle: string;
-  hero_image?: string;
   welcome_message: string;
 }
+
+const images = [{ id: 1, title: "Francis David", src: "/images/u.jpg" }];
 
 export default function Home() {
   const [home, setHome] = useState<Home | null>(null);
@@ -52,7 +53,7 @@ export default function Home() {
         className="flex-1 text-center md:text-left"
       >
         <h1 className="text-5xl font-extrabold mb-4">
-         {home ? home.title : "Loading..."}
+          {home ? home.title : "Loading..."}
         </h1>
 
         {/* Typing Effect */}
@@ -70,14 +71,14 @@ export default function Home() {
             ]}
             wrapper="span"
             speed={50}
-            repeat={Infinity} 
+            repeat={Infinity}
           />
         </h2>
 
         {/* Slug line */}
         <p className="text-lg text-gray-600 dark:text-gray-400 mb-6 max-w-xl">
-           {home?.welcome_message ||
-          "I build modern, responsive, and scalable web applications with clean code and powerful backends."}
+          {home?.welcome_message ||
+            "I build modern, responsive, and scalable web applications with clean code and powerful backends."}
         </p>
 
         {/* Call to Action */}
@@ -93,7 +94,10 @@ export default function Home() {
           <SiNextdotjs size={36} className="text-gray-900 dark:text-gray-200" />
           <SiTailwindcss size={36} className="text-sky-500" />
           <SiDjango size={36} className="text-green-700 dark:text-green-500" />
-          <SiPostgresql size={36} className="text-blue-800 dark:text-blue-300" />
+          <SiPostgresql
+            size={36}
+            className="text-blue-800 dark:text-blue-300"
+          />
           <SiDocker size={36} className="text-blue-600 dark:text-blue-400" />
         </div>
       </motion.div>
@@ -106,24 +110,18 @@ export default function Home() {
         className="flex-1 flex justify-center"
       >
         <div className="relative w-56 h-56 md:w-72 md:h-72 rounded-full overflow-hidden shadow-lg border-4 border-blue-500 dark:border-blue-400">
-                   {home?.hero_image ? (
+          {/* Profile Image */}
+          {images.map((image) => (
             <Image
-              src={home.hero_image} // prepend backend URL
-              alt={home.title}
+              key={image.id}
+              src={image.src}
+              alt={image.title}
               fill
               className="object-cover"
             />
-          ) : (
-            <Image
-              src="/u.jpg"
-              alt="Default"
-              fill
-              className="object-cover"
-            />
-          )}
-
+          ))}
         </div>
       </motion.div>
     </section>
-  )
+  );
 }
