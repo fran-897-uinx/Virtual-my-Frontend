@@ -34,7 +34,7 @@ export default function BlogPage() {
         );
         const data = await res.json();
 
-        const mapped = data.items.map((item: any) => ({
+        const mapped = data.items.map((item: Record<string, unknown>) => ({
           title: item.title,
           link: item.link,
           published: item.pubDate,

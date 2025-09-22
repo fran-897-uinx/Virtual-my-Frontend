@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { fetchData } from "@/services/api";
 import * as AiIcons from "react-icons/ai";
+import Image from "next/image";
 
 // shadcn carousel
 import {
@@ -57,7 +58,7 @@ export default function TestimonialsPage() {
               >
                 <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 mb-4 overflow-hidden">
                   {t.avatar ? (
-                    <img
+                    <Image
                       src={t.avatar}
                       alt={t.name}
                       className="w-full h-full object-cover"

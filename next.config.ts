@@ -4,7 +4,20 @@ import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
   /* config options here */
   images: {
-    domains: ["127.0.0.1", "localhost"], // allow Django API host
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "https://code-port-backend.onrender.com",
+      },
+      {
+        protocol: "http",
+        hostname: "127.0.0.1",
+      },
+      {
+        protocol: "http",
+        hostname: "localhost",
+      },
+    ],
   },
 };
 export default withSentryConfig(nextConfig, {
