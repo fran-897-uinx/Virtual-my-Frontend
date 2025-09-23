@@ -13,9 +13,10 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
-import { getProjects } from "@/services/project"; // ✅ use Django backend
+import { fetchData } from "@/services/api"; // ✅ use API service
 
 interface Project {
+  id: number;
   title: string;
   link: string;
   image?: string;
@@ -31,12 +32,22 @@ export default function ProjectPage() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    getProjects()
-      .then(setProjects)
-      .catch((err) => console.error("Error fetching projects:", err))
-      .finally(() => setLoading(false));
+    async function fetchProjects() {
+      try {
+        // ✅ Call Django API
+        const data = await fetchData("/projects/");
+        setProjects(data);
+      } catch (err) {
+        console.error("Error fetching projects:", err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    fetchProjects();
   }, []);
 
+  // ✅ Skeleton placeholders
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
     <CarouselItem
       key={`skeleton-${index}`}
@@ -65,9 +76,9 @@ export default function ProjectPage() {
         <CarouselContent>
           {loading
             ? skeletonItems
-            : projects.map((project, index) => (
+            : projects.map((project) => (
                 <CarouselItem
-                  key={index}
+                  key={project.id}
                   className="basis-full sm:basis-1/2 lg:basis-1/3"
                 >
                   <Link
@@ -86,7 +97,7 @@ export default function ProjectPage() {
                           <Image
                             src={project.image}
                             alt={project.title}
-                            width={600}
+                            width={600} // ✅ required for Next.js
                             height={300}
                             className="w-full h-40 md:h-48 object-cover rounded-xl"
                           />
