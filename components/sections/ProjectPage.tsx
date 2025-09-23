@@ -15,8 +15,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
 import { getProjects } from "@/services/project";
 
-export interface Project {
-  // 👈 export so service can import
+interface Project {
   id: number;
   title?: string;
   link?: string;
@@ -37,7 +36,7 @@ export default function ProjectPage() {
 
   React.useEffect(() => {
     getProjects()
-      .then((data) => setProjects(data)) // always array now
+      .then((data) => setProjects(data || [])) // always an array
       .catch((err) => {
         console.error("Error fetching projects:", err);
         setProjects([]);
@@ -101,36 +100,32 @@ export default function ProjectPage() {
                         {project.description || "No description available."}
                       </p>
 
-                      <div className="flex flex-wrap gap-2 mt-auto">
-                        {project.tech_stack?.map((tech, i) => (
-                          <span
-                            key={i}
-                            className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-md"
-                          >
-                            {tech}
-                          </span>
-                        ))}
+                      {/* Tech stack as comma-separated string */}
+                      {project.tech_stack && project.tech_stack.length > 0 && (
+                        <p className="text-gray-500 text-sm mt-2">
+                          Tech Stack: {project.tech_stack.join(", ")}
+                        </p>
+                      )}
 
-                        <div className="flex gap-3 mt-2">
-                          {project.github_link && (
-                            <Link
-                              href={project.github_link}
-                              target="_blank"
-                              className="text-blue-600 hover:underline text-sm"
-                            >
-                              GitHub
-                            </Link>
-                          )}
-                          {project.live_link && (
-                            <Link
-                              href={project.live_link}
-                              target="_blank"
-                              className="text-green-600 hover:underline text-sm"
-                            >
-                              Live Demo
-                            </Link>
-                          )}
-                        </div>
+                      <div className="flex gap-3 mt-2">
+                        {project.github_link && (
+                          <Link
+                            href={project.github_link}
+                            target="_blank"
+                            className="text-blue-600 hover:underline text-sm"
+                          >
+                            GitHub
+                          </Link>
+                        )}
+                        {project.live_link && (
+                          <Link
+                            href={project.live_link}
+                            target="_blank"
+                            className="text-green-600 hover:underline text-sm"
+                          >
+                            Live Demo
+                          </Link>
+                        )}
                       </div>
                     </CardContent>
                   </Card>
