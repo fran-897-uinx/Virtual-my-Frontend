@@ -13,9 +13,10 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
-import { getProjects } from "@/services/project"; // ✅ using your existing service
+import { getProjects } from "@/services/project";
 
-interface Project {
+export interface Project {
+  // 👈 export so service can import
   id: number;
   title?: string;
   link?: string;
@@ -36,15 +37,15 @@ export default function ProjectPage() {
 
   React.useEffect(() => {
     getProjects()
-      .then((data) => setProjects(data || [])) // ✅ guard against null
+      .then((data) => setProjects(data)) // always array now
       .catch((err) => {
         console.error("Error fetching projects:", err);
-        setProjects([]); // fallback
+        setProjects([]);
       })
       .finally(() => setLoading(false));
   }, []);
 
-  // ✅ Skeleton placeholders while loading
+  // Skeletons
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
     <CarouselItem
       key={`skeleton-${index}`}
@@ -84,7 +85,6 @@ export default function ProjectPage() {
                     </CardHeader>
 
                     <CardContent className="flex flex-col gap-3 flex-grow">
-                      {/* Image or skeleton */}
                       {project.image ? (
                         <Image
                           src={project.image}
@@ -97,12 +97,10 @@ export default function ProjectPage() {
                         <Skeleton className="w-full h-40 md:h-48 rounded-xl" />
                       )}
 
-                      {/* Description */}
                       <p className="text-gray-700 text-sm md:text-base line-clamp-3">
                         {project.description || "No description available."}
                       </p>
 
-                      {/* Tech stack & links */}
                       <div className="flex flex-wrap gap-2 mt-auto">
                         {project.tech_stack?.map((tech, i) => (
                           <span
