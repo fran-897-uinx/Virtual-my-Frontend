@@ -13,7 +13,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
-import { fetchData } from "@/services/api";
+import { getProjects } from "@/services/project"; // ✅ using your existing service
 
 interface Project {
   id: number;
@@ -35,19 +35,13 @@ export default function ProjectPage() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    async function fetchProjects() {
-      try {
-        const data = await fetchData("/projects/");
-        setProjects(data || []);
-      } catch (err) {
+    getProjects()
+      .then((data) => setProjects(data || [])) // ✅ guard against null
+      .catch((err) => {
         console.error("Error fetching projects:", err);
-        setProjects([]); // ✅ fallback to empty
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchProjects();
+        setProjects([]); // fallback
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   // ✅ Skeleton placeholders while loading
@@ -76,13 +70,13 @@ export default function ProjectPage() {
         <CarouselContent>
           {loading
             ? skeletonItems
-            : projects.map((project) => (
+            : projects.length > 0
+            ? projects.map((project) => (
                 <CarouselItem
                   key={project.id}
                   className="basis-full sm:basis-1/2 lg:basis-1/3"
                 >
                   <Card className="h-full shadow-md rounded-2xl flex flex-col">
-                    {/* Title + Link */}
                     <CardHeader>
                       <CardTitle className="text-lg md:text-xl">
                         {project.title || "Untitled Project"}
@@ -108,20 +102,16 @@ export default function ProjectPage() {
                         {project.description || "No description available."}
                       </p>
 
-                      {/* Extra metadata (optional fields) */}
+                      {/* Tech stack & links */}
                       <div className="flex flex-wrap gap-2 mt-auto">
-                        {project.tech_stack?.length ? (
-                          <div className="flex flex-wrap gap-1">
-                            {project.tech_stack.map((tech, i) => (
-                              <span
-                                key={i}
-                                className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-md"
-                              >
-                                {tech}
-                              </span>
-                            ))}
-                          </div>
-                        ) : null}
+                        {project.tech_stack?.map((tech, i) => (
+                          <span
+                            key={i}
+                            className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-md"
+                          >
+                            {tech}
+                          </span>
+                        ))}
 
                         <div className="flex gap-3 mt-2">
                           {project.github_link && (
@@ -147,10 +137,14 @@ export default function ProjectPage() {
                     </CardContent>
                   </Card>
                 </CarouselItem>
-              ))}
+              ))
+            : !loading && (
+                <p className="text-center text-gray-500 w-full">
+                  No projects available at the moment.
+                </p>
+              )}
         </CarouselContent>
 
-        {/* Controls */}
         <CarouselPrevious className="hidden sm:flex" />
         <CarouselNext className="hidden sm:flex" />
       </Carousel>
