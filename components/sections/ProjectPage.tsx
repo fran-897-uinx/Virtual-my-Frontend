@@ -13,14 +13,14 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
-import { fetchData } from "@/services/api"; // ✅ use API service
+import { fetchData } from "@/services/api"; // ✅ centralized API fetch
 
 interface Project {
   id: number;
   title: string;
-  link: string;
+  link?: string;
   image?: string;
-  description: string;
+  description?: string;
 }
 
 export default function ProjectPage() {
@@ -36,7 +36,7 @@ export default function ProjectPage() {
       try {
         // ✅ Call Django API
         const data = await fetchData("/projects/");
-        setProjects(data);
+        setProjects(data || []); // ✅ guard against null
       } catch (err) {
         console.error("Error fetching projects:", err);
       } finally {
@@ -67,10 +67,7 @@ export default function ProjectPage() {
       <h2 className="text-3xl font-bold text-center mb-8">Projects</h2>
       <Carousel
         plugins={[plugin.current]}
-        opts={{
-          align: "start",
-          loop: true,
-        }}
+        opts={{ align: "start", loop: true }}
         className="w-full max-w-6xl mx-auto"
       >
         <CarouselContent>
@@ -81,23 +78,23 @@ export default function ProjectPage() {
                   key={project.id}
                   className="basis-full sm:basis-1/2 lg:basis-1/3"
                 >
-                  <Link
-                    href={project.link}
-                    target="_blank"
-                    className="block h-full"
-                  >
-                    <Card className="h-full shadow-sm transition rounded-2xl cursor-pointer">
+                  <Card className="h-full shadow-sm transition rounded-2xl cursor-pointer">
+                    <Link
+                      href={project.link || "#"} // ✅ safe fallback
+                      target="_blank"
+                      className="block h-full"
+                    >
                       <CardHeader>
                         <CardTitle className="text-lg md:text-xl">
-                          {project.title}
+                          {project.title || "Untitled Project"}
                         </CardTitle>
                       </CardHeader>
                       <CardContent className="space-y-3">
                         {project.image ? (
                           <Image
                             src={project.image}
-                            alt={project.title}
-                            width={600} // ✅ required for Next.js
+                            alt={project.title || "Project image"}
+                            width={600}
                             height={300}
                             className="w-full h-40 md:h-48 object-cover rounded-xl"
                           />
@@ -105,11 +102,11 @@ export default function ProjectPage() {
                           <Skeleton className="w-full h-40 md:h-48 rounded-xl" />
                         )}
                         <p className="text-gray-700 text-sm md:text-base line-clamp-3">
-                          {project.description}
+                          {project.description || "No description available."}
                         </p>
                       </CardContent>
-                    </Card>
-                  </Link>
+                    </Link>
+                  </Card>
                 </CarouselItem>
               ))}
         </CarouselContent>
