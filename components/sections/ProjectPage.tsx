@@ -13,14 +13,17 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
-import { fetchData } from "@/services/api"; // ✅ centralized API fetch
+import { fetchData } from "@/services/api";
 
 interface Project {
   id: number;
-  title: string;
+  title?: string;
   link?: string;
   image?: string;
   description?: string;
+  github_link?: string;
+  tech_stack?: string[];
+  live_link?: string;
 }
 
 export default function ProjectPage() {
@@ -34,11 +37,11 @@ export default function ProjectPage() {
   React.useEffect(() => {
     async function fetchProjects() {
       try {
-        // ✅ Call Django API
         const data = await fetchData("/projects/");
-        setProjects(data || []); // ✅ guard against null
+        setProjects(data || []);
       } catch (err) {
         console.error("Error fetching projects:", err);
+        setProjects([]); // ✅ fallback to empty
       } finally {
         setLoading(false);
       }
@@ -47,7 +50,7 @@ export default function ProjectPage() {
     fetchProjects();
   }, []);
 
-  // ✅ Skeleton placeholders
+  // ✅ Skeleton placeholders while loading
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
     <CarouselItem
       key={`skeleton-${index}`}
@@ -78,38 +81,76 @@ export default function ProjectPage() {
                   key={project.id}
                   className="basis-full sm:basis-1/2 lg:basis-1/3"
                 >
-                  <Card className="h-full shadow-sm transition rounded-2xl cursor-pointer">
-                    <Link
-                      href={project.link || "#"} // ✅ safe fallback
-                      target="_blank"
-                      className="block h-full"
-                    >
-                      <CardHeader>
-                        <CardTitle className="text-lg md:text-xl">
-                          {project.title || "Untitled Project"}
-                        </CardTitle>
-                      </CardHeader>
-                      <CardContent className="space-y-3">
-                        {project.image ? (
-                          <Image
-                            src={project.image}
-                            alt={project.title || "Project image"}
-                            width={600}
-                            height={300}
-                            className="w-full h-40 md:h-48 object-cover rounded-xl"
-                          />
-                        ) : (
-                          <Skeleton className="w-full h-40 md:h-48 rounded-xl" />
-                        )}
-                        <p className="text-gray-700 text-sm md:text-base line-clamp-3">
-                          {project.description || "No description available."}
-                        </p>
-                      </CardContent>
-                    </Link>
+                  <Card className="h-full shadow-md rounded-2xl flex flex-col">
+                    {/* Title + Link */}
+                    <CardHeader>
+                      <CardTitle className="text-lg md:text-xl">
+                        {project.title || "Untitled Project"}
+                      </CardTitle>
+                    </CardHeader>
+
+                    <CardContent className="flex flex-col gap-3 flex-grow">
+                      {/* Image or skeleton */}
+                      {project.image ? (
+                        <Image
+                          src={project.image}
+                          alt={project.title || "Project image"}
+                          width={600}
+                          height={300}
+                          className="w-full h-40 md:h-48 object-cover rounded-xl"
+                        />
+                      ) : (
+                        <Skeleton className="w-full h-40 md:h-48 rounded-xl" />
+                      )}
+
+                      {/* Description */}
+                      <p className="text-gray-700 text-sm md:text-base line-clamp-3">
+                        {project.description || "No description available."}
+                      </p>
+
+                      {/* Extra metadata (optional fields) */}
+                      <div className="flex flex-wrap gap-2 mt-auto">
+                        {project.tech_stack?.length ? (
+                          <div className="flex flex-wrap gap-1">
+                            {project.tech_stack.map((tech, i) => (
+                              <span
+                                key={i}
+                                className="bg-blue-100 text-blue-700 text-xs px-2 py-1 rounded-md"
+                              >
+                                {tech}
+                              </span>
+                            ))}
+                          </div>
+                        ) : null}
+
+                        <div className="flex gap-3 mt-2">
+                          {project.github_link && (
+                            <Link
+                              href={project.github_link}
+                              target="_blank"
+                              className="text-blue-600 hover:underline text-sm"
+                            >
+                              GitHub
+                            </Link>
+                          )}
+                          {project.live_link && (
+                            <Link
+                              href={project.live_link}
+                              target="_blank"
+                              className="text-green-600 hover:underline text-sm"
+                            >
+                              Live Demo
+                            </Link>
+                          )}
+                        </div>
+                      </div>
+                    </CardContent>
                   </Card>
                 </CarouselItem>
               ))}
         </CarouselContent>
+
+        {/* Controls */}
         <CarouselPrevious className="hidden sm:flex" />
         <CarouselNext className="hidden sm:flex" />
       </Carousel>
