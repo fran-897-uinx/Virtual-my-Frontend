@@ -44,6 +44,11 @@ export default function ProjectPage() {
       .finally(() => setLoading(false));
   }, []);
 
+  function formatTechStack(stack: string[] | string | undefined) {
+    if (Array.isArray(stack)) return stack.join(", ");
+    if (typeof stack === "string") return stack;
+    return "";
+  }
   // Skeletons
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
     <CarouselItem
@@ -103,7 +108,7 @@ export default function ProjectPage() {
                       {/* Tech stack as comma-separated string */}
                       {project.tech_stack && project.tech_stack.length > 0 && (
                         <p className="text-gray-500 text-sm mt-2">
-                          Tech Stack: {project.tech_stack.join(", ")}
+                          Tech Stack: {formatTechStack(project.tech_stack)}
                         </p>
                       )}
 
