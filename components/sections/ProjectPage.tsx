@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import Link from "next/link";
-import Image from "next/image"; // ✅ Next.js Image
+import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -13,6 +13,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
+import { getProjects } from "@/services/project"; // ✅ use Django backend
 
 interface Project {
   title: string;
@@ -30,23 +31,12 @@ export default function ProjectPage() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    async function fetchProjects() {
-      try {
-        // Replace with your own API or static list
-        const res = await fetch("/api/projects");
-        const data = await res.json();
-        setProjects(data);
-      } catch (err) {
-        console.error("Error fetching projects:", err);
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    fetchProjects();
+    getProjects()
+      .then(setProjects)
+      .catch((err) => console.error("Error fetching projects:", err))
+      .finally(() => setLoading(false));
   }, []);
 
-  // ✅ skeleton placeholders
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
     <CarouselItem
       key={`skeleton-${index}`}
@@ -96,8 +86,8 @@ export default function ProjectPage() {
                           <Image
                             src={project.image}
                             alt={project.title}
-                            width={600} // required by Next.js
-                            height={300} // required by Next.js
+                            width={600}
+                            height={300}
                             className="w-full h-40 md:h-48 object-cover rounded-xl"
                           />
                         ) : (
