@@ -71,7 +71,7 @@ export default function About() {
               />
             ) : (
               <Image
-                src="/u.jpg"
+                src="images/u.jpg"
                 alt="Default"
                 width={400}
                 height={400}
