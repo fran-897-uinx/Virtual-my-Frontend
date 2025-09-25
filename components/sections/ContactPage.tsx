@@ -65,7 +65,10 @@ export default function ContactPage() {
   }
 
   return (
-    <section id="contact" className="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-8">
+    <section
+      id="contact"
+      className="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-8"
+    >
       {/* Left: Contact Form */}
       <Card className="shadow-md">
         <CardHeader>
@@ -146,9 +149,7 @@ export default function ContactPage() {
       <Card className="shadow-md p-6 flex flex-col justify-center">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Contact Info</CardTitle>
-          <CardDescription>
-            you can still reach me directly.
-          </CardDescription>
+          <CardDescription>you can still reach me directly.</CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-3">
@@ -171,25 +172,18 @@ export default function ContactPage() {
 
           <div className="flex gap-4 pt-4">
             <a
-              href="https://github.com/yourusername"
+              href="https://github.com/fran-897-uinx"
               target="_blank"
               className="text-gray-700 hover:text-black"
             >
               <Github className="w-6 h-6" />
             </a>
             <a
-              href="https://linkedin.com/in/yourusername"
+              href="https://www.linkedin.com/in/francis-prevail-39b800359/"
               target="_blank"
               className="text-blue-700 hover:text-blue-900"
             >
               <Linkedin className="w-6 h-6" />
-            </a>
-            <a
-              href="https://twitter.com/yourusername"
-              target="_blank"
-              className="text-sky-500 hover:text-sky-700"
-            >
-              <Twitter className="w-6 h-6" />
             </a>
           </div>
         </CardContent>
