@@ -101,13 +101,13 @@ export default function ProjectPage() {
                         <Skeleton className="w-full h-40 md:h-48 rounded-xl" />
                       )}
 
-                      <p className="text-gray-700 text-sm md:text-base line-clamp-3">
+                      <p className="text-gray-500 text-sm md:text-base line-clamp-3">
                         {project.description || "No description available."}
                       </p>
 
                       {/* Tech stack as comma-separated string */}
                       {project.tech_stack && project.tech_stack.length > 0 && (
-                        <p className="text-gray-500 text-sm mt-2">
+                        <p className="text-white-500 text-sm mt-2 uppercase font-bold">
                           Tech Stack: {formatTechStack(project.tech_stack)}
                         </p>
                       )}
