@@ -69,7 +69,7 @@ export default function ContactPage() {
       id="contact"
       className="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-8"
     >
-      {/* Left: Contact Form */}
+      {/* inset-inline-start: Contact Form */}
       <Card className="shadow-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
@@ -145,7 +145,7 @@ export default function ContactPage() {
         </CardContent>
       </Card>
 
-      {/* Right: Contact Info */}
+      {/* inset-inline-end: Contact Info */}
       <Card className="shadow-md p-6 flex flex-col justify-center">
         <CardHeader>
           <CardTitle className="text-2xl font-bold">Contact Info</CardTitle>
@@ -153,7 +153,7 @@ export default function ContactPage() {
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="flex items-center gap-3">
-            <Mail className="w-5 h-5 text-blue-600" />
+            <Mail className="w-5 h-5 text-blue-600 font-bold" />
             <a
               href="mailto:prevailfrancis@gmaiil.com.com"
               className="hover:underline text-sm text-blue-400"
