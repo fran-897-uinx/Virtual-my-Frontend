@@ -89,19 +89,41 @@ export default function About() {
             className="space-y-6"
           >
             <h3 className="text-2xl font-semibold text-gray-900 dark:text-white">
-              Who I Am
+             Hey there 👋 — I’m David Francis, a passionate software developer and problem solver dedicated to
+              building clean, 
+              efficient, and scalable web applications
             </h3>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              I have experience in full-stack development, working with modern
-              frameworks like Next.js, React, and Django. My focus is on
-              delivering clean code, intuitive UI, and optimized performance.
+              I love turning ideas into reality through code — from crafting smooth,
+              interactive user interfaces to designing reliable backend systems that 
+              power real-world products. My main focus is creating modern, high-performing 
+              digital experiences that work beautifully on any device.
             </p>
-
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
-              Outside of coding, I love exploring new technologies, contributing
-              to open source, and sharing knowledge with the tech community.
+              I’ve honed my skills in both frontend and backend development. 
+              I enjoy working with technologies like React, Next.js, TypeScript, 
+              Tailwind CSS, Django, and Docker, and I’m always exploring new tools
+              to stay ahead in the fast-moving tech world.
             </p>
-
+            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+              Beyond coding, I’m passionate about learning, teaching, and open-source
+              collaboration. I enjoy sharing my knowledge, contributing to projects,
+              and constantly challenging myself to grow into a better engineer every day.
+            </p>
+            <div>
+              <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4"> My Mission </h4>
+              <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                To build meaningful, reliable, and impactful software that solves real-world problems
+                — while continuously improving my craft and helping others grow along the way.</p>
+            </div>
+            <div>
+              <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">What i am currently working on </h4>
+                <ul className="text-gray-600 dark:text-gray-300 leading-relaxed">
+                  <li>Developing full-stack applications using Next.js and Django</li>
+                  <li>Learning advanced software engineering and system design concepts</li>
+                  <li>Exploring DevOps, Docker, and cloud deployment to automate and scale projects</li>
+                </ul>
+            </div>
             {/* Skills section */}
             <div>
               <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
@@ -110,12 +132,17 @@ export default function About() {
               <div className="flex flex-wrap gap-3">
                 {[
                   "React",
+                  "Html",
+                  "Css",
+                  "Tailwind",
                   "Next.js",
                   "TypeScript",
                   "TailwindCSS",
                   "Django",
                   "Docker",
-                ].map((skill, i) => (
+                  "Bash",
+                  "Python",
+               ].map((skill, i) => (
                   <motion.span
                     key={i}
                     whileHover={{ scale: 1.1 }}
