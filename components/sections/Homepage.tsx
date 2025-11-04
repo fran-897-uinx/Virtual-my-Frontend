@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion"
-import { Button } from "@/components/ui/button"
-import { TypeAnimation } from "react-type-animation"
+import { motion } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { TypeAnimation } from "react-type-animation";
 import { fetchData } from "@/services/api";
+import { Skeleton } from "@/components/ui/skeleton";
 import Image from "next/image"
 import {
   SiReact,
@@ -53,7 +54,11 @@ export default function Home() {
         className="flex-1 text-center md:text-left"
       >
         <h1 className="text-5xl font-extrabold mb-4">
-          {home ? home.title : "Loading..."}
+          {home ? (
+             <h1 className="text-3xl font-bold">{home.title}</h1>
+           ) : (
+             <Skeleton className="h-8 w-1/2 rounded-lg" />
+           )}
         </h1>
 
         {/* Typing Effect */}
