@@ -86,8 +86,8 @@ export default function ServicesPage() {
                 );
               })}
         </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
+        <CarouselPrevious  className="hidden md:block" />
+        <CarouselNext  className="hidden md:block" />
       </Carousel>
     </section>
   );
