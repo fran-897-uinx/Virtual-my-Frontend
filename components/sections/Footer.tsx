@@ -23,15 +23,15 @@ export default function Footer() {
 
         {/* Socials */}
         <div className="flex gap-4">
-          <a href="https://github.com/yourusername" target="_blank" rel="noopener noreferrer">
+          <a href="https://github.com/fran-897-uinx" target="_blank" rel="noopener noreferrer">
             <Github className="w-6 h-6 hover:text-blue-500 transition" />
           </a>
-          <a href="https://linkedin.com/in/yourusername" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.linkedin.com/in/francis-prevail-39b800359/" target="_blank" rel="noopener noreferrer">
             <Linkedin className="w-6 h-6 hover:text-blue-500 transition" />
           </a>
-          <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">
+          {/* <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">
             <Twitter className="w-6 h-6 hover:text-blue-500 transition" />
-          </a>
+          </a> */}
         </div>
       </div>
 
