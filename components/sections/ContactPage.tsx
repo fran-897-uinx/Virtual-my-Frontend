@@ -158,7 +158,7 @@ export default function ContactPage() {
               href="mailto:prevailfrancis@gmaiil.com.com"
               className="hover:underline text-sm text-blue-400"
             >
-              prevailfrancis@gmaiil.com
+              prevailfrancis@gmail.com
             </a>
           </div>
           <div className="flex items-center gap-3">
