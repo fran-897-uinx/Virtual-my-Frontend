@@ -93,12 +93,12 @@ export default function About() {
               building clean, 
               efficient, and scalable web applications
             </h3>
-            <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
+            {/* <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
               I love turning ideas into reality through code — from crafting smooth,
               interactive user interfaces to designing reliable backend systems that 
               power real-world products. My main focus is creating modern, high-performing 
               digital experiences that work beautifully on any device.
-            </p>
+            </p> */}
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
               I’ve honed my skills in both frontend and backend development. 
               I enjoy working with technologies like React, Next.js, TypeScript, 
@@ -119,9 +119,9 @@ export default function About() {
             <div>
               <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">What i am currently working on </h4>
                 <ul className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                  <li>Developing full-stack applications using Next.js and Django</li>
-                  <li>Learning advanced software engineering and system design concepts</li>
-                  <li>Exploring DevOps, Docker, and cloud deployment to automate and scale projects</li>
+                  <li> 1) Developing full-stack applications using Next.js and Django</li>
+                  <li> 2) Learning advanced software engineering and system design concepts</li>
+                  <li> 3) Exploring DevOps, Docker, and cloud deployment to automate and scale projects</li>
                 </ul>
             </div>
             {/* Skills section */}
