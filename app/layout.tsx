@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CODESMITH",
-  description: "This is CodeSmith PortFoilo",
+  title: "CodeSmith Portfolio",
+  description: "CodeSmith Portfolio respect the law of code.",
 };
 
 export default function RootLayout({
@@ -26,6 +26,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <link rel="icon" type="image/png" sizes="16x16" href="/file.png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

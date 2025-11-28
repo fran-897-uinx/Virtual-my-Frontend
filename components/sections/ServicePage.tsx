@@ -66,7 +66,7 @@ export default function ServicesPage() {
                     className="basis-full sm:basis-1/2 md:basis-1/3"
                   >
                     <motion.div
-                      className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center transition-transform duration-300 h-full cursor-pointer"
+                      className="bg-white  dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center transition-transform duration-300 h-full cursor-pointer "
                       initial={{ opacity: 0, y: 50 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ duration: 0.5 }}

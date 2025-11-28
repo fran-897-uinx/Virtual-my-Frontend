@@ -30,6 +30,9 @@ export default function ProjectPage() {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true })
   );
+  function getImageUrl(url: string | null) {
+    return url || "/file.png";
+  }
 
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [loading, setLoading] = React.useState(true);
@@ -79,19 +82,19 @@ export default function ProjectPage() {
             ? projects.map((project) => (
                 <CarouselItem
                   key={project.id}
-                  className="basis-full sm:basis-1/2 lg:basis-1/3"
+                  className=" basis-full sm:basis-1/2 lg:basis-1/3 m-1.5"
                 >
-                  <Card className="h-full shadow-md rounded-2xl flex flex-col">
+                  <Card className="h-full shadow-md flex flex-col backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/20 rounded-3xl p-6 hover:scale-[1.01] transition-transform cursor-pointer">
                     <CardHeader>
                       <CardTitle className="text-lg md:text-xl">
                         {project.title || "Untitled Project"}
                       </CardTitle>
                     </CardHeader>
 
-                    <CardContent className="flex flex-col gap-3 flex-grow">
+                    <CardContent className="flex flex-col gap-3 flex-grow ">
                       {project.image ? (
                         <Image
-                          src={project.image}
+                          src={getImageUrl(project.image)}
                           alt={project.title || "Project image"}
                           width={600}
                           height={300}
