@@ -94,7 +94,7 @@ export default function ProjectPage() {
                     <CardContent className="flex flex-col gap-3 flex-grow ">
                       {project.image ? (
                         <Image
-                          src={getImageUrl(project.image)}
+                          src={project.image}
                           alt={project.title || "Project image"}
                           width={600}
                           height={300}

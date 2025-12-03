@@ -1,3 +1,5 @@
+import { hostname } from "os";
+
 /** @type {import('next').NextConfig} */
 module.exports = {
   reactStrictMode: true,
@@ -9,7 +11,18 @@ module.exports = {
         hostname: "code-port-backend.onrender.com",
         pathname: "/media/**",
       },
-
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/**",
+      },
+      {
+        protocol: "http",
+        hostname: "res.cloudinary.com",
+        port: "",
+        pathname: "/**",
+      },
       // Local backend (127.0.0.1)
       {
         protocol: "http",

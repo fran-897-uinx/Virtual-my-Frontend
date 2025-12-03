@@ -21,20 +21,19 @@ interface Testimonial {
   name: string;
   role: string;
   testimonial: string;
-  avatar?: string;
 }
 
 export default function TestimonialsPage() {
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
 
-  function getImageUrl(path: string | null) {
-    if (!path) return "/placeholder.png"; // fallback image
+  // function getImageUrl(path: string | null) {
+  //   if (!path) return "/placeholder.png"; // fallback image
 
-    if (path.startsWith("http")) return path;
+  //   if (path.startsWith("http")) return path;
 
-    return `http://127.0.0.1:8050${path.startsWith("/") ? "" : "/"}${path}`;
-  }
+  //   return `http://127.0.0.1:8050${path.startsWith("/") ? "" : "/"}${path}`;
+  // }
   useEffect(() => {
     fetchData("/testimonials/")
       .then((data) => setTestimonials(data))
@@ -64,17 +63,7 @@ export default function TestimonialsPage() {
                 transition={{ duration: 0.5 }}
               >
                 <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 mb-4 overflow-hidden">
-                  {t.avatar ? (
-                    <Image
-                      src={getImageUrl(t.avatar)}
-                      alt={t.name}
-                      className="w-full h-full object-cover"
-                      width={80}
-                      height={80}
-                    />
-                  ) : (
-                    <AiIcons.AiOutlineUser className="w-10 h-10 text-blue-600 dark:text-blue-300" />
-                  )}
+                  <AiIcons.AiOutlineUser className="w-10 h-10 text-blue-600 dark:text-blue-300" />
                 </div>
 
                 <h3 className="text-lg font-semibold">{t.name}</h3>

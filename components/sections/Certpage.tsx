@@ -18,6 +18,9 @@ export default function CertificateSection() {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [loading, setLoading] = useState(true);
 
+  function getImageUrl(url: string | null) {
+    return url || "/cert.jpg";
+  }
   useEffect(() => {
     async function fetchCerts() {
       try {
@@ -65,7 +68,7 @@ export default function CertificateSection() {
                 className="backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/20 shadow-xl rounded-3xl p-6 hover:scale-[1.03] transition-transform cursor-pointer"
               >
                 {/* Certificate Image */}
-                <div className="w-full h-48 relative rounded-xl overflow-hidden mb-5">
+                <div className="w-full h-48 relative rounded-xl overflow-hidden mb-5 md:hover:scale-150  transition-transform duration-300 hover:scale-110 z-20 md:cursor-pointer md:shadow-lg md:shadow-black/20">
                   {cert.certificate_image ? (
                     <Image
                       src={cert.certificate_image}
@@ -74,7 +77,7 @@ export default function CertificateSection() {
                       className="object-cover"
                     />
                   ) : (
-                    <div className="bg-gray-200 dark:bg-gray-700 w-full h-full flex items-center justify-center">
+                    <div className="bg-gray-200 dark:bg-gray-700 w-full h-full flex items-center justify-center ">
                       No Image
                     </div>
                   )}

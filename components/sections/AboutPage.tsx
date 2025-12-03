@@ -6,6 +6,7 @@ import { fetchData } from "@/services/api";
 import { getAbout } from "@/services/about";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
+import { Skeleton } from "../ui/skeleton";
 
 interface About {
   id: number;
@@ -81,20 +82,14 @@ export default function About() {
           >
             {about?.profile_image ? (
               <Image
-                src={getImageUrl(about.profile_image)}
+                src={about.profile_image}
                 alt={about.heading}
                 width={400}
                 height={400}
                 className="rounded-2xl w-56 h-80 md:w-72 shadow-2xl object-cover border-2 border-blue-500 dark:border-blue-400"
               />
             ) : (
-              <Image
-                src="/file.png"
-                alt="Default"
-                width={400}
-                height={400}
-                className="rounded-2xl w-56 h-80 md:w-72 shadow-2xl object-cover border-2 border-blue-500 dark:border-blue-400"
-              />
+              <Skeleton className="w-full h-40 md:h-48 rounded-xl" />
             )}
           </motion.div>
 

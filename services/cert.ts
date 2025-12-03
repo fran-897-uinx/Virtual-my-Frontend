@@ -12,5 +12,5 @@ export async function getCertificates() {
 
 // Fetch single project by slug
 export async function getProject(slug: string) {
-  return fetchData(`/projects/${slug}/`);
+  return fetchData(`/projects/certificates/${slug}/`);
 }
