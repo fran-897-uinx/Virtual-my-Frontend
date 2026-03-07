@@ -1,12 +1,24 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, scale } from "framer-motion";
 import { useEffect, useState } from "react";
 import { fetchData } from "@/services/api";
 import { getAbout } from "@/services/about";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
 import { Skeleton } from "../ui/skeleton";
+import {
+  SiPython,
+  SiLinux,
+  SiTailwindcss,
+  SiDjango,
+  SiPostgresql,
+  SiDocker,
+  SiKalilinux,
+  SiLua,
+  SiJavascript,
+  SiMetasploit,
+} from "react-icons/si";
 
 interface About {
   id: number;
@@ -17,6 +29,54 @@ interface About {
 
 export default function About() {
   const [about, setAbout] = useState<About | null>(null);
+
+  const Skills = [
+    {
+      icon: <SiPython size={20} />,
+      name: "Python",
+      color: "text-yellow-500 dark:text-yellow-400",
+    },
+    {
+      icon: <SiLinux size={20} />,
+      name: "Next.js",
+      color: "text-gray-900 dark:text-gray-200",
+    },
+    {
+      icon: <SiTailwindcss size={20} />,
+      name: "Tailwind CSS",
+      color: "text-sky-500 dark:text-sky-400",
+    },
+    {
+      icon: <SiDjango size={20} />,
+      name: "Django",
+      color: "text-green-700 dark:text-green-500",
+    },
+    {
+      icon: <SiPostgresql size={20} />,
+      name: "PostgreSQL",
+      color: "text-blue-800 dark:text-blue-300",
+    },
+    {
+      icon: <SiDocker size={20} />,
+      name: "Docker",
+      color: "text-blue-600 dark:text-blue-400",
+    },
+    {
+      icon: <SiKalilinux size={45} />,
+      name: "Kalilinux",
+      color: "text-blue-900 dark:text-gray-400",
+    },
+    {
+      icon: <SiLua size={20} />,
+      name: "Lua",
+      color: "text-blue-600 dark:text-blue-400",
+    },
+    {
+      icon: <SiJavascript size={20} />,
+      name: "Javascripts",
+      color: "text-yellow-600 dark:text-yello-400",
+    },
+  ];
 
   // Helper to build absolute URLs for images
   const getImageUrl = (path?: string) => {
@@ -141,25 +201,15 @@ export default function About() {
               <h4 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                 Skills & Tools
               </h4>
-              <div className="flex flex-wrap gap-3">
-                {[
-                  "React",
-                  "HTML",
-                  "CSS",
-                  "Tailwind",
-                  "Next.js",
-                  "TypeScript",
-                  "Django",
-                  "Docker",
-                  "Bash",
-                  "Python",
-                ].map((skill, i) => (
+              <div className="flex flex-wrap gap-4 sm:justify-between">
+                {Skills.map((skill, i) => (
                   <motion.span
                     key={i}
-                    whileHover={{ scale: 1.1 }}
-                    className="px-4 py-2 bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300 rounded-full text-sm font-medium shadow-sm"
+                    whileHover={{ scale: 1.1, rotate: 20 }}
+                    className={`rounded-full text-sm font-medium shadow-sm text-center items-center flex justify-center px-4 py-2 ${skill.color}`}
+                    title={skill.name}
                   >
-                    {skill}
+                    {skill.icon} . {skill.name}
                   </motion.span>
                 ))}
               </div>

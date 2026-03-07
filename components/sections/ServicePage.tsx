@@ -54,40 +54,46 @@ export default function ServicesPage() {
         <CarouselContent>
           {loading
             ? skeletonItems
-            : services.map((service) => {
-                const IconComponent =
-                  (BsIcons as Record<string, React.ElementType>)[
-                    service.icon
-                  ] || BsIcons.BsQuestionCircle;
+            : services.length > 0
+              ? services.map((service) => {
+                  const IconComponent =
+                    (BsIcons as Record<string, React.ElementType>)[
+                      service.icon
+                    ] || BsIcons.BsQuestionCircle;
 
-                return (
-                  <CarouselItem
-                    key={service.id}
-                    className="basis-full sm:basis-1/2 md:basis-1/3"
-                  >
-                    <motion.div
-                      className="bg-white  dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center transition-transform duration-300 h-full cursor-pointer "
-                      initial={{ opacity: 0, y: 50 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5 }}
+                  return (
+                    <CarouselItem
+                      key={service.id}
+                      className="basis-full sm:basis-1/2 md:basis-1/3"
                     >
-                      <div className="bg-blue-100 dark:bg-blue-900 w-20 h-20 flex items-center justify-center rounded-full mb-4">
-                        <IconComponent className="w-10 h-10 text-blue-600 dark:text-blue-300" />
-                      </div>
+                      <motion.div
+                        className="bg-white  dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center transition-transform duration-300 h-full cursor-pointer "
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                      >
+                        <div className="bg-blue-100 dark:bg-blue-900 w-20 h-20 flex items-center justify-center rounded-full mb-4">
+                          <IconComponent className="w-10 h-10 text-blue-600 dark:text-blue-300" />
+                        </div>
 
-                      <h3 className="text-xl font-semibold mb-2">
-                        {service.title}
-                      </h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        {service.description}
-                      </p>
-                    </motion.div>
-                  </CarouselItem>
-                );
-              })}
+                        <h3 className="text-xl font-semibold mb-2">
+                          {service.title}
+                        </h3>
+                        <p className="text-gray-600 dark:text-gray-300">
+                          {service.description}
+                        </p>
+                      </motion.div>
+                    </CarouselItem>
+                  );
+                })
+              : !loading && (
+                  <p className="text-center text-gray-500 w-full">
+                    Servcies are loading at the moment.......
+                  </p>
+                )}
         </CarouselContent>
-        <CarouselPrevious  className="hidden md:block" />
-        <CarouselNext  className="hidden md:block" />
+        <CarouselPrevious className="hidden md:block" />
+        <CarouselNext className="hidden md:block" />
       </Carousel>
     </section>
   );

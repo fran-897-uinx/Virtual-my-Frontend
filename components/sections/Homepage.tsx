@@ -6,13 +6,16 @@ import { Button } from "@/components/ui/button";
 import { TypeAnimation } from "react-type-animation";
 import { fetchData } from "@/services/api";
 import Image from "next/image";
+import { Moon_Dance } from "next/font/google";
+const mono = Moon_Dance({ weight: "400", subsets: ["latin"] });
+
 import {
-  SiReact,
-  SiNextdotjs,
+  SiPython,
   SiTailwindcss,
   SiDjango,
   SiPostgresql,
   SiDocker,
+  SiLinux,
 } from "react-icons/si";
 
 interface Home {
@@ -47,12 +50,12 @@ export default function Home() {
 
   const techStack = [
     {
-      icon: <SiReact size={36} />,
-      name: "React",
-      color: "text-blue-500 dark:text-blue-400",
+      icon: <SiPython size={36} />,
+      name: "Python",
+      color: "text-yellow-500 dark:text-yellow-400",
     },
     {
-      icon: <SiNextdotjs size={36} />,
+      icon: <SiLinux size={36} />,
       name: "Next.js",
       color: "text-gray-900 dark:text-gray-200",
     },
@@ -111,28 +114,31 @@ export default function Home() {
           ) : (
             <div className="h-12 w-48 bg-gray-300 dark:bg-gray-700 rounded-md animate-pulse" />
           )}
+          <h1
+            className={` ${mono.className} text-3xl font-bold text-gray-700 dark:text-gray-300 mb-4 capitalize `}
+          >
+            DE-Ghost
+          </h1>
         </motion.div>
 
         {/* Typing Subtitle */}
         <motion.h2
-          className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4"
+          className="text-2xl font-semibold text-gray-700 dark:text-gray-300 mb-4 capitalize "
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}
         >
           <TypeAnimation
             sequence={[
-              home?.subtitle ?? "Full-Stack Developer",
+              home?.subtitle ?? "Full-Stack Website Developer",
               1000,
-              "Django + Next.js Engineer",
-              1000,
-              "API Designer",
-              1000,
-              "I'M The CodeSmith Dev",
-              6000,
+              "Python expertize",
+              1500,
+              "Automation Engineer (Bash/Powershell)",
+              3000,
             ]}
             wrapper="span"
-            speed={50}
+            speed={20}
             repeat={Infinity}
           />
         </motion.h2>
@@ -169,7 +175,7 @@ export default function Home() {
           {techStack.map((tech, i) => (
             <motion.div
               key={i}
-              whileHover={{ scale: 1.2 }}
+              whileHover={{ scale: 1.2, rotate: 30 }}
               className={`cursor-pointer ${tech.color}`}
               title={tech.name}
             >

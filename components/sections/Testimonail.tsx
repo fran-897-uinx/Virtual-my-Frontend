@@ -5,7 +5,9 @@ import { motion } from "framer-motion";
 import { fetchData } from "@/services/api";
 import * as AiIcons from "react-icons/ai";
 import Image from "next/image";
-
+import { Dancing_Script } from "next/font/google";
+const moonDance = Dancing_Script({ weight: "400", subsets: ["latin"] });
+import { createTestimonial } from "@/services/testimonail";
 // shadcn carousel
 import {
   Carousel,
@@ -15,25 +17,60 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import Autoplay from "embla-carousel-autoplay";
+import { Button } from "../ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "../ui/dialog";
 
-interface Testimonial {
+export interface Testimonial {
   id: number;
+  avatar?: string;
   name: string;
   role: string;
   testimonial: string;
 }
 
 export default function TestimonialsPage() {
+  // const [loading, setLoading] = useState(true);
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [formData, setFormData] = useState<{
+    name: string;
+    image: File | null; // <-- change from string
+    role: string;
+    testimonial: string;
+  }>({
+    name: "",
+    image: null, // <-- initialize as null
+    role: "",
+    testimonial: "",
+  });
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("role", formData.role);
+    data.append("testimonial", formData.testimonial);
+    if (formData.image) {
+      data.append("avatar", formData.image); // optional avatar
+    }
+
+    try {
+      await createTestimonial(data);
+      const newData = await fetchData("/testimonials/");
+      setTestimonials(newData);
+    } catch (err) {
+      console.error(err);
+      alert("⚠️ Network error.");
+    }
+  };
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
 
-  // function getImageUrl(path: string | null) {
-  //   if (!path) return "/placeholder.png"; // fallback image
-
-  //   if (path.startsWith("http")) return path;
-
-  //   return `http://127.0.0.1:8050${path.startsWith("/") ? "" : "/"}${path}`;
-  // }
   useEffect(() => {
     fetchData("/testimonials/")
       .then((data) => setTestimonials(data))
@@ -62,8 +99,20 @@ export default function TestimonialsPage() {
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.5 }}
               >
-                <div className="w-20 h-20 flex items-center justify-center rounded-full bg-blue-100 dark:bg-blue-900 mb-4 overflow-hidden">
-                  <AiIcons.AiOutlineUser className="w-10 h-10 text-blue-600 dark:text-blue-300" />
+                <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border">
+                  {t.avatar ? (
+                    <Image
+                      src={t.avatar}
+                      alt={t.name}
+                      width={80}
+                      height={80}
+                      className="object-cover w-full h-full"
+                    />
+                  ) : (
+                    <div className="flex items-center justify-center w-full h-full bg-blue-100 dark:bg-blue-900">
+                      <AiIcons.AiOutlineUser className="w-10 h-10 text-blue-600 dark:text-blue-300" />
+                    </div>
+                  )}
                 </div>
 
                 <h3 className="text-lg font-semibold">{t.name}</h3>
@@ -71,7 +120,7 @@ export default function TestimonialsPage() {
                   {t.role}
                 </p>
                 <p className="text-gray-600 dark:text-gray-300">
-                  {t.testimonial}
+                  "{t.testimonial}"
                 </p>
               </motion.div>
             </CarouselItem>
@@ -80,6 +129,104 @@ export default function TestimonialsPage() {
         <CarouselPrevious className="hidden md:block" />
         <CarouselNext className="hidden md:block" />
       </Carousel>
+      <Dialog>
+        <DialogTrigger asChild>
+          <Button className="hover:bg-blue-900 cursor-pointer flex gap-2 mt-7">
+            Testify <AiIcons.AiOutlineEdit />
+          </Button>
+        </DialogTrigger>
+        <DialogContent className="scroll">
+          <DialogHeader>
+            <DialogTitle
+              className={`${moonDance.className} text-2xl font-bold`}
+            >
+              Share Your Thought
+            </DialogTitle>
+          </DialogHeader>
+          <DialogDescription>
+            <p
+              className={`text-gray-600 dark:text-gray-300 ${moonDance.className} text-xl`}
+            >
+              Tell us about your experience with our product or service.
+            </p>
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col items-center">
+                {/* Image Preview */}
+                {formData.image && (
+                  <div className="mb-2">
+                    <img
+                      src={URL.createObjectURL(formData.image)}
+                      alt="Profile Preview"
+                      className="w-32 h-32 rounded-full object-cover border-2 border-blue-500 shadow-md"
+                    />
+                  </div>
+                )}
+                {/* File Input */}
+                <input
+                  id="image"
+                  type="file"
+                  accept="image/*"
+                  placeholder="Profile Image"
+                  onChange={(e) => {
+                    if (e.target.files && e.target.files[0]) {
+                      setFormData({ ...formData, image: e.target.files[0] });
+                    }
+                  }}
+                  className="block w-40 text-sm text-gray-700 dark:text-gray-300
+               file:mr-4 file:py-2 file:px-4
+               file:rounded-full file:border-0
+               file:text-sm file:font-semibold
+               file:bg-blue-500 file:text-white
+               hover:file:bg-blue-600
+               cursor-pointer"
+                />
+              </div>
+
+              <div className="mb-4 mt-5">
+                <input
+                  type="text"
+                  id="name"
+                  placeholder=" FullName or Nickname"
+                  value={formData.name}
+                  onChange={(e) =>
+                    setFormData({ ...formData, name: e.target.value })
+                  }
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-4"
+                />
+              </div>
+              <div className="mb-4">
+                <input
+                  type="text"
+                  id="role"
+                  placeholder="Role or Department .."
+                  value={formData.role}
+                  onChange={(e) =>
+                    setFormData({ ...formData, role: e.target.value })
+                  }
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-4"
+                />
+              </div>
+              <div className="mb-4">
+                <textarea
+                  id="testimonial"
+                  rows={4}
+                  value={formData.testimonial}
+                  placeholder="Testimonial message ..."
+                  onChange={(e) =>
+                    setFormData({ ...formData, testimonial: e.target.value })
+                  }
+                  className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-4"
+                />
+              </div>
+              <div className="flex justify-center mt-4">
+                <Button type="submit" className="cursor-pointer px-6">
+                  Add Testimonial
+                </Button>
+              </div>
+            </form>
+          </DialogDescription>
+        </DialogContent>
+      </Dialog>
     </section>
   );
 }

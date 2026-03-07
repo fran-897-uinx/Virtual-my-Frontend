@@ -1,13 +1,12 @@
-import { fetchData } from "./api";
+export async function createTestimonial(data: FormData) {
+  const baseUrl =
+    process.env.NEXT_PUBLIC_API_URL ||
+    "https://code-port-backend.onrender.com/api";
 
-export interface Testimonial {
-  id: number;
-  name: string;
-  role: string;
-  testimonial: string;
-  avatar?: string; // optional image/avatar URL
-}
+  const res = await fetch(`${baseUrl}/testimonials/`, {
+    method: "POST",
+    body: data,
+  });
 
-export async function getTestimonials(): Promise<Testimonial[]> {
-  return fetchData("/testimonials/");
+  return res.json();
 }

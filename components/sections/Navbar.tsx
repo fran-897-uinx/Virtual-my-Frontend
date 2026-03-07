@@ -98,19 +98,19 @@ export default function Navbar() {
             <Link
               key={item.id}
               href={`#${item.id}`}
-              className="relative font-medium transition-colors"
+              className="relative font-medium transition-all duration-1000 ease-linear"
             >
               <span
                 className={`${
                   activeSection === item.id
                     ? "text-blue-400 drop-shadow-md"
-                    : "text-gray-900 dark:text-gray-300 hover:text-blue-300"
+                    : "text-gray-900 dark:text-gray-300 hover:text-blue-300 transition-all duration-1000 ease-linear"
                 }`}
               >
                 {item.label}
               </span>
               <span
-                className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all ${
+                className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all duration-1000 ease-linear${
                   activeSection === item.id ? "w-full" : "w-0"
                 }`}
               ></span>
@@ -121,7 +121,7 @@ export default function Navbar() {
           {mounted && (
             <motion.button
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-              className="p-2 rounded-full hover:bg-white/20 dark:hover:bg-gray-700/40 transition"
+              className="p-2 rounded-full hover:bg-white/20 dark:hover:bg-gray-700/40 transition duration-700"
               whileTap={{ rotate: 20 }}
             >
               {theme === "dark" ? <Sun size={20} /> : <Moon size={20} />}

@@ -12,10 +12,16 @@ import Testimonials from "@/components/sections/Testimonail";
 import Footer from "@/components/sections/Footer";
 import CertificateSection from "@/components/sections/Certpage";
 
-import { SiDailydotdev, SiGithub, SiReddit, SiX } from "react-icons/si";
+import {
+  SiDailydotdev,
+  SiGithub,
+  SiReddit,
+  SiX,
+  SiYoutube,
+} from "react-icons/si";
 
 import { LucideNotebookText } from "lucide-react";
-import { BsLinkedin } from "react-icons/bs";
+import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { link } from "fs";
@@ -48,19 +54,19 @@ export default function Landing() {
       icon: <BsLinkedin size={20} />,
       name: "Linkedin",
       color: "text-blue-400 dark:text-blue-600",
-      link: "https://www.linkedin.com/in/francis-prevail-39b800359/",
+      link: "https://www.linkedin.com/in/francis-david-7code",
     },
     {
-      icon: <SiDailydotdev size={20} />,
-      name: "Daily.dev",
-      color: "text-gray-800 dark:text-gray-100",
-      link: "https://app.daily.dev/combat",
+      icon: <SiYoutube size={20} />,
+      name: "Youtube",
+      color: "text-red-800 dark:text-red-500",
+      link: "https://youtube.com/codesmith_dev",
     },
     {
-      icon: <SiReddit size={20} />,
+      icon: <BsTwitterX size={20} />,
       name: "X",
-      color: "text-red-900 dark:text-red-600",
-      link: "https://www.reddit.com/user/ErrorSenior6225/",
+      color: "text-gray-900 dark:text-gray-300",
+      link: "https://x.com/CodeWithFrancis",
     },
   ];
 
