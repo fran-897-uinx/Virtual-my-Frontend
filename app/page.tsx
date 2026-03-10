@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-
 import Home from "@/components/sections/Homepage";
 import About from "@/components/sections/AboutPage";
 import Blog from "@/components/sections/BlogPage";
@@ -12,30 +10,17 @@ import Testimonials from "@/components/sections/Testimonail";
 import Footer from "@/components/sections/Footer";
 import CertificateSection from "@/components/sections/Certpage";
 
-import {
-  SiDailydotdev,
-  SiGithub,
-  SiReddit,
-  SiX,
-  SiYoutube,
-} from "react-icons/si";
+import { SiGithub, SiYoutube } from "react-icons/si";
 
 import { LucideNotebookText } from "lucide-react";
 import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { link } from "fs";
 
 export default function Landing() {
   // --------------------------
   // CV DOWNLOAD FUNCTION
   // --------------------------
-  const downloadCV = () => {
-    const link = document.createElement("a");
-    link.href = "/cv/francisdavid_cv.pdf"; // <= Place file in public/cv/
-    link.download = "francisdavid_cv.pdf";
-    link.click();
-  };
 
   const Dots = [
     {

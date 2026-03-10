@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, scale } from "framer-motion";
+import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { fetchData } from "@/services/api";
+
 import { getAbout } from "@/services/about";
 import Image from "next/image";
 import Typewriter from "typewriter-effect";
@@ -108,11 +108,6 @@ export default function About() {
   ];
 
   // Helper to build absolute URLs for images
-  const getImageUrl = (path?: string) => {
-    if (!path) return "/images/u.jpg";
-    if (path.startsWith("http")) return path;
-    return `http://127.0.0.1:8050${path.startsWith("/") ? "" : "/"}${path}`;
-  };
 
   useEffect(() => {
     async function loadAbout() {

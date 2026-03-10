@@ -170,7 +170,7 @@ export default function TestimonialsPage() {
                   {t.role}
                 </p>
                 <p className="text-gray-600 dark:text-gray-300 line-clamp-3">
-                  "{t.testimonial}"
+                  &quot; {t.testimonial} &quot;
                 </p>
               </motion.div>
             </CarouselItem>
@@ -208,8 +208,10 @@ export default function TestimonialsPage() {
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col items-center">
               {preview && (
-                <img
+                <Image
                   src={preview}
+                  width={80}
+                  height={80}
                   alt="Profile Preview"
                   className="w-32 h-32 rounded-full object-cover border-2 border-blue-500 shadow-md"
                 />

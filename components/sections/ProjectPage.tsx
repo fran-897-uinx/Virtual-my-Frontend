@@ -40,7 +40,6 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { Button } from "../ui/button";
 import { IconType } from "react-icons/lib";
 
 export interface Project {
@@ -145,9 +144,9 @@ export default function ProjectPage() {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true }),
   );
-  function getImageUrl(url: string | null) {
-    return url || "/file.png";
-  }
+  // function getImageUrl(url: string | null) {
+  //   return url || "/file.png";
+  // }
 
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [loading, setLoading] = React.useState(true);

@@ -12,7 +12,7 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton"; // ✅ import skeleton
 import Autoplay from "embla-carousel-autoplay";
-import { ca } from "zod/v4/locales";
+
 
 interface Article {
   title: string;

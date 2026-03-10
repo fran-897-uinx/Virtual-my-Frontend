@@ -18,9 +18,6 @@ export default function CertificateSection() {
   const [certificates, setCertificates] = useState<Certificate[]>([]);
   const [loading, setLoading] = useState(true);
 
-  function getImageUrl(url: string | null) {
-    return url || "/cert.jpg";
-  }
   useEffect(() => {
     async function fetchCerts() {
       try {
