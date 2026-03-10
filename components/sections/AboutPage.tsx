@@ -9,7 +9,6 @@ import Typewriter from "typewriter-effect";
 import { Skeleton } from "../ui/skeleton";
 import {
   SiPython,
-  SiLinux,
   SiTailwindcss,
   SiDjango,
   SiPostgresql,
@@ -17,7 +16,12 @@ import {
   SiKalilinux,
   SiLua,
   SiJavascript,
-  SiMetasploit,
+  SiUbuntu,
+  SiNextdotjs,
+  SiArchlinux,
+  SiHtml5,
+  SiCss3,
+  SiGit,
 } from "react-icons/si";
 
 interface About {
@@ -37,9 +41,34 @@ export default function About() {
       color: "text-yellow-500 dark:text-yellow-400",
     },
     {
-      icon: <SiLinux size={20} />,
-      name: "Next.js",
-      color: "text-gray-900 dark:text-gray-200",
+      icon: <SiUbuntu size={20} />,
+      name: "Ubuntu",
+      color: "text-orange-900 dark:text-orange-400",
+    },
+    {
+      icon: <SiArchlinux size={20} />,
+      name: "Archlinux",
+      color: "text-blue-900 dark:text-blue-400",
+    },
+    {
+      icon: <SiHtml5 size={20} />,
+      name: "Html5",
+      color: "text-orange-900 dark:text-orange-400",
+    },
+    {
+      icon: <SiCss3 size={20} />,
+      name: "Css3",
+      color: "text-blue-900 dark:text-blue-400",
+    },
+    {
+      icon: <SiGit size={20} />,
+      name: "GIT",
+      color: "text-orange-900 dark:text-orange-400",
+    },
+    {
+      icon: <SiNextdotjs size={20} />,
+      name: "Nextjs",
+      color: "text-gray-900 dark:text-gray-400",
     },
     {
       icon: <SiTailwindcss size={20} />,
@@ -173,7 +202,7 @@ export default function About() {
             </p>
 
             {/* Collapsible Mission Section */}
-            <details className="bg-gray-100 dark:bg-gray-900 p-2 rounded-lg shadow-sm">
+            <details className="bg-gray-100 dark:bg-gray-900 p-2 rounded-lg shadow-sm transition-all">
               <summary className="cursor-pointer text-lg font-semibold text-gray-900 dark:text-white">
                 My Mission
               </summary>
@@ -185,7 +214,7 @@ export default function About() {
             </details>
 
             {/* Collapsible Current Work */}
-            <details className="bg-gray-100 dark:bg-gray-900 p-2 rounded-lg shadow-sm">
+            <details className="bg-gray-100 dark:bg-gray-900 p-2 rounded-lg shadow-sm transition-all ">
               <summary className="cursor-pointer text-lg font-semibold text-gray-900 dark:text-white">
                 What I am currently working on
               </summary>

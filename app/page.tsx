@@ -87,7 +87,7 @@ export default function Landing() {
       <motion.div
         className="gap-6 mt-8 justify-center md:justify-start fixed top-44 md:right-12 right-2 grid grid-cols-1 backdrop-blur-xl bg-white/10 dark:bg-gray-900/20
           border border-white/20 dark:border-gray-700/30
-          shadow-lg shadow-black/10 p-2.5 rounded-b-full"
+          shadow-lg shadow-black/55  p-2.5 rounded-full"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 1 }}

@@ -12,12 +12,14 @@ import {
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton"; // ✅ import skeleton
 import Autoplay from "embla-carousel-autoplay";
+import { ca } from "zod/v4/locales";
 
 interface Article {
   title: string;
   link: string;
   published: string;
   summary: string;
+  category: string;
 }
 
 export default function BlogPage() {
@@ -41,6 +43,9 @@ export default function BlogPage() {
           link: item.link,
           published: item.pubDate,
           summary: item.description,
+          category: item.categories
+            ? (item.categories as string[]).join(", ")
+            : "",
         }));
 
         setArticles(mapped);
@@ -103,6 +108,11 @@ export default function BlogPage() {
                           </p>
                           <p className="text-gray-700 line-clamp-3">
                             {blog.summary.replace(/<[^>]+>/g, "")}
+                          </p>
+                          <p>
+                            <span className="text-xs text-gray-500">
+                              {blog.category}
+                            </span>
                           </p>
                         </CardContent>
                       </Card>

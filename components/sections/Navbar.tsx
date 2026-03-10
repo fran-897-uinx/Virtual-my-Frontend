@@ -93,7 +93,7 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden md:flex gap-8 items-center">
+        <div className="hidden lg:flex gap-8 items-center">
           {navItems.map((item) => (
             <Link
               key={item.id}
@@ -132,7 +132,7 @@ export default function Navbar() {
         {/* Mobile Button */}
         <button
           onClick={() => setIsOpen(!isOpen)}
-          className="md:hidden text-blue-800 dark:text-gray-200"
+          className="lg:hidden text-blue-800 dark:text-gray-200"
         >
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
@@ -146,7 +146,7 @@ export default function Navbar() {
           exit={{ opacity: 0, y: -20 }}
           transition={{ duration: 0.3 }}
           className="
-            mt-3 md:hidden
+            mt-3 lg:hidden
             backdrop-blur-xl
             bg-white/10 dark:bg-gray-900/30
             border border-white/20 dark:border-gray-700/30
