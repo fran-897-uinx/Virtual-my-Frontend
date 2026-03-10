@@ -286,7 +286,7 @@ export default function ProjectPage() {
                             </Link>
                           )}
                           <Dialog>
-                            <DialogTrigger className="w-full  justify-end bg-transparent text-white flex items-center gap-2 cursor-pointer hover:bg-blue-900 rounded-md px-2 py-1">
+                            <DialogTrigger className="w-full  justify-end bg-transparent flex items-center gap-2 cursor-pointer hover:bg-blue-900 rounded-md px-2 py-1">
                               Details <BsThreeDots />
                             </DialogTrigger>
 
