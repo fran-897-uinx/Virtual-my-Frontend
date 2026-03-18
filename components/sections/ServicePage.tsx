@@ -44,7 +44,7 @@ export default function ServicesPage() {
 
   return (
     <section id="services" className="max-w-6xl mx-auto py-12 px-4">
-      <h2 className="text-3xl font-bold mb-12 text-center">Our Services</h2>
+      <h2 className="text-3xl font-bold mb-12 text-center">Core Services</h2>
 
       <Carousel
         plugins={[plugin.current]}

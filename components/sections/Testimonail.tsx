@@ -26,6 +26,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
+import { BsQuote } from "react-icons/bs";
 
 export interface Testimonial {
   id: number;
@@ -142,35 +143,25 @@ export default function TestimonialsPage() {
               className="basis-full sm:basis-1/2 md:basis-1/3"
             >
               <motion.div
-                className="bg-white dark:bg-gray-800 p-6 rounded-2xl shadow-lg flex flex-col items-center text-center h-full hover:scale-105 transition-transform duration-300"
+                className="bg-white dark:bg-gray-800 p-6 shadow-lg flex flex-col  text-center h-full hover:scale-95 transition-transform duration-300"
                 initial={{ opacity: 0, y: 50 }}
                 animate={{ opacity: 1, y: 0 }}
-                whileHover={{ scale: 1.05 }}
-                transition={{ duration: 0.5 }}
+                whileHover={{ scale: 0.95 }}
+                transition={{ duration: 1.2 }}
               >
-                <div className="w-20 h-20 rounded-full overflow-hidden mb-4 border">
-                  {t.avatar ? (
-                    <Image
-                      src={t.avatar}
-                      alt={t.name}
-                      width={80}
-                      height={80}
-                      sizes="(max-width: 768px) 80px, (max-width: 1200px) 80px, 80px"
-                      className="object-cover w-full h-full"
-                    />
-                  ) : (
-                    <div className="flex items-center justify-center w-full h-full bg-blue-100 dark:bg-blue-900">
-                      <AiIcons.AiOutlineUser className="w-10 h-10 text-blue-600 dark:text-blue-300" />
-                    </div>
-                  )}
-                </div>
-
-                <h3 className="text-lg font-semibold">{t.name}</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">
-                  {t.role}
+                {/* Testimonial */}
+                <p className="text-gray-600 dark:text-gray-300 italic line-clamp-3 mb-4">
+                  “{t.testimonial}”
                 </p>
-                <p className="text-gray-600 dark:text-gray-300 line-clamp-3">
-                  &quot; {t.testimonial} &quot;
+
+                {/* Name */}
+                <h3 className="text-lg font-semibold text-gray-800 dark:text-white">
+                  {t.name}
+                </h3>
+
+                {/* Role */}
+                <p className="text-sm text-gray-500 dark:text-gray-400">
+                  {t.role}
                 </p>
               </motion.div>
             </CarouselItem>
@@ -185,7 +176,7 @@ export default function TestimonialsPage() {
         <div className="flex justify-end end-auto relative right-[30px]">
           <DialogTrigger asChild>
             <Button className="hover:bg-blue-900 cursor-pointer flex gap-2 mt-7">
-              Testify <AiIcons.AiOutlineEdit />
+              add to my testimony Testify <AiIcons.AiOutlineEdit />
             </Button>
           </DialogTrigger>
         </div>
