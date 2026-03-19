@@ -27,7 +27,7 @@ export default function Landing() {
       icon: <SiGithub size={20} />,
       name: "Github",
       color: "text-gray-500 dark:text-gray-300",
-      link: "https://github.com/fran-897-uinx",
+      link: "https://github.com/DeFrancis-unix27",
     },
     {
       icon: <LucideNotebookText size={20} />,

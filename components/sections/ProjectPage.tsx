@@ -208,7 +208,7 @@ export default function ProjectPage() {
                     key={project.id}
                     className=" basis-full sm:basis-1/2 lg:basis-1/3 m-1.5"
                   >
-                    <Card className="h-full shadow-md flex flex-col backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/20 rounded-3xl p-6 hover:scale-[1.01] transition-transform cursor-pointer">
+                    <Card className="h-full shadow-md flex flex-col backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/20  p-6 hover:scale-[1.01] transition-transform cursor-pointer">
                       <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle className="text-sm font-bold line-clamp-1">
                           {project.title || "Untitled Project"}
@@ -222,7 +222,7 @@ export default function ProjectPage() {
                         </div>
                       </CardHeader>
 
-                      <CardContent className="flex flex-col gap-3 flex-grow ">
+                      <CardContent className="flex flex-col gap-3 grow ">
                         {project.image ? (
                           <Image
                             src={project.image}

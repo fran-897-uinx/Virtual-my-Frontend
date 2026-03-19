@@ -176,7 +176,7 @@ export default function TestimonialsPage() {
         <div className="flex justify-end end-auto relative right-[30px]">
           <DialogTrigger asChild>
             <Button className="hover:bg-blue-900 cursor-pointer flex gap-2 mt-7">
-              add to my testimony Testify <AiIcons.AiOutlineEdit />
+              Testify <AiIcons.AiOutlineEdit />
             </Button>
           </DialogTrigger>
         </div>
@@ -197,36 +197,6 @@ export default function TestimonialsPage() {
           </DialogDescription>
 
           <form onSubmit={handleSubmit}>
-            <div className="flex flex-col items-center">
-              {preview && (
-                <Image
-                  src={preview}
-                  width={80}
-                  height={80}
-                  alt="Profile Preview"
-                  className="w-32 h-32 rounded-full object-cover border-2 border-blue-500 shadow-md"
-                />
-              )}
-              <input
-                id="image"
-                type="file"
-                accept="image/*"
-                placeholder="Profile Image"
-                onChange={(e) => {
-                  if (e.target.files && e.target.files[0]) {
-                    setFormData({ ...formData, avatar: e.target.files[0] });
-                  }
-                }}
-                className="block w-40 text-sm text-gray-700 dark:text-gray-300
-               file:mr-4 file:py-2 file:px-4
-               file:rounded-full file:border-0
-               file:text-sm file:font-semibold
-               file:bg-blue-500 file:text-white
-               hover:file:bg-blue-600
-               cursor-pointer"
-              />
-            </div>
-
             <div className="mb-4 mt-5">
               <input
                 type="text"
@@ -236,7 +206,7 @@ export default function TestimonialsPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
                 }
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-4"
+                className="mt-1 block w-full border border-gray-300 rounded-2xl shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-2"
               />
             </div>
             <div className="mb-4">
@@ -248,7 +218,7 @@ export default function TestimonialsPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, role: e.target.value })
                 }
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-4"
+                className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-2"
               />
             </div>
             <div className="mb-4">
@@ -260,7 +230,7 @@ export default function TestimonialsPage() {
                 onChange={(e) =>
                   setFormData({ ...formData, testimonial: e.target.value })
                 }
-                className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-4"
+                className="mt-1 block w-full border border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-500 dark:text-white p-4"
               />
             </div>
             <div className="flex justify-center mt-4">

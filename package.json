@@ -2,6 +2,22 @@
   "name": "my-frontend",
   "version": "0.1.0",
   "private": true,
+  "description": "Francis David portfolio frontend ",
+  "homepage": "https://github.com/DeFrancis-unix27/Virtual-my-Frontend#readme",
+  "bugs": {
+    "url": "https://github.com/DeFrancis-unix27/Virtual-my-Frontend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DeFrancis-unix27/Virtual-my-Frontend.git"
+  },
+  "license": "ISC",
+  "author": "Francis David",
+  "type": "commonjs",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
   "scripts": {
     "dev": "next dev -p 3000",
     "build": "next build",
