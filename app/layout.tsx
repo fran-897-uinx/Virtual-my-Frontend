@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "CodeSmith Portfolio",
-  description: "CodeSmith Portfolio respect the law of code.",
+  title: "De-Ghost",
+  description:
+    "As De-Ghost, I specialize in:Custom website development E-commerce solutions (WooCommerce & modern tools) Website optimization and performance improvement Debugging and fixing broken or slow websites My mission is simple: Build powerful websites and eliminate issues that affect performance and user experience.",
 };
 
 export default function RootLayout({
@@ -27,7 +28,12 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <link rel="icon" type="image/png" sizes="16x16" href="/file.png" />
+        <link
+          rel="icon"
+          type="image/png/jpeg"
+          sizes="16x16"
+          href="/logo.jpeg"
+        />
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
