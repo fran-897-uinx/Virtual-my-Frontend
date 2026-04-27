@@ -255,7 +255,7 @@ export default function ProjectPage() {
                                   <div
                                     key={idx}
                                     className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold
-            ${techData?.bg || "bg-gray-200"} ${techData?.color || "text-gray-700"}`}
+            ${techData?.bg || "bg-gray-200"} ${techData?.color || "text-gray-700 capitalize"}`}
                                   >
                                     {Icon && <Icon size={14} />}
                                     {tech}

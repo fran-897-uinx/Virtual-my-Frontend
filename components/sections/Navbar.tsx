@@ -86,10 +86,11 @@ export default function Navbar() {
               height={40}
               className="rounded-full object-cover shadow-md border-2 border-blue-500 dark:border-blue-400"
             />
-            <span className="hidden md:inline text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
+            <span className="hidden md:inline text-sm font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
               David Francis
             </span>
           </motion.div>
+          <span className="w-5.75 h-full bg-gradient-to-b from-blue-500 to-cyan-400"></span>
         </Link>
 
         {/* Desktop Menu */}

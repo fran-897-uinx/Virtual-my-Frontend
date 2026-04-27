@@ -3,8 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { motion } from "framer-motion";
 import { fetchData } from "@/services/api";
-import * as AiIcons from "react-icons/ai";
-import Image from "next/image";
+import { AiOutlineEdit } from "react-icons/ai";
 import { Dancing_Script } from "next/font/google";
 const moonDance = Dancing_Script({ weight: "400", subsets: ["latin"] });
 import { createTestimonial } from "@/services/testimonail";
@@ -26,8 +25,6 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "../ui/dialog";
-import { BsQuote } from "react-icons/bs";
-
 export interface Testimonial {
   id: number;
   avatar?: string;
@@ -176,7 +173,7 @@ export default function TestimonialsPage() {
         <div className="flex justify-end end-auto relative right-[30px]">
           <DialogTrigger asChild>
             <Button className="hover:bg-blue-900 cursor-pointer flex gap-2 mt-7">
-              Testify <AiIcons.AiOutlineEdit />
+              Testify <AiOutlineEdit />
             </Button>
           </DialogTrigger>
         </div>

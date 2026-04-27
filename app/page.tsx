@@ -1,27 +1,15 @@
 "use client";
 import Home from "@/components/sections/Homepage";
 import About from "@/components/sections/AboutPage";
-import Blog from "@/components/sections/BlogPage";
-import Projects from "@/components/sections/ProjectPage";
-import Contact from "@/components/sections/ContactPage";
 import Navbar from "@/components/sections/Navbar";
-import Services from "@/components/sections/ServicePage";
-import Testimonials from "@/components/sections/Testimonail";
 import Footer from "@/components/sections/Footer";
-import CertificateSection from "@/components/sections/Certpage";
-
 import { SiGithub, SiYoutube } from "react-icons/si";
-
 import { LucideNotebookText } from "lucide-react";
 import { BsLinkedin, BsTwitterX } from "react-icons/bs";
 import { motion } from "framer-motion";
 import Link from "next/link";
-
+import dynamic from "next/dynamic";
 export default function Landing() {
-  // --------------------------
-  // CV DOWNLOAD FUNCTION
-  // --------------------------
-
   const Dots = [
     {
       icon: <SiGithub size={20} />,
@@ -33,7 +21,7 @@ export default function Landing() {
       icon: <LucideNotebookText size={20} />,
       name: "CV",
       color: "text-gray-800 dark:text-gray-100",
-      link: "/cv/Davidfrancis_CV.png", // <= triggers CV download
+      link: "/cv", // <= triggers CV download
     },
     {
       icon: <BsLinkedin size={20} />,
@@ -54,6 +42,27 @@ export default function Landing() {
       link: "https://x.com/CodeWithFrancis",
     },
   ];
+
+  const Blog = dynamic(() => import("@/components/sections/BlogPage"), {
+    ssr: false,
+  });
+  const Services = dynamic(() => import("@/components/sections/ServicePage"), {
+    ssr: false,
+  });
+  const Projects = dynamic(() => import("@/components/sections/ProjectPage"), {
+    ssr: false,
+  });
+  const Testimonials = dynamic(
+    () => import("@/components/sections/Testimonail"),
+    { ssr: false },
+  );
+  const CertificateSection = dynamic(
+    () => import("@/components/sections/Certpage"),
+    { ssr: false },
+  );
+  const Contact = dynamic(() => import("@/components/sections/ContactPage"), {
+    ssr: false,
+  });
 
   return (
     <main>

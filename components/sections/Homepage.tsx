@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
@@ -8,7 +7,6 @@ import { fetchData } from "@/services/api";
 import Image from "next/image";
 import { Moon_Dance } from "next/font/google";
 const mono = Moon_Dance({ weight: "400", subsets: ["latin"] });
-
 import {
   SiPython,
   SiTailwindcss,
@@ -143,7 +141,7 @@ export default function Home() {
 
         {/* Welcome message */}
         <motion.p
-          className="text-lg text-gray-600 dark:text-gray-400 max-w-xl mb-6"
+          className="text-sm text-gray-600 dark:text-gray-400 max-w-xl mb-6 capitalize caption-bottom"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6 }}

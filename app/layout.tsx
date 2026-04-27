@@ -41,10 +41,11 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head>
         <link
+          className="border-blue-300 border-2 rounded-4xl"
           rel="icon"
           type="image/png/jpeg"
           sizes="16x16"
-          href="/logo.jpeg"
+          href="/ruk.png"
         />
       </head>
       <body
