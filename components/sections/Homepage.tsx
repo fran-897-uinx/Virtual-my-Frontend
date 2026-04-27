@@ -156,7 +156,10 @@ export default function Home() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
         >
-          <Button className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md shadow-md transition-all hover:scale-105">
+          <Button
+            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md shadow-md transition-all hover:scale-105"
+            aria-label="Show Work Button"
+          >
             <a href="#projects">View My Work</a>
           </Button>
         </motion.div>

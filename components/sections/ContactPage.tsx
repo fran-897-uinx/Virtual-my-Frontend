@@ -227,6 +227,7 @@ export default function ContactPage() {
 
               <Button
                 variant="ghost"
+                aria-label="Book a meeting with me"
                 className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2 cursor-pointer"
                 onClick={() =>
                   window.open("https://cal.com/francis-david-kygzgw", "_blank")

@@ -269,6 +269,7 @@ export default function ProjectPage() {
                         <div className="flex gap-3 mt-2">
                           {project.github_link && (
                             <Link
+                              aria-label="project github link"
                               href={project.github_link}
                               target="_blank"
                               className="hover:underline text-sm flex items-center gap-1 hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1"
@@ -278,6 +279,7 @@ export default function ProjectPage() {
                           )}
                           {project.live_link && (
                             <Link
+                              aria-label="project live link"
                               href={project.live_link}
                               target="_blank"
                               className="text-green-600 flex items-center gap-1 text-md hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1"
@@ -286,7 +288,10 @@ export default function ProjectPage() {
                             </Link>
                           )}
                           <Dialog>
-                            <DialogTrigger className="w-full  justify-end bg-transparent flex items-center gap-2 cursor-pointer hover:bg-blue-900 rounded-md px-2 py-1">
+                            <DialogTrigger
+                              className="w-full  justify-end bg-transparent flex items-center gap-2 cursor-pointer hover:bg-blue-900 rounded-md px-2 py-1"
+                              aria-label="project details"
+                            >
                               Details <BsThreeDots />
                             </DialogTrigger>
 
@@ -381,6 +386,7 @@ export default function ProjectPage() {
                                   <a
                                     href={project.github_link}
                                     target="_blank"
+                                    aria-label="github link"
                                     rel="noopener noreferrer"
                                     className="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-md shadow-md transition"
                                   >
@@ -392,6 +398,7 @@ export default function ProjectPage() {
                                   <a
                                     href={project.live_link}
                                     target="_blank"
+                                    aria-label="live demo link"
                                     rel="noopener noreferrer"
                                     className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-md transition"
                                   >
