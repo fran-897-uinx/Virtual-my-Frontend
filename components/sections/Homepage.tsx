@@ -105,7 +105,7 @@ export default function Home() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-5xl font-extrabold mb-4 text-gray-900 dark:text-white"
+          className="text-3xl font-extrabold mb-4 text-gray-900 dark:text-white"
         >
           {home ? (
             <h1>{home.title}</h1>
