@@ -4,8 +4,7 @@ export async function fetchData(
   options: RequestInit = {}
 ) {
   const baseUrl =
-    process.env.NEXT_PUBLIC_API_URL ||
-    "https://code-port-backend.onrender.com/api";
+    process.env.NEXT_PUBLIC_API_URL
 
   try {
     const res = await fetch(`${baseUrl}${endpoint}`, {

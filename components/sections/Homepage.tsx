@@ -115,9 +115,9 @@ export default function Home() {
             <div className="h-12 w-48 bg-gray-300 dark:bg-gray-700 rounded-md animate-pulse" />
           )}
           <h1
-            className={` ${mono.className} text-3xl font-bold text-gray-700 dark:text-gray-300 mb-4 capitalize `}
+            className={` ${mono.className} text-xl font-bold text-gray-700 dark:text-gray-300 mb-4 capitalize `}
           >
-            DE-Ghost
+            Backend Developer & system Engineer
           </h1>
         </motion.div>
 
@@ -130,12 +130,10 @@ export default function Home() {
         >
           <TypeAnimation
             sequence={[
-              home?.subtitle ?? "Full-Stack Website Developer",
+              home?.subtitle ?? "A Software Developer",
               1000,
-              "Python expertize",
+              "A Python expertize",
               1500,
-              "Automation Engineer (Bash/Powershell)",
-              3000,
             ]}
             wrapper="span"
             speed={20}
@@ -151,7 +149,7 @@ export default function Home() {
           transition={{ delay: 0.6 }}
         >
           {home?.welcome_message ||
-            "I build modern, responsive, and scalable web applications with clean code and powerful backends."}
+            "i Am a passionate backend developer and system engineer with a knack for crafting efficient and scalable solutions. With expertise in Python, Django, and cloud technologies, I thrive on building robust applications that solve real-world problems. Let's connect and create something amazing together!"}
         </motion.p>
 
         {/* Call to Action */}
