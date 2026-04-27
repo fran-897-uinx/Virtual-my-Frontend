@@ -20,7 +20,7 @@ export default function Landing() {
     {
       icon: <LucideNotebookText size={20} />,
       name: "CV",
-      color: "text-gray-800 dark:text-gray-100",
+      color: "text-gray-800 dark:text-white",
       link: "/cv", // <= triggers CV download
     },
     {

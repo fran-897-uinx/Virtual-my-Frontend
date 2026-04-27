@@ -157,7 +157,7 @@ export default function Home() {
           transition={{ delay: 0.8 }}
         >
           <Button
-            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md shadow-md transition-all hover:scale-105"
+            className="bg-blue-500 hover:bg-blue-600 text-white px-6 py-3 rounded-md shadow-md transition-all hover:scale-105 dark:bg-white dark:text-black"
             aria-label="Show Work Button"
           >
             <a href="#projects">View My Work</a>
@@ -195,9 +195,9 @@ export default function Home() {
           <Image
             src="/ruk.png"
             alt="Francis David"
-            fill
             className="object-cover"
             priority
+            fill
           />
         </div>
       </motion.div>

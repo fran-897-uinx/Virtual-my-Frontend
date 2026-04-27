@@ -57,7 +57,7 @@ export default function Footer() {
         </div>
       </div>
 
-      <div className="mt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="mt-6 text-center text-sm text-gray-700 dark:text-gray-300">
         © {new Date().getFullYear()} Francis David. All rights reserved.
       </div>
     </footer>

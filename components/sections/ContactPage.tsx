@@ -167,48 +167,52 @@ export default function ContactPage() {
         </CardHeader>
         <CardContent className="space-y-4 grid md:grid-cols-2 sm:grid-cols-1 gap-2 text-end">
           <div className="flex items-center gap-3">
-            <Mail className="w-5 h-5 text-blue-600 font-bold" />
+            <Mail className="w-5 h-5 text-blue-700 dark:text-blue-300 font-bold" />
             <a
               href="mailto:prevailfrancis@gmail.com"
-              className="hover:underline text-sm text-blue-400"
+              className="hover:underline text-sm text-blue-400 dark:text-blue-300"
             >
               prevailfrancis@gmail.com
             </a>
           </div>
           <div className="flex items-center gap-3">
-            <Phone className="w-5 h-5 text-green-600" />
-            <span className="text-sm text-green-500">+234 7043-1188 41</span>
+            <Phone className="w-5 h-5 text-green-600 dark:text-green-400" />
+            <span className="text-sm text-green-500 dark:text-green-400">
+              +234 7043-1188 41
+            </span>
           </div>
           <div className="flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-red-600" />
-            <span className="text-sm text-slate-500">Anambara, Nigeria</span>
+            <MapPin className="w-5 h-5 text-red-600 dark:text-red-400" />
+            <span className="text-sm text-slate-500 dark:text-slate-400">
+              Anambara, Nigeria
+            </span>
           </div>
           <div className="flex gap-3">
             <a
               href="https://github.com/fran-897-uinx"
               target="_blank"
-              className="text-gray-700 hover:text-black"
+              className="text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
             >
               <Github className="w-4 h-4" />
             </a>
             <a
               href="https://www.linkedin.com/in/francis-prevail-39b800359/"
               target="_blank"
-              className="text-blue-700 hover:text-blue-900"
+              className="text-blue-700 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-100"
             >
               <Linkedin className="w-4 h-4" />
             </a>
             <a
               href="https://www.linkedin.com/in/francis-prevail-39b800359/"
               target="_blank"
-              className="text-gray-400 hover:text-gray-300"
+              className="text-gray-400 hover:text-gray-300 dark:text-gray-500 dark:hover:text-gray-300"
             >
               <BsTwitterX className="w-4 h-4" />
             </a>
             <a
               href="https://www.linkedin.com/in/francis-prevail-39b800359/"
               target="_blank"
-              className="text-red-700 hover:text-red-900"
+              className="text-red-700 hover:text-red-900 dark:text-red-300 dark:hover:text-red-100"
             >
               <BsYoutube className="w-4 h-4" />
             </a>
@@ -228,7 +232,7 @@ export default function ContactPage() {
               <Button
                 variant="ghost"
                 aria-label="Book a meeting with me"
-                className="mt-3 bg-blue-500 hover:bg-blue-600 text-white px-5 py-2 rounded-md shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2 cursor-pointer"
+                className="mt-3 bg-blue-500 hover:bg-blue-700 text-white px-5 py-2 rounded-md shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2 cursor-pointer dark:bg-blue-400 dark:hover:bg-blue-700"
                 onClick={() =>
                   window.open("https://cal.com/francis-david-kygzgw", "_blank")
                 }

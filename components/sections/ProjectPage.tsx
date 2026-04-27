@@ -214,7 +214,7 @@ export default function ProjectPage() {
                           {project.title || "Untitled Project"}
                         </CardTitle>
 
-                        <div className="flex items-center gap-2 text-xs text-gray-400">
+                        <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
                           <span
                             className={`h-2 w-2 rounded-full ${getStateColor(project.state)}`}
                           />
@@ -272,7 +272,7 @@ export default function ProjectPage() {
                               aria-label="project github link"
                               href={project.github_link}
                               target="_blank"
-                              className="hover:underline text-sm flex items-center gap-1 hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1"
+                              className="hover:underline text-sm flex items-center gap-1 hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1 dark:hover:bg-blue-800"
                             >
                               GitHub <BsGithub />
                             </Link>
@@ -282,7 +282,7 @@ export default function ProjectPage() {
                               aria-label="project live link"
                               href={project.live_link}
                               target="_blank"
-                              className="text-green-600 flex items-center gap-1 text-md hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1"
+                              className="text-green-600 dark:text-green-400 flex items-center gap-1 text-md hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1"
                             >
                               Live <BsLink />
                             </Link>
