@@ -30,6 +30,8 @@ import {
   SiWireguard,
   SiNextdotjs,
   SiLua,
+  SiFastapi,
+  SiJinja,
 } from "react-icons/si";
 import { BsWindow } from "react-icons/bs";
 import {
@@ -138,6 +140,16 @@ const techIcons: Record<string, TechIcon> = {
     icon: SiLua,
     color: "text-blue-100",
     bg: "bg-blue-600",
+  },
+  Fastapi:{
+    icon: SiFastapi,
+    color:"text-[#009688]",
+    bg:"bg-[#005A51]",
+  },
+  Jinja:{
+    icon:SiJunja,
+    color:"text-[#A50808]",
+    bg:"bg-[#eeecb8]"
   },
 };
 export default function ProjectPage() {
