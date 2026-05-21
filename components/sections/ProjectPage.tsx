@@ -147,7 +147,7 @@ const techIcons: Record<string, TechIcon> = {
     bg:"bg-[#005A51]",
   },
   Jinja2:{
-    icon:SiJunja,
+    icon:SiJinja,
     color:"text-[#A50808]",
     bg:"bg-[#eeecb8]"
   },
