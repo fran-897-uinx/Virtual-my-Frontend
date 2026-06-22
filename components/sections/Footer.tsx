@@ -9,7 +9,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
         {/* Logo / Name */}
         <Link
-          href="#home"
+          href="/"
           className="text-2xl font-bold text-blue-600 dark:text-blue-400"
         >
           Francis{" "}
@@ -17,20 +17,29 @@ export default function Footer() {
         </Link>
 
         {/* Links */}
-        <nav className="flex gap-6">
-          <Link href="#home" className="hover:text-blue-500">
+        <nav className="flex flex-wrap justify-center gap-x-6 gap-y-2">
+          <Link href="/" className="hover:text-blue-500">
             Home
           </Link>
-          <Link href="#about" className="hover:text-blue-500">
+          <Link href="/#about" className="hover:text-blue-500">
             About
           </Link>
-          <Link href="#services" className="hover:text-blue-500">
+          <Link href="/blog" className="hover:text-blue-500">
+            Blog
+          </Link>
+          <Link href="/#services" className="hover:text-blue-500">
             Services
           </Link>
-          <Link href="#projects" className="hover:text-blue-500">
+          <Link href="/projects" className="hover:text-blue-500">
             Projects
           </Link>
-          <Link href="#contact" className="hover:text-blue-500">
+          <Link href="/gallery" className="hover:text-blue-500">
+            Gallery
+          </Link>
+          <Link href="/certificates" className="hover:text-blue-500">
+            Certificates
+          </Link>
+          <Link href="/#contact" className="hover:text-blue-500">
             Contact
           </Link>
         </nav>
@@ -51,14 +60,11 @@ export default function Footer() {
           >
             <Linkedin className="w-6 h-6 hover:text-blue-500 transition text-blue-400 dark:text-blue-600" />
           </a>
-          {/* <a href="https://twitter.com/yourusername" target="_blank" rel="noopener noreferrer">
-            <Twitter className="w-6 h-6 hover:text-blue-500 transition" />
-          </a> */}
         </div>
       </div>
 
       <div className="mt-6 text-center text-sm text-gray-700 dark:text-gray-300">
-        © {new Date().getFullYear()} Francis David. All rights reserved.
+        &copy; {new Date().getFullYear()} Francis David. All rights reserved.
       </div>
     </footer>
   );

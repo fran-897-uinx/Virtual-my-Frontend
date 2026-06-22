@@ -56,6 +56,10 @@ export default function Landing() {
     () => import("@/components/sections/Testimonail"),
     { ssr: false },
   );
+  const Gallery = dynamic(
+    () => import("@/components/sections/GalleryPage"),
+    { ssr: false },
+  );
   const CertificateSection = dynamic(
     () => import("@/components/sections/Certpage"),
     { ssr: false },
@@ -72,6 +76,7 @@ export default function Landing() {
       <Blog />
       <Services />
       <Projects />
+      <Gallery />
       <Testimonials />
       <CertificateSection />
       <Contact />

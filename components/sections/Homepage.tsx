@@ -130,7 +130,7 @@ export default function Home() {
             sequence={[
               home?.subtitle ?? "A Software Developer",
               1000,
-              "A Python expertize",
+              "A Python expertise",
               1500,
             ]}
             wrapper="span"

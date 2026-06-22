@@ -31,6 +31,7 @@ import {
   CardDescription,
 } from "@/components/ui/card";
 import { BsPhoneVibrate, BsTwitterX, BsYoutube } from "react-icons/bs";
+import { submitContactForm } from "@/services/contact";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -50,24 +51,11 @@ export default function ContactPage() {
   async function onSubmit(values: FormValues) {
     setStatus("Sending...");
     try {
-      const res = await fetch("https://formspree.io/f/xgvlggkj", {
-        method: "POST",
-        body: JSON.stringify(values),
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-      });
-
-      if (res.ok) {
-        setStatus("✅ Message sent successfully!");
-        form.reset();
-      } else {
-        setStatus("❌ Something went wrong, try again.");
-      }
-    } catch (err) {
-      console.error(err);
-      setStatus("⚠️ Network error.");
+      await submitContactForm(values);
+      setStatus("Message sent successfully!");
+      form.reset();
+    } catch {
+      setStatus("Something went wrong, try again.");
     }
   }
 
@@ -76,7 +64,6 @@ export default function ContactPage() {
       id="contact"
       className="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-8"
     >
-      {/* inset-inline-start: Contact Form */}
       <Card className="shadow-md">
         <CardHeader>
           <CardTitle className="text-2xl font-bold text-center">
@@ -92,7 +79,6 @@ export default function ContactPage() {
           )}
           <Form {...form}>
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              {/* Name */}
               <FormField
                 control={form.control}
                 name="name"
@@ -106,8 +92,6 @@ export default function ContactPage() {
                   </FormItem>
                 )}
               />
-
-              {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
@@ -125,8 +109,6 @@ export default function ContactPage() {
                   </FormItem>
                 )}
               />
-
-              {/* Message */}
               <FormField
                 control={form.control}
                 name="message"
@@ -143,7 +125,6 @@ export default function ContactPage() {
                   </FormItem>
                 )}
               />
-
               <Button type="submit" className="w-full cursor-pointer">
                 Send Message
               </Button>
@@ -152,9 +133,8 @@ export default function ContactPage() {
         </CardContent>
       </Card>
 
-      {/* inset-inline-end: Contact Info */}
       <Card className="shadow-md p-4 flex flex-col justify-start">
-        <CardHeader className="border-b transition-transform transform-border hover:scale-105 pb-0 mb-0 text-center">
+        <CardHeader className="border-b pb-0 mb-0 text-center">
           <CardTitle
             className={`${poppins.className} text-3xl font-bold italic`}
           >
@@ -189,28 +169,28 @@ export default function ContactPage() {
           </div>
           <div className="flex gap-3">
             <a
-              href="https://github.com/fran-897-uinx"
+              href="https://github.com/DeFrancis-unix27"
               target="_blank"
               className="text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
             >
               <Github className="w-4 h-4" />
             </a>
             <a
-              href="https://www.linkedin.com/in/francis-prevail-39b800359/"
+              href="https://www.linkedin.com/in/francis-david-7code"
               target="_blank"
               className="text-blue-700 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-100"
             >
               <Linkedin className="w-4 h-4" />
             </a>
             <a
-              href="https://www.linkedin.com/in/francis-prevail-39b800359/"
+              href="https://x.com/CodeWithFrancis"
               target="_blank"
               className="text-gray-400 hover:text-gray-300 dark:text-gray-500 dark:hover:text-gray-300"
             >
               <BsTwitterX className="w-4 h-4" />
             </a>
             <a
-              href="https://www.linkedin.com/in/francis-prevail-39b800359/"
+              href="https://youtube.com/codesmith_dev"
               target="_blank"
               className="text-red-700 hover:text-red-900 dark:text-red-300 dark:hover:text-red-100"
             >
@@ -219,16 +199,12 @@ export default function ContactPage() {
           </div>
         </CardContent>
         <CardContent className="flex justify-center">
-          <div className="relative w-64 h-36 rounded-3xl overflow-hidden flex items-center justify-center group border-4 border-x-white">
-            {/* animated gradient border */}
-            <div className="absolute inset-0 animate-ping bg-gradient-to-r from-blue-600 via-purple-600 to-gray-700 opacity-60 blur-lg"></div>
-
-            {/* inner card */}
+          <div className="relative w-64 h-36 rounded-3xl overflow-hidden flex items-center justify-center group border-2 border-blue-500/30 dark:border-blue-400/30">
+            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-gray-700/20" />
             <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
-              <p className={`text-lg font-semibold  ${poppins.className}`}>
+              <p className={`text-lg font-semibold ${poppins.className}`}>
                 Book a meeting now
               </p>
-
               <Button
                 variant="ghost"
                 aria-label="Book a meeting with me"
