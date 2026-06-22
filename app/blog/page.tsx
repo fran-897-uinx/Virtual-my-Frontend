@@ -28,10 +28,38 @@ export default function BlogPage() {
   const [selectedCategory, setSelectedCategory] = useState("");
 
   useEffect(() => {
-    getBlogs()
-      .then((data) => setArticles(Array.isArray(data) ? data : []))
-      .catch((err) => console.error("Error fetching blogs:", err))
-      .finally(() => setLoading(false));
+    async function fetchBlogs() {
+      try {
+        const data = await getBlogs();
+        if (Array.isArray(data) && data.length > 0) {
+          setArticles(data);
+          return;
+        }
+      } catch (err) {
+        console.error("API blogs failed, falling back to TechCrunch:", err);
+      }
+      try {
+        const res = await fetch(
+          "https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/feed/"
+        );
+        const rss = await res.json();
+        const mapped = (rss.items || []).map((item: Record<string, unknown>, i: number) => ({
+          id: i,
+          title: item.title as string,
+          slug: (item.link as string) || "",
+          published_date: item.pubDate as string,
+          summary: (item.description as string)?.replace(/<[^>]+>/g, "").slice(0, 300),
+          category: Array.isArray(item.categories) ? (item.categories as string[]).join(", ") : "",
+          image: (item as Record<string, unknown>).thumbnail as string || "",
+        }));
+        setArticles(mapped);
+      } catch (rssErr) {
+        console.error("TechCrunch RSS also failed:", rssErr);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBlogs();
   }, []);
 
   const categories = [...new Set(articles.map((a) => a.category).filter(Boolean))] as string[];
@@ -118,51 +146,72 @@ export default function BlogPage() {
                   variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
                   className="group rounded-2xl overflow-hidden backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                 >
-                  <Link href={`/blog/${blog.slug || blog.id}`}>
-                    {blog.image ? (
-                      <div className="relative h-48 w-full overflow-hidden">
-                        <Image
-                          src={blog.image}
-                          alt={blog.title}
-                          fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
-                        />
-                      </div>
-                    ) : (
-                      <div className="h-48 bg-gradient-to-br from-blue-500/20 to-cyan-400/20 flex items-center justify-center">
-                        <span className="text-4xl opacity-30">📝</span>
-                      </div>
-                    )}
-                    <div className="p-5">
-                      <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
-                        {blog.published_date && (
-                          <span className="flex items-center gap-1">
-                            <CalendarDays size={12} />
-                            {new Date(blog.published_date).toLocaleDateString()}
-                          </span>
-                        )}
-                        {blog.category && (
-                          <>
-                            <span>·</span>
-                            <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">
-                              {blog.category}
+                  {typeof blog.slug === "string" && blog.slug.startsWith("http") ? (
+                    <a href={blog.slug} target="_blank" rel="noopener noreferrer" className="block h-full">
+                      <div className="p-5">
+                        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+                          {blog.published_date && (
+                            <span className="flex items-center gap-1">
+                              <CalendarDays size={12} />
+                              {new Date(blog.published_date).toLocaleDateString()}
                             </span>
-                          </>
+                          )}
+                          {blog.category && (
+                            <>
+                              <span>·</span>
+                              <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">{blog.category}</span>
+                            </>
+                          )}
+                        </div>
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-500 transition-colors">
+                          {blog.title}
+                        </h2>
+                        {blog.summary && (
+                          <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">{blog.summary.replace(/<[^>]+>/g, "")}</p>
                         )}
+                        <span className="inline-flex items-center gap-1 mt-4 text-sm text-blue-500 font-medium group-hover:gap-2 transition-all">
+                          Read more <ArrowRight size={14} />
+                        </span>
                       </div>
-                      <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-500 transition-colors">
-                        {blog.title}
-                      </h2>
-                      {blog.summary && (
-                        <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
-                          {blog.summary.replace(/<[^>]+>/g, "")}
-                        </p>
+                    </a>
+                  ) : (
+                    <Link href={`/blog/${blog.slug || blog.id}`} className="block h-full">
+                      {blog.image ? (
+                        <div className="relative h-48 w-full overflow-hidden">
+                          <Image src={blog.image} alt={blog.title} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                        </div>
+                      ) : (
+                        <div className="h-48 bg-gradient-to-br from-blue-500/20 to-cyan-400/20 flex items-center justify-center">
+                          <span className="text-4xl opacity-30">📝</span>
+                        </div>
                       )}
-                      <span className="inline-flex items-center gap-1 mt-4 text-sm text-blue-500 font-medium group-hover:gap-2 transition-all">
-                        Read more <ArrowRight size={14} />
-                      </span>
-                    </div>
-                  </Link>
+                      <div className="p-5">
+                        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
+                          {blog.published_date && (
+                            <span className="flex items-center gap-1">
+                              <CalendarDays size={12} />
+                              {new Date(blog.published_date).toLocaleDateString()}
+                            </span>
+                          )}
+                          {blog.category && (
+                            <>
+                              <span>·</span>
+                              <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">{blog.category}</span>
+                            </>
+                          )}
+                        </div>
+                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-500 transition-colors">
+                          {blog.title}
+                        </h2>
+                        {blog.summary && (
+                          <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">{blog.summary.replace(/<[^>]+>/g, "")}</p>
+                        )}
+                        <span className="inline-flex items-center gap-1 mt-4 text-sm text-blue-500 font-medium group-hover:gap-2 transition-all">
+                          Read more <ArrowRight size={14} />
+                        </span>
+                      </div>
+                    </Link>
+                  )}
                 </motion.article>
               ))}
             </motion.div>

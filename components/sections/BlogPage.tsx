@@ -37,10 +37,38 @@ export default function BlogPage() {
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
-    getBlogs()
-      .then((data) => setArticles(Array.isArray(data) ? data : []))
-      .catch((err) => console.error("Error fetching blogs:", err))
-      .finally(() => setLoading(false));
+    async function fetchBlogs() {
+      try {
+        const data = await getBlogs();
+        if (Array.isArray(data) && data.length > 0) {
+          setArticles(data);
+          return;
+        }
+      } catch (err) {
+        console.error("API blogs failed, falling back to TechCrunch:", err);
+      }
+      try {
+        const res = await fetch(
+          "https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/feed/"
+        );
+        const rss = await res.json();
+        const mapped = (rss.items || []).map((item: Record<string, unknown>, i: number) => ({
+          id: i,
+          title: item.title as string,
+          slug: (item.link as string) || "",
+          published_date: item.pubDate as string,
+          summary: (item.description as string)?.replace(/<[^>]+>/g, "").slice(0, 300),
+          category: Array.isArray(item.categories) ? (item.categories as string[]).join(", ") : "",
+          image: (item as Record<string, unknown>).thumbnail as string || "",
+        }));
+        setArticles(mapped);
+      } catch (rssErr) {
+        console.error("TechCrunch RSS also failed:", rssErr);
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchBlogs();
   }, []);
 
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
@@ -91,46 +119,51 @@ export default function BlogPage() {
                         viewport={{ once: true }}
                         transition={{ delay: index * 0.05 }}
                       >
-                        <Link
-                          href={`/blog/${blog.slug || blog.id}`}
-                          className="block h-full"
-                        >
-                          <Card className="h-full shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden rounded-2xl">
-                            {blog.image && (
-                              <div className="relative h-44 w-full overflow-hidden">
-                                <Image
-                                  src={blog.image}
-                                  alt={blog.title}
-                                  fill
-                                  className="object-cover transition-transform duration-500 hover:scale-110"
-                                />
-                              </div>
-                            )}
-                            <CardHeader className={blog.image ? "pb-2" : ""}>
-                              <CardTitle className="line-clamp-2 text-lg">
-                                {blog.title}
-                              </CardTitle>
-                            </CardHeader>
-                            <CardContent>
-                              {blog.published_date && (
-                                <p className="text-gray-500 text-xs mb-2 flex items-center gap-1">
-                                  <CalendarDays size={12} />
-                                  {new Date(blog.published_date).toLocaleDateString()}
-                                </p>
-                              )}
-                              {blog.summary && (
-                                <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
-                                  {blog.summary.replace(/<[^>]+>/g, "")}
-                                </p>
-                              )}
-                              {blog.category && (
-                                <span className="inline-block mt-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">
-                                  {blog.category}
-                                </span>
-                              )}
-                            </CardContent>
-                          </Card>
-                        </Link>
+                        {(() => {
+                          const isExternal = typeof blog.slug === "string" && blog.slug.startsWith("http");
+                          const href = isExternal ? blog.slug : `/blog/${blog.slug || blog.id}`;
+                          const Wrapper = isExternal ? "a" : Link;
+                          const extraProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
+                          return (
+                            <Wrapper href={href} className="block h-full" {...extraProps}>
+                              <Card className="h-full shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden rounded-2xl">
+                                {blog.image && (
+                                  <div className="relative h-44 w-full overflow-hidden">
+                                    <Image
+                                      src={blog.image}
+                                      alt={blog.title}
+                                      fill
+                                      className="object-cover transition-transform duration-500 hover:scale-110"
+                                    />
+                                  </div>
+                                )}
+                                <CardHeader className={blog.image ? "pb-2" : ""}>
+                                  <CardTitle className="line-clamp-2 text-lg">
+                                    {blog.title}
+                                  </CardTitle>
+                                </CardHeader>
+                                <CardContent>
+                                  {blog.published_date && (
+                                    <p className="text-gray-500 text-xs mb-2 flex items-center gap-1">
+                                      <CalendarDays size={12} />
+                                      {new Date(blog.published_date).toLocaleDateString()}
+                                    </p>
+                                  )}
+                                  {blog.summary && (
+                                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
+                                      {blog.summary.replace(/<[^>]+>/g, "")}
+                                    </p>
+                                  )}
+                                  {blog.category && (
+                                    <span className="inline-block mt-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">
+                                      {blog.category}
+                                    </span>
+                                  )}
+                                </CardContent>
+                              </Card>
+                            </Wrapper>
+                          );
+                        })()}
                       </motion.div>
                     </CarouselItem>
                   ))
