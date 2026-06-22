@@ -7,3 +7,7 @@ export async function getBlogs() {
 export async function getBlog(slug: string) {
   return fetchData(`/blogs/${slug}/`);
 }
+
+export async function fetchExternalBlogs() {
+  return fetchData("/blogs/external-blogs/");
+}

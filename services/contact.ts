@@ -1,7 +1,8 @@
 import { fetchData } from "./api";
 
+const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "https://code-port-backend.onrender.com/api";
+
 async function getCsrfToken() {
-  // Try from cookie first
   const name = "csrftoken";
   const cookieValue = document.cookie
     .split("; ")
@@ -10,10 +11,9 @@ async function getCsrfToken() {
 
   if (cookieValue) return cookieValue;
 
-  // Fallback: request from backend
   try {
-    const res = await fetch("http://127.0.0.1:8000/api/csrf/", {
-      credentials: "include", // important
+    const res = await fetch(`${BASE_URL}/csrf/`, {
+      credentials: "include",
     });
     const data = await res.json();
     return data.csrfToken;
