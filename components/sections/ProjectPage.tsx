@@ -10,11 +10,10 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
 import { getProjects } from "@/services/project";
-import { BsGithub, BsLink, BsThreeDots } from "react-icons/bs";
+import { BsGithub, BsLink } from "react-icons/bs";
 import {
   SiDjango,
   SiReact,
@@ -43,6 +42,11 @@ import {
   DialogDescription,
 } from "@/components/ui/dialog";
 import { IconType } from "react-icons/lib";
+import { Terminal, ExternalLink } from "lucide-react";
+import { JetBrains_Mono } from "next/font/google";
+import { motion } from "framer-motion";
+
+const mono = JetBrains_Mono({ weight: ["400", "700"], subsets: ["latin"] });
 
 export interface Project {
   id: number;
@@ -55,117 +59,54 @@ export interface Project {
   state: "not_started" | "in_progress" | "completed";
   image: string;
 }
+
 type TechIcon = {
   icon: IconType;
   color: string;
   bg: string;
 };
+
 const techIcons: Record<string, TechIcon> = {
-  Django: {
-    icon: SiDjango,
-    color: "text-green-700",
-    bg: "bg-green-100",
-  },
-  React: {
-    icon: SiReact,
-    color: "text-sky-500",
-    bg: "bg-sky-100",
-  },
-  JavaScript: {
-    icon: SiJavascript,
-    color: "text-yellow-500",
-    bg: "bg-yellow-100",
-  },
-  Python: {
-    icon: SiPython,
-    color: "text-blue-500",
-    bg: "bg-blue-100",
-  },
-  Html5: {
-    icon: SiHtml5,
-    color: "text-orange-600",
-    bg: "bg-orange-100",
-  },
-  Tailwindcss: {
-    icon: SiTailwindcss,
-    color: "text-cyan-500",
-    bg: "bg-cyan-100",
-  },
-  PostgreSQL: {
-    icon: SiPostgresql,
-    color: "text-indigo-600",
-    bg: "bg-indigo-100",
-  },
-  Docker: {
-    icon: SiDocker,
-    color: "text-blue-600",
-    bg: "bg-blue-100",
-  },
-  Bash: {
-    icon: SiLinux,
-    color: "text-gray-600",
-    bg: "bg-gray-100",
-  },
-  Powershell: {
-    icon: BsWindow,
-    color: "text-blue-600",
-    bg: "bg-blue-100",
-  },
-  Tshark: {
-    icon: SiWireshark,
-    color: "text-blue-600",
-    bg: "bg-blue-100",
-  },
-  Wireshark: {
-    icon: SiWireshark,
-    color: "text-blue-600",
-    bg: "bg-blue-100",
-  },
-  Css3: {
-    icon: SiCss3,
-    color: "text-blue-600",
-    bg: "bg-blue-100",
-  },
-  Wiregurad: {
-    icon: SiWireguard,
-    color: "text-gray-100",
-    bg: "bg-red-600",
-  },
-  Nextjs: {
-    icon: SiNextdotjs,
-    color: "text-gray-100",
-    bg: "bg-gray-600",
-  },
-  Lua: {
-    icon: SiLua,
-    color: "text-blue-100",
-    bg: "bg-blue-600",
-  },
-  Fastapi:{
-    icon: SiFastapi,
-    color:"text-[#009688]",
-    bg:"bg-[#005A51]",
-  },
-  Jinja2:{
-    icon:SiJinja,
-    color:"text-[#A50808]",
-    bg:"bg-[#eeecb8]"
-  },
+  Django: { icon: SiDjango, color: "text-green-500", bg: "bg-green-900/30" },
+  React: { icon: SiReact, color: "text-sky-500", bg: "bg-sky-900/30" },
+  JavaScript: { icon: SiJavascript, color: "text-yellow-500", bg: "bg-yellow-900/30" },
+  Python: { icon: SiPython, color: "text-blue-500", bg: "bg-blue-900/30" },
+  Html5: { icon: SiHtml5, color: "text-orange-400", bg: "bg-orange-900/30" },
+  Tailwindcss: { icon: SiTailwindcss, color: "text-cyan-500", bg: "bg-cyan-900/30" },
+  PostgreSQL: { icon: SiPostgresql, color: "text-indigo-400", bg: "bg-indigo-900/30" },
+  Docker: { icon: SiDocker, color: "text-blue-600", bg: "bg-blue-900/30" },
+  Bash: { icon: SiLinux, color: "text-gray-400", bg: "bg-gray-800/30" },
+  Powershell: { icon: BsWindow, color: "text-blue-400", bg: "bg-blue-900/30" },
+  Tshark: { icon: SiWireshark, color: "text-blue-400", bg: "bg-blue-900/30" },
+  Wireshark: { icon: SiWireshark, color: "text-blue-400", bg: "bg-blue-900/30" },
+  Css3: { icon: SiCss3, color: "text-blue-400", bg: "bg-blue-900/30" },
+  Wiregurad: { icon: SiWireguard, color: "text-gray-100", bg: "bg-red-900/30" },
+  Nextjs: { icon: SiNextdotjs, color: "text-gray-400", bg: "bg-gray-800/30" },
+  Lua: { icon: SiLua, color: "text-blue-400", bg: "bg-blue-900/30" },
+  Fastapi: { icon: SiFastapi, color: "text-[#009688]", bg: "bg-[#005A51]/30" },
+  Jinja2: { icon: SiJinja, color: "text-[#A50808]", bg: "bg-[#eeecb8]/30" },
 };
+
+function getStateIndicator(state: string) {
+  switch (state) {
+    case "not_started": return "[   ]";
+    case "in_progress": return "[~]";
+    case "completed": return "[x]";
+    default: return "[?]";
+  }
+}
+
 export default function ProjectPage() {
   const plugin = React.useRef(
     Autoplay({ delay: 3000, stopOnInteraction: true }),
   );
-  // function getImageUrl(url: string | null) {
-  //   return url || "/file.png";
-  // }
 
   const [projects, setProjects] = React.useState<Project[]>([]);
   const [loading, setLoading] = React.useState(true);
 
   React.useEffect(() => {
     getProjects()
-      .then((data) => setProjects(data || [])) // always an array
+      .then((data) => setProjects(data || []))
       .catch((err) => {
         console.error("Error fetching projects:", err);
         setProjects([]);
@@ -173,268 +114,180 @@ export default function ProjectPage() {
       .finally(() => setLoading(false));
   }, []);
 
-  function getStateColor(state: string) {
-    switch (state) {
-      case "not_started":
-        return "bg-red-500";
-      case "in_progress":
-        return "bg-yellow-500";
-      case "completed":
-        return "bg-green-500";
-      default:
-        return "bg-gray-500";
-    }
-  }
-  function formatState(state: string) {
-    return state.replace("_", " ");
-  }
-  // Skeletons
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
-    <CarouselItem
-      key={`skeleton-${index}`}
-      className="basis-full sm:basis-1/2 lg:basis-1/3"
-    >
-      <Card className="h-full shadow-sm p-4 space-y-4 rounded-2xl">
-        <Skeleton className="h-40 w-full rounded-xl" />
-        <Skeleton className="h-6 w-2/3" />
-        <Skeleton className="h-4 w-1/2" />
-        <Skeleton className="h-12 w-full" />
-      </Card>
+    <CarouselItem key={`skeleton-${index}`} className="basis-full sm:basis-1/2 lg:basis-1/3">
+      <div className="bg-gray-900/50 border border-green-500/10 h-full p-4 space-y-4">
+        <Skeleton className="h-40 w-full rounded-none bg-gray-900" />
+        <Skeleton className="h-6 w-2/3 bg-gray-900" />
+        <Skeleton className="h-4 w-1/2 bg-gray-900" />
+        <Skeleton className="h-12 w-full bg-gray-900" />
+      </div>
     </CarouselItem>
   ));
 
   return (
-    <section id="projects" className="w-full py-12 px-4">
-      <h2 className="text-3xl font-bold text-center mb-8">Projects</h2>
-      <Carousel
-        plugins={[plugin.current]}
-        opts={{ align: "start", loop: true }}
-        className="w-full max-w-6xl mx-auto"
-      >
-        <CarouselContent>
-          {loading
-            ? skeletonItems
-            : projects.length > 0
-              ? projects.map((project) => (
-                  <CarouselItem
-                    key={project.id}
-                    className=" basis-full sm:basis-1/2 lg:basis-1/3 m-1.5"
-                  >
-                    <Card className="h-full shadow-md flex flex-col backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/20  p-6 hover:scale-[1.01] transition-transform cursor-pointer">
-                      <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle className="text-sm font-bold line-clamp-1">
-                          {project.title || "Untitled Project"}
-                        </CardTitle>
+    <section id="projects" className="bg-gray-950 py-16 px-4">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex items-end justify-between mb-8">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
+              <Terminal size={14} />
+              <span>~/projects $</span>
+            </div>
+            <h2 className={`${mono.className} text-3xl md:text-5xl font-bold text-green-400`}>
+              $ ls ./repos/
+            </h2>
+            <p className={`${mono.className} text-green-600/60 text-sm mt-1`}>
+              # real-world applications I have built
+            </p>
+          </motion.div>
+          <Link
+            href="/projects"
+            className={`${mono.className} text-sm text-green-500/80 hover:text-green-400 underline underline-offset-4`}
+          >
+            $ ls ./all/
+          </Link>
+        </div>
 
-                        <div className="flex items-center gap-2 text-xs text-gray-600 dark:text-gray-400">
-                          <span
-                            className={`h-2 w-2 rounded-full ${getStateColor(project.state)}`}
-                          />
-                          {formatState(project.state)}
-                        </div>
-                      </CardHeader>
-
-                      <CardContent className="flex flex-col gap-3 grow ">
+        <Carousel
+          plugins={[plugin.current]}
+          opts={{ align: "start", loop: true }}
+          className="w-full max-w-6xl mx-auto"
+        >
+          <CarouselContent>
+            {loading
+              ? skeletonItems
+              : projects.length > 0
+                ? projects.map((project) => (
+                    <CarouselItem key={project.id} className="basis-full sm:basis-1/2 lg:basis-1/3 m-1.5">
+                      <div className="bg-gray-900/40 border border-green-500/20 hover:border-green-400/40 h-full transition-all duration-300">
                         {project.image ? (
-                          <Image
-                            src={project.image}
-                            alt={project.title}
-                            width={800}
-                            height={400}
-                            className="w-full h-64 object-cover rounded-xl"
-                          />
-                        ) : (
-                          <Skeleton className="w-full h-64 rounded-xl" />
-                        )}
-
-                        <p className="text-gray-500 text-sm md:text-base line-clamp-3">
-                          {project.description || "No description available."}
-                        </p>
-
-                        {/* Tech stack as comma-separated string */}
-                        {project.tech_stack?.length > 0 && (
-                          <div className="mt-6">
-                            <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                              Tech Stack
-                            </h3>
-
-                            <div className="flex flex-wrap gap-3">
-                              {project.tech_stack.map((tech, idx) => {
-                                const techData = techIcons[tech];
-                                const Icon = techData?.icon;
-
-                                return (
-                                  <div
-                                    key={idx}
-                                    className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold
-            ${techData?.bg || "bg-gray-200"} ${techData?.color || "text-gray-700 capitalize"}`}
-                                  >
-                                    {Icon && <Icon size={14} />}
-                                    {tech}
-                                  </div>
-                                );
-                              })}
+                          <div className="relative h-44 w-full overflow-hidden border-b border-green-500/10">
+                            <Image src={project.image} alt={project.title} width={800} height={400} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
+                            <div className={`${mono.className} absolute top-3 right-3 text-[10px] bg-gray-950/80 text-green-500 px-2 py-1 border border-green-500/30`}>
+                              {getStateIndicator(project.state)}
                             </div>
                           </div>
+                        ) : (
+                          <div className="h-44 bg-gray-900 border-b border-green-500/10 flex items-center justify-center">
+                            <span className={`${mono.className} text-green-700/30 text-2xl`}>~</span>
+                          </div>
                         )}
-
-                        <div className="flex gap-3 mt-2">
-                          {project.github_link && (
-                            <Link
-                              aria-label="project github link"
-                              href={project.github_link}
-                              target="_blank"
-                              className="hover:underline text-sm flex items-center gap-1 hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1 dark:hover:bg-blue-800"
-                            >
-                              GitHub <BsGithub />
-                            </Link>
+                        <div className="p-5">
+                          <div className={`${mono.className} text-green-600/50 text-xs mb-2`}>$ ./repos/{project.id}/</div>
+                          <h3 className={`${mono.className} text-green-300 font-semibold text-base mb-2 line-clamp-1`}>
+                            {project.title || "Untitled Project"}
+                          </h3>
+                          <p className={`${mono.className} text-green-600/70 text-xs line-clamp-2 mb-4 leading-relaxed`}>
+                            {project.description || "No description available."}
+                          </p>
+                          {project.tech_stack?.length > 0 && (
+                            <div className="flex flex-wrap gap-1.5 mb-4">
+                              {project.tech_stack.slice(0, 4).map((tech, idx) => {
+                                const techData = techIcons[tech];
+                                const Icon = techData?.icon;
+                                return (
+                                  <span key={idx} className={`${mono.className} text-[10px] bg-gray-900 border border-green-500/20 text-green-500 px-2 py-0.5 flex items-center gap-1`}>
+                                    {Icon && <Icon size={10} />}
+                                    {tech}
+                                  </span>
+                                );
+                              })}
+                              {project.tech_stack.length > 4 && (
+                                <span className={`${mono.className} text-[10px] text-green-600/50`}>+{project.tech_stack.length - 4}</span>
+                              )}
+                            </div>
                           )}
-                          {project.live_link && (
-                            <Link
-                              aria-label="project live link"
-                              href={project.live_link}
-                              target="_blank"
-                              className="text-green-600 dark:text-green-400 flex items-center gap-1 text-md hover:bg-blue-900 cursor-pointer rounded-md px-2 py-1"
-                            >
-                              Live <BsLink />
-                            </Link>
-                          )}
-                          <Dialog>
-                            <DialogTrigger
-                              className="w-full  justify-end bg-transparent flex items-center gap-2 cursor-pointer hover:bg-blue-900 rounded-md px-2 py-1"
-                              aria-label="project details"
-                            >
-                              Details <BsThreeDots />
-                            </DialogTrigger>
-
-                            <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto p-6 bg-gray-50 dark:bg-gray-900 rounded-xl shadow-xl">
-                              {/* HEADER */}
-                              <DialogHeader className="space-y-2">
-                                <DialogTitle className="text-2xl font-bold text-gray-900 dark:text-gray-100">
-                                  {project.title || "Untitled Project"}
-                                </DialogTitle>
-
-                                <div className="flex items-center gap-2 text-sm text-gray-500">
-                                  <span
-                                    className={`h-2 w-2 rounded-full ${getStateColor(project.state)}`}
-                                  />
-                                  {project.state.replace("_", " ")}
-                                </div>
-                              </DialogHeader>
-
-                              {/* IMAGE */}
-                              <div className="mt-4">
-                                <Image
-                                  src={project.image || "/file.png"}
-                                  alt={project.title || "Project image"}
-                                  width={800}
-                                  height={400}
-                                  className="w-full h-48 md:h-64 object-cover rounded-xl"
-                                />
-                              </div>
-
-                              {/* DESCRIPTION */}
-                              <div className="mt-6">
-                                <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                                  Description
-                                </h3>
-
-                                <DialogDescription className="text-gray-600 dark:text-gray-300 leading-relaxed">
-                                  {project.description ||
-                                    "No description available."}
-                                </DialogDescription>
-                              </div>
-
-                              {/* TECH STACK */}
-                              {project.tech_stack?.length > 0 && (
-                                <div className="mt-6">
-                                  <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                                    Tech Stack
-                                  </h3>
-
-                                  <div className="flex flex-wrap gap-3">
-                                    {project.tech_stack.map((tech, idx) => {
-                                      const techData = techIcons[tech];
-                                      const Icon = techData?.icon;
-
-                                      return (
-                                        <div
-                                          key={idx}
-                                          className={`flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold
-            ${techData?.bg || "bg-gray-200"} ${techData?.color || "text-gray-700"}`}
-                                        >
-                                          {Icon && <Icon size={14} />}
-                                          {tech}
-                                        </div>
-                                      );
-                                    })}
+                          <div className="flex items-center gap-3 pt-2 border-t border-green-500/10">
+                            {project.github_link && (
+                              <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="text-green-600/60 hover:text-green-400 transition-colors">
+                                <BsGithub size={16} />
+                              </a>
+                            )}
+                            {project.live_link && (
+                              <a href={project.live_link} target="_blank" rel="noopener noreferrer" className="text-green-600/60 hover:text-green-400 transition-colors">
+                                <ExternalLink size={16} />
+                              </a>
+                            )}
+                            <Dialog>
+                              <DialogTrigger className={`${mono.className} ml-auto text-xs text-green-500/70 hover:text-green-400 bg-transparent flex items-center gap-1 cursor-pointer`}>
+                                $ cat ./README
+                              </DialogTrigger>
+                              <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto p-6 bg-gray-950 border border-green-500/30 rounded-none">
+                                <DialogHeader>
+                                  <div className={`${mono.className} text-green-500/60 text-xs mb-1`}>$ cat ./repos/{project.id}/README</div>
+                                  <DialogTitle className={`${mono.className} text-2xl font-bold text-green-400`}>{project.title}</DialogTitle>
+                                  <DialogDescription className={`${mono.className} flex items-center gap-2 text-sm text-green-600/70`}>
+                                    <span>status: {getStateIndicator(project.state)}</span>
+                                  </DialogDescription>
+                                </DialogHeader>
+                                {project.image && (
+                                  <div className="mt-4 border border-green-500/20">
+                                    <Image src={project.image} alt={project.title} width={800} height={400} className="w-full h-48 md:h-64 object-cover" />
+                                  </div>
+                                )}
+                                <div className="mt-6 space-y-6">
+                                  <div>
+                                    <h3 className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}>## description</h3>
+                                    <p className={`${mono.className} text-green-600/80 text-sm leading-relaxed`}>{project.description}</p>
+                                  </div>
+                                  {project.tech_stack?.length > 0 && (
+                                    <div>
+                                      <h3 className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}>## tech_stack</h3>
+                                      <div className="flex flex-wrap gap-2">
+                                        {project.tech_stack.map((tech, idx) => {
+                                          const techData = techIcons[tech];
+                                          const Icon = techData?.icon;
+                                          return (
+                                            <span key={idx} className={`${mono.className} text-xs bg-gray-900 border border-green-500/20 text-green-500 px-2 py-0.5 flex items-center gap-1`}>
+                                              {Icon && <Icon size={12} />}
+                                              {tech}
+                                            </span>
+                                          );
+                                        })}
+                                      </div>
+                                    </div>
+                                  )}
+                                  {project.colaborators?.length > 0 && (
+                                    <div>
+                                      <h3 className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}>## collaborators</h3>
+                                      <div className="flex flex-wrap gap-2">
+                                        {project.colaborators.map((person, idx) => (
+                                          <span key={idx} className={`${mono.className} text-xs text-green-600/80`}>{person}</span>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )}
+                                  <div className="flex gap-4 pt-2 border-t border-green-500/10">
+                                    {project.github_link && (
+                                      <a href={project.github_link} target="_blank" rel="noopener noreferrer" className={`${mono.className} flex items-center gap-2 px-4 py-2 bg-gray-900 border border-green-500/30 text-green-400 hover:bg-gray-800 transition text-sm`}>
+                                        <BsGithub size={16} /> github
+                                      </a>
+                                    )}
+                                    {project.live_link && (
+                                      <a href={project.live_link} target="_blank" rel="noopener noreferrer" className={`${mono.className} flex items-center gap-2 px-4 py-2 bg-green-900/30 border border-green-500/50 text-green-400 hover:bg-green-900/50 transition text-sm`}>
+                                        <ExternalLink size={16} /> live
+                                      </a>
+                                    )}
                                   </div>
                                 </div>
-                              )}
-
-                              {/* COLLABORATORS */}
-                              {project.colaborators?.length > 0 && (
-                                <div className="mt-6">
-                                  <h3 className="text-sm font-semibold text-gray-800 dark:text-gray-200 mb-2">
-                                    Collaborators
-                                  </h3>
-
-                                  <div className="flex flex-wrap gap-2">
-                                    {project.colaborators.map((person, idx) => (
-                                      <span
-                                        key={idx}
-                                        className="px-2 py-1 text-xs rounded-md bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200"
-                                      >
-                                        {person}
-                                      </span>
-                                    ))}
-                                  </div>
-                                </div>
-                              )}
-
-                              {/* LINKS */}
-                              <div className="flex gap-4 mt-8">
-                                {project.github_link && (
-                                  <a
-                                    href={project.github_link}
-                                    target="_blank"
-                                    aria-label="github link"
-                                    rel="noopener noreferrer"
-                                    className="px-4 py-2 bg-gray-800 hover:bg-gray-900 text-white rounded-md shadow-md transition"
-                                  >
-                                    GitHub
-                                  </a>
-                                )}
-
-                                {project.live_link && (
-                                  <a
-                                    href={project.live_link}
-                                    target="_blank"
-                                    aria-label="live demo link"
-                                    rel="noopener noreferrer"
-                                    className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md shadow-md transition"
-                                  >
-                                    Live Demo
-                                  </a>
-                                )}
-                              </div>
-                            </DialogContent>
-                          </Dialog>
+                              </DialogContent>
+                            </Dialog>
+                          </div>
                         </div>
-                      </CardContent>
-                    </Card>
-                  </CarouselItem>
-                ))
-              : !loading && (
-                  <p className="text-center text-gray-500 w-full">
-                    Projects are loading at the moment.......
-                  </p>
-                )}
-        </CarouselContent>
-
-        <CarouselPrevious className="hidden sm:flex" />
-        <CarouselNext className="hidden sm:flex" />
-      </Carousel>
+                      </div>
+                    </CarouselItem>
+                  ))
+                : !loading && (
+                    <p className={`${mono.className} text-center text-green-600/70 w-full py-12`}>
+                      projects: directory is empty
+                    </p>
+                  )}
+          </CarouselContent>
+          <CarouselPrevious className="hidden sm:flex text-green-500 border-green-500/30" />
+          <CarouselNext className="hidden sm:flex text-green-500 border-green-500/30" />
+        </Carousel>
+      </div>
     </section>
   );
 }

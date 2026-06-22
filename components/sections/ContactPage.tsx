@@ -4,8 +4,10 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Mail, Phone, MapPin, Github, Linkedin } from "lucide-react";
+import { Mail, Phone, MapPin, Github, Linkedin, Terminal } from "lucide-react";
 import { JetBrains_Mono } from "next/font/google";
+import { motion } from "framer-motion";
+
 const poppins = JetBrains_Mono({
   weight: "400",
   subsets: ["latin"],
@@ -60,165 +62,165 @@ export default function ContactPage() {
   }
 
   return (
-    <section
-      id="contact"
-      className="max-w-5xl mx-auto py-12 px-4 grid md:grid-cols-2 gap-8"
-    >
-      <Card className="shadow-md">
-        <CardHeader>
-          <CardTitle className="text-2xl font-bold text-center">
-            Get in Touch
-          </CardTitle>
-          <CardDescription className="text-center">
-            Fill the form below or use my contact info.
-          </CardDescription>
-        </CardHeader>
-        <CardContent>
-          {status && (
-            <p className="mt-4 text-center text-sm text-gray-600">{status}</p>
-          )}
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="name"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Name</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Your name" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input
-                        type="email"
-                        placeholder="you@example.com"
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="message"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Message</FormLabel>
-                    <FormControl>
-                      <Textarea
-                        placeholder="Write your message..."
-                        {...field}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button type="submit" className="w-full cursor-pointer">
-                Send Message
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
+    <section id="contact" className="bg-gray-950 py-16 px-4">
+      <div className="max-w-5xl mx-auto">
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8">
+          <div className={`${poppins.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
+            <Terminal size={14} />
+            <span>~/contact $</span>
+          </div>
+          <h2 className={`${poppins.className} text-3xl md:text-5xl font-bold text-green-400`}>
+            $ mail --send
+          </h2>
+          <p className={`${poppins.className} text-green-600/60 text-sm mt-1`}>
+            # get in touch
+          </p>
+        </motion.div>
 
-      <Card className="shadow-md p-4 flex flex-col justify-start">
-        <CardHeader className="border-b pb-0 mb-0 text-center">
-          <CardTitle
-            className={`${poppins.className} text-3xl font-bold italic`}
-          >
-            Contact Info
-          </CardTitle>
-          <CardDescription className="capitalize">
-            you can still reach me directly. with the following details below Or
-            book a meeting with me either voice / video conference
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4 grid md:grid-cols-2 sm:grid-cols-1 gap-2 text-end">
-          <div className="flex items-center gap-3">
-            <Mail className="w-5 h-5 text-blue-700 dark:text-blue-300 font-bold" />
-            <a
-              href="mailto:prevailfrancis@gmail.com"
-              className="hover:underline text-sm text-blue-400 dark:text-blue-300"
-            >
-              prevailfrancis@gmail.com
-            </a>
-          </div>
-          <div className="flex items-center gap-3">
-            <Phone className="w-5 h-5 text-green-600 dark:text-green-400" />
-            <span className="text-sm text-green-500 dark:text-green-400">
-              +234 7043-1188 41
-            </span>
-          </div>
-          <div className="flex items-center gap-3">
-            <MapPin className="w-5 h-5 text-red-600 dark:text-red-400" />
-            <span className="text-sm text-slate-500 dark:text-slate-400">
-              Anambara, Nigeria
-            </span>
-          </div>
-          <div className="flex gap-3">
-            <a
-              href="https://github.com/DeFrancis-unix27"
-              target="_blank"
-              className="text-gray-700 hover:text-black dark:text-gray-300 dark:hover:text-white"
-            >
-              <Github className="w-4 h-4" />
-            </a>
-            <a
-              href="https://www.linkedin.com/in/francis-david-7code"
-              target="_blank"
-              className="text-blue-700 hover:text-blue-900 dark:text-blue-300 dark:hover:text-blue-100"
-            >
-              <Linkedin className="w-4 h-4" />
-            </a>
-            <a
-              href="https://x.com/CodeWithFrancis"
-              target="_blank"
-              className="text-gray-400 hover:text-gray-300 dark:text-gray-500 dark:hover:text-gray-300"
-            >
-              <BsTwitterX className="w-4 h-4" />
-            </a>
-            <a
-              href="https://youtube.com/codesmith_dev"
-              target="_blank"
-              className="text-red-700 hover:text-red-900 dark:text-red-300 dark:hover:text-red-100"
-            >
-              <BsYoutube className="w-4 h-4" />
-            </a>
-          </div>
-        </CardContent>
-        <CardContent className="flex justify-center">
-          <div className="relative w-64 h-36 rounded-3xl overflow-hidden flex items-center justify-center group border-2 border-blue-500/30 dark:border-blue-400/30">
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-600/20 via-purple-600/20 to-gray-700/20" />
-            <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
-              <p className={`text-lg font-semibold ${poppins.className}`}>
-                Book a meeting now
-              </p>
-              <Button
-                variant="ghost"
-                aria-label="Book a meeting with me"
-                className="mt-3 bg-blue-500 hover:bg-blue-700 text-white px-5 py-2 rounded-md shadow-md transition-transform duration-200 hover:scale-105 flex items-center gap-2 cursor-pointer dark:bg-blue-400 dark:hover:bg-blue-700"
-                onClick={() =>
-                  window.open("https://cal.com/francis-david-kygzgw", "_blank")
-                }
-              >
-                Click to Book <BsPhoneVibrate />
-              </Button>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+        <div className="grid md:grid-cols-2 gap-8">
+          <Card className="bg-gray-900/40 border-green-500/20 text-green-400 shadow-none rounded-none">
+            <CardHeader>
+              <CardTitle className={`${poppins.className} text-2xl font-bold text-green-400`}>
+                ./contact_form
+              </CardTitle>
+              <CardDescription className={`${poppins.className} text-green-600/70`}>
+                fill in the fields below
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              {status && (
+                <p className={`${poppins.className} mt-4 text-center text-sm text-green-500`}>{status}</p>
+              )}
+              <Form {...form}>
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className={`${poppins.className} text-green-500`}>name</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="your name"
+                            {...field}
+                            className={`${poppins.className} bg-gray-900 border-green-500/30 text-green-400 placeholder-green-700/50 focus:border-green-400 rounded-none`}
+                          />
+                        </FormControl>
+                        <FormMessage className={`${poppins.className} text-red-500/80 text-xs`} />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="email"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className={`${poppins.className} text-green-500`}>email</FormLabel>
+                        <FormControl>
+                          <Input
+                            type="email"
+                            placeholder="you@example.com"
+                            {...field}
+                            className={`${poppins.className} bg-gray-900 border-green-500/30 text-green-400 placeholder-green-700/50 focus:border-green-400 rounded-none`}
+                          />
+                        </FormControl>
+                        <FormMessage className={`${poppins.className} text-red-500/80 text-xs`} />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name="message"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className={`${poppins.className} text-green-500`}>message</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            placeholder="write your message..."
+                            {...field}
+                            className={`${poppins.className} bg-gray-900 border-green-500/30 text-green-400 placeholder-green-700/50 focus:border-green-400 rounded-none`}
+                          />
+                        </FormControl>
+                        <FormMessage className={`${poppins.className} text-red-500/80 text-xs`} />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="submit"
+                    className={`${poppins.className} w-full bg-green-900/30 border border-green-500/50 text-green-400 hover:bg-green-900/50 cursor-pointer rounded-none`}
+                  >
+                    $ ./send_mail.sh
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-gray-900/40 border-green-500/20 text-green-400 shadow-none rounded-none p-4 flex flex-col justify-start">
+            <CardHeader className="border-b border-green-500/10 pb-4 mb-0 text-center">
+              <CardTitle className={`${poppins.className} text-3xl font-bold text-green-400`}>
+                reach_me
+              </CardTitle>
+              <CardDescription className={`${poppins.className} text-green-600/70 text-sm`}>
+                # direct contact channels
+              </CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4 grid md:grid-cols-2 sm:grid-cols-1 gap-2 mt-4">
+              <div className="flex items-center gap-3">
+                <Mail className="w-5 h-5 text-green-500" />
+                <a href="mailto:prevailfrancis@gmail.com" className={`${poppins.className} hover:underline text-sm text-green-500/80`}>
+                  prevailfrancis@gmail.com
+                </a>
+              </div>
+              <div className="flex items-center gap-3">
+                <Phone className="w-5 h-5 text-green-500" />
+                <span className={`${poppins.className} text-sm text-green-500/80`}>
+                  +234 7043-1188 41
+                </span>
+              </div>
+              <div className="flex items-center gap-3">
+                <MapPin className="w-5 h-5 text-green-500" />
+                <span className={`${poppins.className} text-sm text-green-500/60`}>
+                  Anambara, Nigeria
+                </span>
+              </div>
+              <div className="flex gap-3">
+                <a href="https://github.com/DeFrancis-unix27" target="_blank" className="text-green-500/60 hover:text-green-400">
+                  <Github className="w-4 h-4" />
+                </a>
+                <a href="https://www.linkedin.com/in/francis-david-7code" target="_blank" className="text-green-500/60 hover:text-green-400">
+                  <Linkedin className="w-4 h-4" />
+                </a>
+                <a href="https://x.com/CodeWithFrancis" target="_blank" className="text-green-500/60 hover:text-green-400">
+                  <BsTwitterX className="w-4 h-4" />
+                </a>
+                <a href="https://youtube.com/codesmith_dev" target="_blank" className="text-green-500/60 hover:text-green-400">
+                  <BsYoutube className="w-4 h-4" />
+                </a>
+              </div>
+            </CardContent>
+            <CardContent className="flex justify-center mt-4">
+              <div className="relative w-64 h-36 overflow-hidden flex items-center justify-center group border border-green-500/20">
+                <div className="relative z-10 flex flex-col items-center justify-center text-center px-4">
+                  <p className={`${poppins.className} text-lg font-semibold text-green-400`}>
+                    book_meeting
+                  </p>
+                  <Button
+                    variant="ghost"
+                    aria-label="Book a meeting"
+                    className={`${poppins.className} mt-3 bg-green-900/30 border border-green-500/50 text-green-400 hover:bg-green-900/50 px-5 py-2 transition-all flex items-center gap-2 cursor-pointer rounded-none`}
+                    onClick={() =>
+                      window.open("https://cal.com/francis-david-kygzgw", "_blank")
+                    }
+                  >
+                    $ ./book.sh <BsPhoneVibrate />
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
     </section>
   );
 }

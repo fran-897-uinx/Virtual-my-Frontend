@@ -69,7 +69,7 @@ export default function Landing() {
   });
 
   return (
-    <main>
+    <main className="bg-gray-950">
       <Navbar />
       <Home />
       <About />

@@ -10,12 +10,14 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
 import { getBlogs } from "@/services/blog";
 import { motion } from "framer-motion";
-import { CalendarDays } from "lucide-react";
+import { CalendarDays, Terminal, ArrowRight } from "lucide-react";
+import { JetBrains_Mono } from "next/font/google";
+
+const mono = JetBrains_Mono({ weight: ["400", "700"], subsets: ["latin"] });
 
 interface BlogPost {
   id: number;
@@ -73,31 +75,39 @@ export default function BlogPage() {
   }, []);
 
   const skeletonItems = Array.from({ length: 3 }).map((_, index) => (
-    <CarouselItem
-      key={`skeleton-${index}`}
-      className="md:basis-1/3 lg:basis-1/3 sm:basis-1/2 basis-full"
-    >
-      <Card className="h-full shadow-md p-0 space-y-0 overflow-hidden rounded-2xl">
-        <Skeleton className="h-44 w-full rounded-none" />
+    <CarouselItem key={`skeleton-${index}`} className="md:basis-1/3 lg:basis-1/3 sm:basis-1/2 basis-full">
+      <div className="bg-gray-900/50 border border-green-500/10 h-full">
+        <Skeleton className="h-44 w-full rounded-none bg-gray-900" />
         <div className="p-4 space-y-3">
-          <Skeleton className="h-6 w-3/4" />
-          <Skeleton className="h-4 w-1/3" />
-          <Skeleton className="h-12 w-full" />
+          <Skeleton className="h-6 w-3/4 bg-gray-900" />
+          <Skeleton className="h-4 w-1/3 bg-gray-900" />
+          <Skeleton className="h-12 w-full bg-gray-900" />
         </div>
-      </Card>
+      </div>
     </CarouselItem>
   ));
 
   return (
-    <section id="blog" className="w-full py-12 px-4">
+    <section id="blog" className="bg-gray-950 py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <div className="flex items-center justify-between mb-8">
-          <h2 className="text-3xl font-bold">Latest Blogs</h2>
+        <div className="flex items-end justify-between mb-8">
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+            <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
+              <Terminal size={14} />
+              <span>~/blog $</span>
+            </div>
+            <h2 className={`${mono.className} text-3xl md:text-5xl font-bold text-green-400`}>
+              $ cat ./posts/*
+            </h2>
+            <p className={`${mono.className} text-green-600/60 text-sm mt-1`}>
+              # thoughts, tutorials, and insights
+            </p>
+          </motion.div>
           <Link
             href="/blog"
-            className="text-sm text-blue-500 hover:text-blue-600 dark:text-blue-400 dark:hover:text-blue-300 underline underline-offset-4"
+            className={`${mono.className} text-sm text-green-500/80 hover:text-green-400 underline underline-offset-4`}
           >
-            View all
+            $ ls ./all/
           </Link>
         </div>
         <Carousel
@@ -110,10 +120,7 @@ export default function BlogPage() {
               ? skeletonItems
               : articles.length > 0
                 ? articles.map((blog, index) => (
-                    <CarouselItem
-                      key={blog.id || index}
-                      className="md:basis-1/3 lg:basis-1/3 sm:basis-1/2 basis-full"
-                    >
+                    <CarouselItem key={blog.id || index} className="md:basis-1/3 lg:basis-1/3 sm:basis-1/2 basis-full">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         whileInView={{ opacity: 1, y: 0 }}
@@ -122,14 +129,14 @@ export default function BlogPage() {
                       >
                         {(() => {
                           const isExternal = typeof blog.slug === "string" && blog.slug.startsWith("http");
-                          const href = isExternal ? blog.slug : `/blog/${blog.slug || blog.id}`;
+                          const href = isExternal ? (blog.slug as string) : `/blog/${blog.slug || blog.id}`;
                           const Wrapper = isExternal ? "a" : Link;
                           const extraProps = isExternal ? { target: "_blank", rel: "noopener noreferrer" } : {};
                           return (
                             <Wrapper href={href} className="block h-full" {...extraProps}>
-                              <Card className="h-full shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 overflow-hidden rounded-2xl">
-                                {blog.image && (
-                                  <div className="relative h-44 w-full overflow-hidden">
+                              <div className="bg-gray-900/40 border border-green-500/20 hover:border-green-400/40 h-full transition-all duration-300">
+                                {blog.image ? (
+                                  <div className="relative h-44 w-full overflow-hidden border-b border-green-500/10">
                                     <Image
                                       src={blog.image}
                                       alt={blog.title}
@@ -137,31 +144,36 @@ export default function BlogPage() {
                                       className="object-cover transition-transform duration-500 hover:scale-110"
                                     />
                                   </div>
+                                ) : (
+                                  <div className="h-44 bg-gray-900 border-b border-green-500/10 flex items-center justify-center">
+                                    <span className={`${mono.className} text-green-700/30 text-2xl`}>~</span>
+                                  </div>
                                 )}
-                                <CardHeader className={blog.image ? "pb-2" : ""}>
-                                  <CardTitle className="line-clamp-2 text-lg">
-                                    {blog.title}
-                                  </CardTitle>
-                                </CardHeader>
-                                <CardContent>
+                                <div className="p-5">
                                   {blog.published_date && (
-                                    <p className="text-gray-500 text-xs mb-2 flex items-center gap-1">
+                                    <p className={`${mono.className} text-green-600/60 text-xs mb-2 flex items-center gap-1`}>
                                       <CalendarDays size={12} />
                                       {new Date(blog.published_date).toLocaleDateString()}
                                     </p>
                                   )}
+                                  <h3 className={`${mono.className} text-green-300 font-semibold text-base mb-2 line-clamp-2`}>
+                                    {blog.title}
+                                  </h3>
                                   {blog.summary && (
-                                    <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">
+                                    <p className={`${mono.className} text-green-600/70 text-xs line-clamp-3 leading-relaxed`}>
                                       {blog.summary.replace(/<[^>]+>/g, "")}
                                     </p>
                                   )}
                                   {blog.category && (
-                                    <span className="inline-block mt-2 text-xs bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">
+                                    <span className={`${mono.className} inline-block mt-3 text-[10px] bg-gray-900 border border-green-500/20 text-green-500/80 px-2 py-0.5`}>
                                       {blog.category}
                                     </span>
                                   )}
-                                </CardContent>
-                              </Card>
+                                  <span className={`${mono.className} inline-flex items-center gap-1 mt-3 text-xs text-green-500/70`}>
+                                    $ cat ./post <ArrowRight size={12} />
+                                  </span>
+                                </div>
+                              </div>
                             </Wrapper>
                           );
                         })()}
@@ -169,13 +181,13 @@ export default function BlogPage() {
                     </CarouselItem>
                   ))
                 : !loading && (
-                    <p className="text-center text-gray-500 w-full py-12">
-                      No blog posts available at the moment.
+                    <p className={`${mono.className} text-center text-green-600/70 w-full py-12`}>
+                      blog: directory is empty
                     </p>
                   )}
           </CarouselContent>
-          <CarouselPrevious className="hidden md:flex" />
-          <CarouselNext className="hidden md:flex" />
+          <CarouselPrevious className="hidden md:flex text-green-500 border-green-500/30" />
+          <CarouselNext className="hidden md:flex text-green-500 border-green-500/30" />
         </Carousel>
       </div>
     </section>
