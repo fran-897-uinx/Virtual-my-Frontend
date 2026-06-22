@@ -34,15 +34,41 @@ interface Project {
 export default function ProjectsPage() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
   const [search, setSearch] = useState("");
   const [filterState, setFilterState] = useState("");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
 
   useEffect(() => {
-    getProjects()
-      .then((data) => setProjects(data || []))
-      .catch((err) => console.error("Error fetching projects:", err))
-      .finally(() => setLoading(false));
+    async function fetchProjects() {
+      try {
+        const data = await getProjects();
+        if (Array.isArray(data) && data.length > 0) {
+          setProjects(data);
+          setLoading(false);
+          return;
+        }
+      } catch (err) {
+        console.error("getProjects failed, trying direct fetch:", err);
+      }
+      try {
+        const baseUrl = process.env.NEXT_PUBLIC_API_URL || "https://code-port-backend.onrender.com/api";
+        const res = await fetch(`${baseUrl}/projects/`, { cache: "no-store" });
+        const data = await res.json();
+        const list = Array.isArray(data) ? data : data?.results || [];
+        if (list.length > 0) {
+          setProjects(list);
+        } else {
+          setError("No projects found.");
+        }
+      } catch (err) {
+        console.error("Direct fetch also failed:", err);
+        setError("Failed to load projects.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchProjects();
   }, []);
 
   function getStateIndicator(state: string) {
@@ -132,6 +158,11 @@ export default function ProjectsPage() {
                   </div>
                 </div>
               ))}
+            </div>
+          ) : error ? (
+            <div className="text-center py-20">
+              <p className={`${mono.className} text-red-400/70 text-lg mb-2`}>error: {error}</p>
+              <p className={`${mono.className} text-green-700/50 text-xs`}>check the browser console (F12) for details</p>
             </div>
           ) : filtered.length > 0 ? (
             <motion.div
