@@ -42,6 +42,7 @@ export default function BlogPage() {
         const data = await getBlogs();
         if (Array.isArray(data) && data.length > 0) {
           setArticles(data);
+          setLoading(false);
           return;
         }
       } catch (err) {

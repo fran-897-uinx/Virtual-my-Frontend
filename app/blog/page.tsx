@@ -8,7 +8,10 @@ import { getBlogs } from "@/services/blog";
 import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
-import { Search, CalendarDays, ArrowRight } from "lucide-react";
+import { Search, CalendarDays, ArrowRight, Terminal } from "lucide-react";
+import { JetBrains_Mono } from "next/font/google";
+
+const mono = JetBrains_Mono({ weight: ["400", "700"], subsets: ["latin"] });
 
 interface BlogPost {
   id: number;
@@ -33,6 +36,7 @@ export default function BlogPage() {
         const data = await getBlogs();
         if (Array.isArray(data) && data.length > 0) {
           setArticles(data);
+          setLoading(false);
           return;
         }
       } catch (err) {
@@ -75,44 +79,58 @@ export default function BlogPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16">
+      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
         <section className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="text-center mb-12"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="mb-12"
           >
-            <h1 className="text-4xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent">
-              Blog
-            </h1>
-            <p className="text-gray-500 dark:text-gray-400 max-w-xl mx-auto">
-              Thoughts, tutorials, and insights on software development
-            </p>
+            <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
+              <Terminal size={14} />
+              <span>~/blog $</span>
+            </div>
+            <motion.h1
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.1 }}
+              className={`${mono.className} text-4xl md:text-5xl font-bold text-green-400 mb-2`}
+            >
+              $ cat ./posts/*
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className={`${mono.className} text-green-600/70 text-sm`}
+            >
+              # thoughts, tutorials, and insights on software development
+            </motion.p>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto mb-10"
+            transition={{ delay: 0.3 }}
+            className="flex flex-col sm:flex-row gap-4 max-w-2xl mb-10"
           >
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600/50" size={18} />
               <input
                 type="text"
-                placeholder="Search articles..."
+                placeholder="grep -i 'search' ./posts/*"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 rounded-xl bg-white/10 dark:bg-gray-900/30 border border-white/20 dark:border-gray-700/30 backdrop-blur-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                className={`${mono.className} w-full pl-10 pr-4 py-3 rounded-none bg-gray-900 border border-green-500/30 text-green-400 placeholder-green-700/50 focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400/30`}
               />
             </div>
             {categories.length > 0 && (
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-3 rounded-xl bg-white/10 dark:bg-gray-900/30 border border-white/20 dark:border-gray-700/30 backdrop-blur-xl text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500/50"
+                className={`${mono.className} px-4 py-3 rounded-none bg-gray-900 border border-green-500/30 text-green-400 focus:outline-none focus:border-green-400 focus:ring-1 focus:ring-green-400/30`}
               >
-                <option value="">All Categories</option>
+                <option value="">all categories</option>
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>{cat}</option>
                 ))}
@@ -123,12 +141,12 @@ export default function BlogPage() {
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, idx) => (
-                <div key={idx} className="rounded-2xl overflow-hidden border border-white/20 dark:border-gray-700/20">
-                  <Skeleton className="h-48 w-full rounded-none" />
+                <div key={idx} className="border border-green-500/10 bg-gray-900/50">
+                  <Skeleton className="h-48 w-full rounded-none bg-gray-900" />
                   <div className="p-5 space-y-3">
-                    <Skeleton className="h-6 w-3/4" />
-                    <Skeleton className="h-4 w-1/3" />
-                    <Skeleton className="h-16 w-full" />
+                    <Skeleton className="h-6 w-3/4 bg-gray-900" />
+                    <Skeleton className="h-4 w-1/3 bg-gray-900" />
+                    <Skeleton className="h-16 w-full bg-gray-900" />
                   </div>
                 </div>
               ))}
@@ -144,70 +162,63 @@ export default function BlogPage() {
                 <motion.article
                   key={blog.id || index}
                   variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
-                  className="group rounded-2xl overflow-hidden backdrop-blur-xl bg-white/10 dark:bg-gray-900/20 border border-white/20 dark:border-gray-700/20 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+                  className="group border border-green-500/20 hover:border-green-400/50 bg-gray-900/30 transition-all duration-300"
                 >
                   {typeof blog.slug === "string" && blog.slug.startsWith("http") ? (
                     <a href={blog.slug} target="_blank" rel="noopener noreferrer" className="block h-full">
-                      <div className="p-5">
-                        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
-                          {blog.published_date && (
-                            <span className="flex items-center gap-1">
-                              <CalendarDays size={12} />
-                              {new Date(blog.published_date).toLocaleDateString()}
-                            </span>
-                          )}
-                          {blog.category && (
-                            <>
-                              <span>·</span>
-                              <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">{blog.category}</span>
-                            </>
-                          )}
+                      {blog.image ? (
+                        <div className="relative h-44 w-full overflow-hidden border-b border-green-500/10">
+                          <Image src={blog.image} alt={blog.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
                         </div>
-                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-500 transition-colors">
+                      ) : (
+                        <div className="h-44 bg-gray-900 border-b border-green-500/10 flex items-center justify-center">
+                          <span className={`${mono.className} text-green-700/30 text-2xl`}>~</span>
+                        </div>
+                      )}
+                      <div className="p-5">
+                        <div className={`${mono.className} flex items-center gap-2 text-xs text-green-600/60 mb-2`}>
+                          {blog.published_date && <span>{new Date(blog.published_date).toLocaleDateString()}</span>}
+                          {blog.category && <><span>|</span><span>{blog.category}</span></>}
+                        </div>
+                        <h2 className={`${mono.className} text-green-300 font-semibold text-base mb-2 line-clamp-2 group-hover:text-green-200 transition-colors`}>
                           {blog.title}
                         </h2>
                         {blog.summary && (
-                          <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">{blog.summary.replace(/<[^>]+>/g, "")}</p>
+                          <p className={`${mono.className} text-green-600/80 text-xs line-clamp-3 leading-relaxed`}>
+                            {blog.summary.replace(/<[^>]+>/g, "")}
+                          </p>
                         )}
-                        <span className="inline-flex items-center gap-1 mt-4 text-sm text-blue-500 font-medium group-hover:gap-2 transition-all">
-                          Read more <ArrowRight size={14} />
+                        <span className={`${mono.className} inline-flex items-center gap-1 mt-4 text-xs text-green-500 group-hover:text-green-400 transition-all`}>
+                          $ cat ./post <ArrowRight size={12} />
                         </span>
                       </div>
                     </a>
                   ) : (
                     <Link href={`/blog/${blog.slug || blog.id}`} className="block h-full">
                       {blog.image ? (
-                        <div className="relative h-48 w-full overflow-hidden">
-                          <Image src={blog.image} alt={blog.title} fill className="object-cover transition-transform duration-500 group-hover:scale-110" />
+                        <div className="relative h-44 w-full overflow-hidden border-b border-green-500/10">
+                          <Image src={blog.image} alt={blog.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
                         </div>
                       ) : (
-                        <div className="h-48 bg-gradient-to-br from-blue-500/20 to-cyan-400/20 flex items-center justify-center">
-                          <span className="text-4xl opacity-30">📝</span>
+                        <div className="h-44 bg-gray-900 border-b border-green-500/10 flex items-center justify-center">
+                          <span className={`${mono.className} text-green-700/30 text-2xl`}>~</span>
                         </div>
                       )}
                       <div className="p-5">
-                        <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400 mb-2">
-                          {blog.published_date && (
-                            <span className="flex items-center gap-1">
-                              <CalendarDays size={12} />
-                              {new Date(blog.published_date).toLocaleDateString()}
-                            </span>
-                          )}
-                          {blog.category && (
-                            <>
-                              <span>·</span>
-                              <span className="bg-blue-100 dark:bg-blue-900/50 text-blue-700 dark:text-blue-300 px-2 py-0.5 rounded-full">{blog.category}</span>
-                            </>
-                          )}
+                        <div className={`${mono.className} flex items-center gap-2 text-xs text-green-600/60 mb-2`}>
+                          {blog.published_date && <span>{new Date(blog.published_date).toLocaleDateString()}</span>}
+                          {blog.category && <><span>|</span><span>{blog.category}</span></>}
                         </div>
-                        <h2 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2 group-hover:text-blue-500 transition-colors">
+                        <h2 className={`${mono.className} text-green-300 font-semibold text-base mb-2 line-clamp-2 group-hover:text-green-200 transition-colors`}>
                           {blog.title}
                         </h2>
                         {blog.summary && (
-                          <p className="text-gray-600 dark:text-gray-400 text-sm line-clamp-3">{blog.summary.replace(/<[^>]+>/g, "")}</p>
+                          <p className={`${mono.className} text-green-600/80 text-xs line-clamp-3 leading-relaxed`}>
+                            {blog.summary.replace(/<[^>]+>/g, "")}
+                          </p>
                         )}
-                        <span className="inline-flex items-center gap-1 mt-4 text-sm text-blue-500 font-medium group-hover:gap-2 transition-all">
-                          Read more <ArrowRight size={14} />
+                        <span className={`${mono.className} inline-flex items-center gap-1 mt-4 text-xs text-green-500 group-hover:text-green-400 transition-all`}>
+                          $ cat ./post <ArrowRight size={12} />
                         </span>
                       </div>
                     </Link>
@@ -217,8 +228,8 @@ export default function BlogPage() {
             </motion.div>
           ) : (
             <div className="text-center py-20">
-              <p className="text-gray-500 dark:text-gray-400 text-lg">
-                {search || selectedCategory ? "No articles match your filters." : "No blog posts available yet."}
+              <p className={`${mono.className} text-green-600/70`}>
+                {search || selectedCategory ? "No results." : "blog: directory is empty"}
               </p>
             </div>
           )}
