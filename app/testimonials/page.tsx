@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import { fetchData } from "@/services/api";
 import { createTestimonial } from "@/services/testimonail";
 import { AiOutlineEdit } from "react-icons/ai";
@@ -13,14 +13,6 @@ import { JetBrains_Mono } from "next/font/google";
 
 const mono = JetBrains_Mono({ weight: ["400", "700"], subsets: ["latin"] });
 
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
-import Autoplay from "embla-carousel-autoplay";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -44,7 +36,6 @@ export default function TestimonialsPage() {
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({ name: "", role: "", testimonial: "" });
-  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
 
   useEffect(() => {
     fetchData("/testimonials/")
@@ -96,39 +87,40 @@ export default function TestimonialsPage() {
             </motion.p>
           </motion.div>
 
-          <Carousel plugins={[plugin.current]} opts={{ align: "start", loop: true }} className="w-full">
-            <CarouselContent>
-              {loading
-                ? Array.from({ length: 3 }).map((_, i) => (
-                    <CarouselItem key={i} className="basis-full sm:basis-1/2 md:basis-1/3">
-                      <div className="bg-gray-900/40 border border-green-500/10 p-6 h-full space-y-3">
-                        <Skeleton className="h-16 w-full bg-gray-900" />
-                        <Skeleton className="h-5 w-2/3 bg-gray-900 mx-auto" />
-                        <Skeleton className="h-4 w-1/3 bg-gray-900 mx-auto" />
-                      </div>
-                    </CarouselItem>
-                  ))
-                : testimonials.length > 0
-                  ? testimonials.map((t) => (
-                      <CarouselItem key={t.id} className="basis-full sm:basis-1/2 md:basis-1/3">
-                        <motion.div
-                          className="bg-gray-900/40 border border-green-500/20 hover:border-green-400/40 p-6 flex flex-col text-center h-full transition-all duration-300"
-                          initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1.2 }}>
-                          <p className={`${mono.className} text-green-600/80 italic line-clamp-3 mb-4 text-sm leading-relaxed`}>
-                            &ldquo;{t.testimonial}&rdquo;
-                          </p>
-                          <h3 className={`${mono.className} text-lg font-semibold text-green-300`}>{t.name}</h3>
-                          <p className={`${mono.className} text-sm text-green-600/60`}>{t.role}</p>
-                        </motion.div>
-                      </CarouselItem>
-                    ))
-                  : !loading && (
-                      <p className={`${mono.className} text-center text-green-600/70 w-full py-12`}>testimonials: directory is empty</p>
-                    )}
-            </CarouselContent>
-            <CarouselPrevious className="hidden md:block text-green-500 border-green-500/30" />
-            <CarouselNext className="hidden md:block text-green-500 border-green-500/30" />
-          </Carousel>
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <div key={i} className="bg-gray-900/40 border border-green-500/10 p-6 space-y-3">
+                  <Skeleton className="h-16 w-full bg-gray-900" />
+                  <Skeleton className="h-5 w-2/3 bg-gray-900 mx-auto" />
+                  <Skeleton className="h-4 w-1/3 bg-gray-900 mx-auto" />
+                </div>
+              ))}
+            </div>
+          ) : testimonials.length > 0 ? (
+            <motion.div
+              initial="hidden"
+              animate="visible"
+              variants={{ hidden: { opacity: 0 }, visible: { transition: { staggerChildren: 0.08 } } }}
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+            >
+              {testimonials.map((t) => (
+                <motion.div
+                  key={t.id}
+                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                  className="bg-gray-900/40 border border-green-500/20 hover:border-green-400/40 p-6 flex flex-col text-center transition-all duration-300"
+                >
+                  <p className={`${mono.className} text-green-600/80 italic line-clamp-3 mb-4 text-sm leading-relaxed`}>
+                    &ldquo;{t.testimonial}&rdquo;
+                  </p>
+                  <h3 className={`${mono.className} text-lg font-semibold text-green-300`}>{t.name}</h3>
+                  <p className={`${mono.className} text-sm text-green-600/60`}>{t.role}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : !loading && (
+            <p className={`${mono.className} text-center text-green-600/70 w-full py-12`}>testimonials: directory is empty</p>
+          )}
 
           <Dialog>
             <div className="flex justify-end mt-8">

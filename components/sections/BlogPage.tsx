@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/carousel";
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
-import { getBlogs, fetchExternalBlogs } from "@/services/blog";
+import { getBlogs } from "@/services/blog";
 import { motion } from "framer-motion";
 import { CalendarDays, Terminal, ArrowRight } from "lucide-react";
 import { JetBrains_Mono } from "next/font/google";
@@ -51,14 +51,47 @@ export default function BlogPage() {
         console.error("API blogs failed, falling back to TechCrunch:", err);
       }
       try {
-        const data = await fetchExternalBlogs();
-        if (Array.isArray(data) && data.length > 0) {
-          setArticles(data);
+        const res = await fetch(
+          "https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/feed/"
+        );
+        const rss = await res.json();
+        if (rss.items && rss.items.length > 0) {
+          const mapped = (rss.items || []).map((item: Record<string, unknown>, i: number) => ({
+            id: i,
+            title: item.title as string,
+            slug: (item.link as string) || "",
+            published_date: item.pubDate as string,
+            summary: (item.description as string)?.replace(/<[^>]+>/g, "").slice(0, 300),
+            category: Array.isArray(item.categories) ? (item.categories as string[]).join(", ") : "",
+            image: (item as Record<string, unknown>).thumbnail as string || "",
+          }));
+          setArticles(mapped);
           setLoading(false);
           return;
         }
-      } catch (extErr) {
-        console.error("External blogs endpoint also failed:", extErr);
+      } catch (rssErr) {
+        console.error("TechCrunch RSS2JSON failed:", rssErr);
+      }
+      try {
+        const rssRes = await fetch("https://techcrunch.com/feed/");
+        const xml = await rssRes.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(xml, "text/xml");
+        const items = doc.querySelectorAll("item");
+        const mapped = Array.from(items).map((item, i) => ({
+          id: i,
+          title: item.querySelector("title")?.textContent || "",
+          slug: item.querySelector("link")?.textContent || "",
+          published_date: item.querySelector("pubDate")?.textContent || "",
+          summary: item.querySelector("description")?.textContent?.replace(/<[^>]+>/g, "").slice(0, 300) || "",
+          category: "",
+          image: item.querySelector("enclosure")?.getAttribute("url") || "",
+        }));
+        if (mapped.length > 0) {
+          setArticles(mapped);
+        }
+      } catch (xmlErr) {
+        console.error("TechCrunch RSS XML also failed:", xmlErr);
       } finally {
         setLoading(false);
       }

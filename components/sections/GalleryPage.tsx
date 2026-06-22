@@ -104,7 +104,7 @@ export default function GalleryPage() {
                       key={item.id}
                       variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
                       className={`relative group cursor-pointer border border-green-500/20 hover:border-green-400/50 transition-colors ${sizeMapMd[idx % sizeMapMd.length]}`}
-                      whileHover={{ scale: 1.02, zIndex: 10 }}
+                      whileHover={{ scale: 1.02, rotate: 2, zIndex: 10 }}
                       transition={{ type: "spring", stiffness: 200 }}
                       onClick={() => setSelectedImage(item)}
                     >
