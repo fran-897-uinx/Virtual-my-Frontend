@@ -9,14 +9,17 @@ import Image from "next/image";
 
 const navLinks = [
   { label: "Home", href: "/" },
-  { label: "About", href: "/about" },
   { label: "Blog", href: "/blog" },
-  { label: "Services", href: "/services" },
   { label: "Projects", href: "/projects" },
   { label: "Gallery", href: "/gallery" },
+  { label: "Contact", href: "/contact" },
+];
+
+const moreLinks = [
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
   { label: "Testimonials", href: "/testimonials" },
   { label: "Certificates", href: "/certificates" },
-  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
@@ -52,16 +55,35 @@ export default function Navbar() {
         </Link>
 
         {/* Desktop Menu */}
-        <div className="hidden lg:flex gap-8 items-center">
+        <div className="hidden lg:flex gap-6 items-center">
           {navLinks.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="relative font-medium transition-all duration-1000 ease-linear text-gray-900 dark:text-gray-300 hover:text-blue-300"
+              className="text-sm font-medium transition-all text-gray-900 dark:text-gray-300 hover:text-blue-300"
             >
-              <span>{item.label}</span>
+              {item.label}
             </Link>
           ))}
+
+          {moreLinks.length > 0 && (
+            <div className="relative group">
+              <span className="text-sm font-medium cursor-pointer text-gray-900 dark:text-gray-300 hover:text-blue-300 transition-all">
+                More ▾
+              </span>
+              <div className="absolute right-0 mt-2 w-40 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 shadow-lg">
+                {moreLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="block px-4 py-2 text-sm text-gray-800 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
 
           {mounted && (
             <motion.button
@@ -92,7 +114,7 @@ export default function Navbar() {
           transition={{ duration: 0.3 }}
           className="mt-3 lg:hidden backdrop-blur-xl bg-white/10 dark:bg-gray-900/30 border border-white/20 dark:border-gray-700/30 rounded-2xl p-4 shadow-lg"
         >
-          {navLinks.map((item) => (
+          {[...navLinks, ...moreLinks].map((item) => (
             <Link
               key={item.href}
               href={item.href}

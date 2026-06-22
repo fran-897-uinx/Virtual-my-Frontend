@@ -47,18 +47,43 @@ export default function BlogPage() {
           "https://api.rss2json.com/v1/api.json?rss_url=https://techcrunch.com/feed/"
         );
         const rss = await res.json();
-        const mapped = (rss.items || []).map((item: Record<string, unknown>, i: number) => ({
-          id: i,
-          title: item.title as string,
-          slug: (item.link as string) || "",
-          published_date: item.pubDate as string,
-          summary: (item.description as string)?.replace(/<[^>]+>/g, "").slice(0, 300),
-          category: Array.isArray(item.categories) ? (item.categories as string[]).join(", ") : "",
-          image: (item as Record<string, unknown>).thumbnail as string || "",
-        }));
-        setArticles(mapped);
+        if (rss.items && rss.items.length > 0) {
+          const mapped = (rss.items || []).map((item: Record<string, unknown>, i: number) => ({
+            id: i,
+            title: item.title as string,
+            slug: (item.link as string) || "",
+            published_date: item.pubDate as string,
+            summary: (item.description as string)?.replace(/<[^>]+>/g, "").slice(0, 300),
+            category: Array.isArray(item.categories) ? (item.categories as string[]).join(", ") : "",
+            image: (item as Record<string, unknown>).thumbnail as string || "",
+          }));
+          setArticles(mapped);
+          setLoading(false);
+          return;
+        }
       } catch (rssErr) {
-        console.error("TechCrunch RSS also failed:", rssErr);
+        console.error("TechCrunch RSS2JSON failed:", rssErr);
+      }
+      try {
+        const rssRes = await fetch("https://techcrunch.com/feed/");
+        const xml = await rssRes.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(xml, "text/xml");
+        const items = doc.querySelectorAll("item");
+        const mapped = Array.from(items).map((item, i) => ({
+          id: i,
+          title: item.querySelector("title")?.textContent || "",
+          slug: item.querySelector("link")?.textContent || "",
+          published_date: item.querySelector("pubDate")?.textContent || "",
+          summary: item.querySelector("description")?.textContent?.replace(/<[^>]+>/g, "").slice(0, 300) || "",
+          category: "",
+          image: item.querySelector("enclosure")?.getAttribute("url") || "",
+        }));
+        if (mapped.length > 0) {
+          setArticles(mapped);
+        }
+      } catch (xmlErr) {
+        console.error("TechCrunch RSS XML also failed:", xmlErr);
       } finally {
         setLoading(false);
       }
