@@ -109,14 +109,14 @@ export default function GalleryPage() {
                       onClick={() => setSelectedImage(item)}
                     >
                       <div
-                        className="relative w-full h-full overflow-hidden bg-gray-900"
+                        className="relative w-full h-full overflow-hidden bg-white/5"
                         style={{ clipPath: clipShapes[shapeIdx] }}
                       >
                         <Image
                           src={item.image}
                           alt={item.title}
                           fill
-                          className="object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="object-contain p-2 transition-transform duration-500 group-hover:scale-110"
                         />
                       </div>
                       <div
