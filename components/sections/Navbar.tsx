@@ -1,62 +1,29 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { Menu, X, Sun, Moon } from "lucide-react";
 import { useTheme } from "next-themes";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 
-const pageLinks = [
-  { id: "blog", label: "Blog", href: "/blog" },
-  { id: "projects", label: "Projects", href: "/projects" },
-  { id: "gallery", label: "Gallery", href: "/gallery" },
-  { id: "cert", label: "Certificates", href: "/certificates" },
-];
-
-const sectionLinks = [
-  { id: "home", label: "Home" },
-  { id: "about", label: "About" },
-  { id: "services", label: "Services" },
-  { id: "testi", label: "Testimonials" },
-  { id: "contact", label: "Contact" },
+const navLinks = [
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Blog", href: "/blog" },
+  { label: "Services", href: "/services" },
+  { label: "Projects", href: "/projects" },
+  { label: "Gallery", href: "/gallery" },
+  { label: "Testimonials", href: "/testimonials" },
+  { label: "Certificates", href: "/certificates" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const pathname = usePathname();
-  const isHome = pathname === "/";
-
   useEffect(() => setMounted(true), []);
-
-  const [activeSection, setActiveSection] = useState("home");
-  useEffect(() => {
-    if (!isHome) return;
-    const handleScroll = () => {
-      const ids = ["home", "about", "services", "testi", "contact"];
-      let current = "home";
-      for (const id of ids) {
-        const el = document.getElementById(id);
-        if (el) {
-          const rect = el.getBoundingClientRect();
-          if (rect.top <= 100 && rect.bottom >= 100) {
-            current = id;
-            break;
-          }
-        }
-      }
-      setActiveSection(current);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [isHome]);
-
-  const navItems = isHome
-    ? [...sectionLinks, ...pageLinks]
-    : [...pageLinks, ...sectionLinks];
 
   return (
     <motion.nav
@@ -86,34 +53,15 @@ export default function Navbar() {
 
         {/* Desktop Menu */}
         <div className="hidden lg:flex gap-8 items-center">
-          {navItems.map((item) => {
-            const href = "href" in item ? (item as typeof pageLinks[0]).href : `#${item.id}`;
-            const isHash = href.startsWith("#");
-            const isActive = isHome && isHash && activeSection === item.id;
-
-            return (
-              <Link
-                key={item.id}
-                href={href}
-                className="relative font-medium transition-all duration-1000 ease-linear"
-              >
-                <span
-                  className={`${
-                    isActive
-                      ? "text-blue-400 drop-shadow-md"
-                      : "text-gray-900 dark:text-gray-300 hover:text-blue-300 transition-all duration-1000 ease-linear"
-                  }`}
-                >
-                  {item.label}
-                </span>
-                <span
-                  className={`absolute left-0 -bottom-1 h-0.5 bg-blue-400 transition-all duration-1000 ease-linear${
-                    isActive ? "w-full" : "w-0"
-                  }`}
-                />
-              </Link>
-            );
-          })}
+          {navLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="relative font-medium transition-all duration-1000 ease-linear text-gray-900 dark:text-gray-300 hover:text-blue-300"
+            >
+              <span>{item.label}</span>
+            </Link>
+          ))}
 
           {mounted && (
             <motion.button
@@ -144,26 +92,16 @@ export default function Navbar() {
           transition={{ duration: 0.3 }}
           className="mt-3 lg:hidden backdrop-blur-xl bg-white/10 dark:bg-gray-900/30 border border-white/20 dark:border-gray-700/30 rounded-2xl p-4 shadow-lg"
         >
-          {navItems.map((item) => {
-            const href = "href" in item ? (item as typeof pageLinks[0]).href : `#${item.id}`;
-            const isHash = href.startsWith("#");
-            const isActive = isHome && isHash && activeSection === item.id;
-
-            return (
-              <Link
-                key={item.id}
-                href={href}
-                onClick={() => setIsOpen(false)}
-                className={`block py-2 text-lg transition ${
-                  isActive
-                    ? "text-blue-400 font-semibold"
-                    : "text-gray-800 dark:text-gray-300 hover:text-blue-300"
-                }`}
-              >
-                {item.label}
-              </Link>
-            );
-          })}
+          {navLinks.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              onClick={() => setIsOpen(false)}
+              className="block py-2 text-lg transition text-gray-800 dark:text-gray-300 hover:text-blue-300"
+            >
+              {item.label}
+            </Link>
+          ))}
 
           {mounted && (
             <motion.button
