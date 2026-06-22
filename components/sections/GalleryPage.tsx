@@ -4,7 +4,6 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { getGalleryImages, GalleryItem } from "@/services/gallery";
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Dialog,
   DialogContent,

@@ -8,7 +8,7 @@ import { getBlogs, fetchExternalBlogs } from "@/services/blog";
 import { Skeleton } from "@/components/ui/skeleton";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
-import { Search, CalendarDays, ArrowRight, Terminal } from "lucide-react";
+import { Search, ArrowRight, Terminal } from "lucide-react";
 import { JetBrains_Mono } from "next/font/google";
 
 const mono = JetBrains_Mono({ weight: ["400", "700"], subsets: ["latin"] });

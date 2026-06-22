@@ -52,6 +52,7 @@ export default function TestimonialsPage() {
   });
   const [preview, setPreview] = useState<string | null>(null);
 
+
   const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
 
   useEffect(() => {

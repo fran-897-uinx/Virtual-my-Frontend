@@ -13,7 +13,7 @@ import {
 import { Skeleton } from "@/components/ui/skeleton";
 import Autoplay from "embla-carousel-autoplay";
 import { getProjects } from "@/services/project";
-import { BsGithub, BsLink } from "react-icons/bs";
+import { BsGithub } from "react-icons/bs";
 import {
   SiDjango,
   SiReact,
