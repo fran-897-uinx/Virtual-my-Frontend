@@ -67,7 +67,7 @@ export default function CertificateSection() {
             ? certificates.map((cert) => (
                 <motion.div
                   key={cert.id}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 1, y: 0 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.5 }}
                   viewport={{ once: true }}

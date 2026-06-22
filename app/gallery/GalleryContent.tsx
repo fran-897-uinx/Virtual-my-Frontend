@@ -106,7 +106,10 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
                 return (
                   <motion.div
                     key={item.id}
-                    variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                    variants={{
+                      hidden: { opacity: 1, y: 30 },
+                      visible: { opacity: 1, y: 0 },
+                    }}
                     className={`relative group cursor-pointer border border-green-500/20 hover:border-green-400/50 transition-colors ${sizeMapMd[idx % sizeMapMd.length]}`}
                     whileHover={{ scale: 1.02, rotate: 2, zIndex: 10 }}
                     transition={{ type: "spring", stiffness: 200 }}
@@ -124,12 +127,20 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
                       />
                     </div>
                     <div
-                      className="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                      className="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-950/30 to-transparent opacity-1 transition-opacity duration-300"
                       style={{ clipPath: clipShapes[shapeIdx] }}
                     >
                       <div className="absolute bottom-0 left-0 right-0 p-4">
-                        <p className={`${mono.className} text-green-400 text-xs opacity-70 mb-0.5`}>$ cat ./events/</p>
-                        <h3 className={`${mono.className} text-green-300 font-bold text-sm md:text-base`}>{item.title}</h3>
+                        <p
+                          className={`${mono.className} text-green-400 text-xs opacity-70 mb-0.5`}
+                        >
+                          $ cat ./events/
+                        </p>
+                        <h3
+                          className={`${mono.className} text-green-300 font-bold text-sm md:text-base`}
+                        >
+                          {item.title}
+                        </h3>
                       </div>
                     </div>
                   </motion.div>

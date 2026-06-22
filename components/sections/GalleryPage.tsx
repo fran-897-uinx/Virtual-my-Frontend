@@ -61,7 +61,7 @@ export default function GalleryPage() {
     <section id="gallery" className="bg-gray-950 py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-end justify-between mb-8">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
+          <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }}>
             <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
               <Terminal size={14} />
               <span>~/gallery $</span>
@@ -85,7 +85,7 @@ export default function GalleryPage() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          variants={{ hidden: { opacity: 0 }, visible: { transition: { staggerChildren: 0.08 } } }}
+          variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.08 } } }}
           className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 auto-rows-[180px] sm:auto-rows-[220px] md:auto-rows-[260px] lg:auto-rows-[280px]"
         >
           {loading
@@ -102,7 +102,7 @@ export default function GalleryPage() {
                   return (
                     <motion.div
                       key={item.id}
-                      variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                      variants={{ hidden: { opacity: 1, y: 30 }, visible: { opacity: 1, y: 0 } }}
                       className={`relative group cursor-pointer border border-green-500/20 hover:border-green-400/50 transition-colors ${sizeMapMd[idx % sizeMapMd.length]}`}
                       whileHover={{ scale: 1.02, rotate: 2, zIndex: 10 }}
                       transition={{ type: "spring", stiffness: 200 }}
@@ -120,7 +120,7 @@ export default function GalleryPage() {
                         />
                       </div>
                       <div
-                        className="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-950/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                        className="absolute inset-0 bg-gradient-to-t from-gray-950/90 via-gray-950/30 to-transparent opacity-1 transition-opacity duration-300"
                         style={{ clipPath: clipShapes[shapeIdx] }}
                       >
                         <div className="absolute bottom-0 left-0 right-0 p-4">

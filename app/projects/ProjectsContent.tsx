@@ -97,7 +97,9 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
             animate={{ opacity: 1 }}
             className="mb-12"
           >
-            <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
+            <div
+              className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}
+            >
               <Terminal size={14} />
               <span>~/projects $</span>
             </div>
@@ -126,7 +128,10 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
             className="flex flex-col sm:flex-row gap-4 max-w-2xl mb-10"
           >
             <div className="relative flex-1">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600/50" size={18} />
+              <Search
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600/50"
+                size={18}
+              />
               <input
                 type="text"
                 placeholder="grep -i 'search' ./repos/*"
@@ -150,7 +155,10 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
           {loading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {Array.from({ length: 6 }).map((_, idx) => (
-                <div key={idx} className="border border-green-500/10 bg-gray-900/50">
+                <div
+                  key={idx}
+                  className="border border-green-500/10 bg-gray-900/50"
+                >
                   <Skeleton className="h-48 w-full rounded-none bg-gray-900" />
                   <div className="p-5 space-y-3">
                     <Skeleton className="h-6 w-3/4 bg-gray-900" />
@@ -162,65 +170,110 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
             </div>
           ) : error ? (
             <div className="text-center py-20">
-              <p className={`${mono.className} text-red-400/70 text-lg mb-2`}>error: {error}</p>
-              <p className={`${mono.className} text-green-700/50 text-xs`}>check the browser console (F12) for details</p>
+              <p className={`${mono.className} text-red-400/70 text-lg mb-2`}>
+                error: {error}
+              </p>
+              <p className={`${mono.className} text-green-700/50 text-xs`}>
+                check the browser console (F12) for details
+              </p>
             </div>
           ) : filtered.length > 0 ? (
             <motion.div
               initial="hidden"
               animate="visible"
-              variants={{ hidden: { opacity: 0 }, visible: { transition: { staggerChildren: 0.08 } } }}
+              variants={{
+                hidden: { opacity: 1 },
+                visible: { transition: { staggerChildren: 0.08 } },
+              }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filtered.map((project, index) => (
                 <motion.div
                   key={project.id || index}
-                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                  variants={{
+                    hidden: { opacity: 1, y: 0 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
                   className="group border border-green-500/20 hover:border-green-400/50 bg-gray-900/30 transition-all duration-300"
                 >
                   {project.image ? (
                     <div className="relative h-44 w-full overflow-hidden border-b border-green-500/10">
-                      <Image src={project.image} alt={project.title} fill className="object-cover transition-transform duration-500 group-hover:scale-105" />
-                      <div className={`${mono.className} absolute top-3 right-3 text-xs bg-gray-950/80 text-green-500 px-2 py-1 border border-green-500/30`}>
-                        {getStateIndicator(project.state)} {project.state.replace("_", " ")}
+                      <Image
+                        src={project.image}
+                        alt={project.title}
+                        fill
+                        className="object-cover transition-transform duration-500 group-hover:scale-105"
+                      />
+                      <div
+                        className={`${mono.className} absolute top-3 right-3 text-xs bg-gray-950/80 text-green-500 px-2 py-1 border border-green-500/30`}
+                      >
+                        {getStateIndicator(project.state)}{" "}
+                        {project.state.replace("_", " ")}
                       </div>
                     </div>
                   ) : (
                     <div className="h-44 bg-gray-900 border-b border-green-500/10 flex items-center justify-center">
-                      <span className={`${mono.className} text-green-700/30 text-2xl`}>~</span>
+                      <span
+                        className={`${mono.className} text-green-700/30 text-2xl`}
+                      >
+                        ~
+                      </span>
                     </div>
                   )}
                   <div className="p-5">
-                    <div className={`${mono.className} flex items-center gap-1 text-green-600/50 text-xs mb-2`}>
+                    <div
+                      className={`${mono.className} flex items-center gap-1 text-green-600/50 text-xs mb-2`}
+                    >
                       <span>$</span>
                       <span>./repos/{project.id}/</span>
                     </div>
-                    <h2 className={`${mono.className} text-green-300 font-semibold text-base mb-2 line-clamp-1 group-hover:text-green-200 transition-colors`}>
+                    <h2
+                      className={`${mono.className} text-green-300 font-semibold text-base mb-2 line-clamp-1 group-hover:text-green-200 transition-colors`}
+                    >
                       {project.title}
                     </h2>
-                    <p className={`${mono.className} text-green-600/80 text-xs line-clamp-2 mb-4 leading-relaxed`}>
+                    <p
+                      className={`${mono.className} text-green-600/80 text-xs line-clamp-2 mb-4 leading-relaxed`}
+                    >
                       {project.description}
                     </p>
                     {project.tech_stack?.length > 0 && (
                       <div className="flex flex-wrap gap-1.5 mb-4">
                         {project.tech_stack.slice(0, 4).map((tech, i) => (
-                          <span key={i} className={`${mono.className} text-[10px] bg-gray-900 border border-green-500/20 text-green-500 px-2 py-0.5`}>
+                          <span
+                            key={i}
+                            className={`${mono.className} text-[10px] bg-gray-900 border border-green-500/20 text-green-500 px-2 py-0.5`}
+                          >
                             {tech}
                           </span>
                         ))}
                         {project.tech_stack.length > 4 && (
-                          <span className={`${mono.className} text-[10px] text-green-600/50`}>+{project.tech_stack.length - 4}</span>
+                          <span
+                            className={`${mono.className} text-[10px] text-green-600/50`}
+                          >
+                            +{project.tech_stack.length - 4}
+                          </span>
                         )}
                       </div>
                     )}
                     <div className="flex items-center gap-3 pt-2 border-t border-green-500/10">
                       {project.github_link && (
-                        <a href={project.github_link} target="_blank" rel="noopener noreferrer" className="text-green-600/60 hover:text-green-400 transition-colors">
+                        <a
+                          href={project.github_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-600/60 hover:text-green-400 transition-colors"
+                        >
                           <Github size={16} />
                         </a>
                       )}
                       {project.live_link && (
-                        <a href={project.live_link} target="_blank" rel="noopener noreferrer" className="text-green-600/60 hover:text-green-400 transition-colors">
+                        <a
+                          href={project.live_link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-green-600/60 hover:text-green-400 transition-colors"
+                        >
                           <ExternalLink size={16} />
                         </a>
                       )}
@@ -238,62 +291,121 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
           ) : (
             <div className="text-center py-20">
               <p className={`${mono.className} text-green-600/70`}>
-                {search || filterState ? "No results." : "projects: directory is empty"}
+                {search || filterState
+                  ? "No results."
+                  : "projects: directory is empty"}
               </p>
             </div>
           )}
         </section>
       </main>
 
-      <Dialog open={!!selectedProject} onOpenChange={(open) => !open && setSelectedProject(null)}>
+      <Dialog
+        open={!!selectedProject}
+        onOpenChange={(open) => !open && setSelectedProject(null)}
+      >
         <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto p-6 bg-gray-950 border border-green-500/30 rounded-none">
           {selectedProject && (
             <>
               <DialogHeader>
-                <div className={`${mono.className} text-green-500/60 text-xs mb-1`}>$ cat ./repos/{selectedProject.id}/README</div>
-                <DialogTitle className={`${mono.className} text-2xl font-bold text-green-400`}>{selectedProject.title}</DialogTitle>
-                <DialogDescription className={`${mono.className} flex items-center gap-2 text-sm text-green-600/70`}>
-                  <span>status: {getStateIndicator(selectedProject.state)}</span>
+                <div
+                  className={`${mono.className} text-green-500/60 text-xs mb-1`}
+                >
+                  $ cat ./repos/{selectedProject.id}/README
+                </div>
+                <DialogTitle
+                  className={`${mono.className} text-2xl font-bold text-green-400`}
+                >
+                  {selectedProject.title}
+                </DialogTitle>
+                <DialogDescription
+                  className={`${mono.className} flex items-center gap-2 text-sm text-green-600/70`}
+                >
+                  <span>
+                    status: {getStateIndicator(selectedProject.state)}
+                  </span>
                 </DialogDescription>
               </DialogHeader>
               {selectedProject.image && (
                 <div className="mt-4 border border-green-500/20">
-                  <Image src={selectedProject.image} alt={selectedProject.title} width={800} height={400} className="w-full h-48 md:h-64 object-cover" />
+                  <Image
+                    src={selectedProject.image}
+                    alt={selectedProject.title}
+                    width={800}
+                    height={400}
+                    className="w-full h-48 md:h-64 object-cover"
+                  />
                 </div>
               )}
               <div className="mt-6 space-y-6">
                 <div>
-                  <h3 className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}>## description</h3>
-                  <p className={`${mono.className} text-green-600/80 text-sm leading-relaxed`}>{selectedProject.description}</p>
+                  <h3
+                    className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}
+                  >
+                    ## description
+                  </h3>
+                  <p
+                    className={`${mono.className} text-green-600/80 text-sm leading-relaxed`}
+                  >
+                    {selectedProject.description}
+                  </p>
                 </div>
                 {selectedProject.tech_stack?.length > 0 && (
                   <div>
-                    <h3 className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}>## tech_stack</h3>
+                    <h3
+                      className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}
+                    >
+                      ## tech_stack
+                    </h3>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.tech_stack.map((tech, i) => (
-                        <span key={i} className={`${mono.className} text-xs bg-gray-900 border border-green-500/20 text-green-500 px-2 py-0.5`}>{tech}</span>
+                        <span
+                          key={i}
+                          className={`${mono.className} text-xs bg-gray-900 border border-green-500/20 text-green-500 px-2 py-0.5`}
+                        >
+                          {tech}
+                        </span>
                       ))}
                     </div>
                   </div>
                 )}
                 {selectedProject.colaborators?.length > 0 && (
                   <div>
-                    <h3 className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}>## collaborators</h3>
+                    <h3
+                      className={`${mono.className} text-green-500 text-sm font-semibold mb-2`}
+                    >
+                      ## collaborators
+                    </h3>
                     <div className="flex flex-wrap gap-2">
                       {selectedProject.colaborators.map((person, i) => (
-                        <span key={i} className={`${mono.className} text-xs text-green-600/80`}>{person}</span>
+                        <span
+                          key={i}
+                          className={`${mono.className} text-xs text-green-600/80`}
+                        >
+                          {person}
+                        </span>
                       ))}
                     </div>
                   </div>
                 )}
                 <div className="flex gap-4 pt-2 border-t border-green-500/10">
                   {selectedProject.github_link && (
-                    <a href={selectedProject.github_link} target="_blank" rel="noopener noreferrer" className={`${mono.className} flex items-center gap-2 px-4 py-2 bg-gray-900 border border-green-500/30 text-green-400 hover:bg-gray-800 transition text-sm`}>
+                    <a
+                      href={selectedProject.github_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${mono.className} flex items-center gap-2 px-4 py-2 bg-gray-900 border border-green-500/30 text-green-400 hover:bg-gray-800 transition text-sm`}
+                    >
                       <Github size={16} /> github
                     </a>
                   )}
                   {selectedProject.live_link && (
-                    <a href={selectedProject.live_link} target="_blank" rel="noopener noreferrer" className={`${mono.className} flex items-center gap-2 px-4 py-2 bg-green-900/30 border border-green-500/50 text-green-400 hover:bg-green-900/50 transition text-sm`}>
+                    <a
+                      href={selectedProject.live_link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${mono.className} flex items-center gap-2 px-4 py-2 bg-green-900/30 border border-green-500/50 text-green-400 hover:bg-green-900/50 transition text-sm`}
+                    >
                       <ExternalLink size={16} /> live
                     </a>
                   )}

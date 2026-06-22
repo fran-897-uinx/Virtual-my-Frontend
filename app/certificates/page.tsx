@@ -115,7 +115,7 @@ export default function CertificatesPage() {
               {filtered.map((cert, index) => (
                 <motion.div
                   key={cert.id || index}
-                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                  variants={{ hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }}
                   className="group border border-green-500/20 hover:border-green-400/50 bg-gray-900/30 transition-all duration-300 cursor-pointer"
                   onClick={() => setSelectedCert(cert)}
                 >
