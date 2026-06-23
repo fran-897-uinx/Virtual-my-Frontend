@@ -62,7 +62,7 @@ export default function ContactPage() {
   }
 
   return (
-    <section id="contact" className="bg-gray-950 py-16 px-4">
+    <section id="contact" className="bg-background py-16 px-4">
       <div className="max-w-5xl mx-auto">
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8">
           <div className={`${poppins.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>

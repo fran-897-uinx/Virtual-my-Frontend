@@ -58,7 +58,7 @@ export default function GalleryPage() {
   }, []);
 
   return (
-    <section id="gallery" className="bg-gray-950 py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
+    <section id="gallery" className="bg-background py-16 px-4 md:px-8 lg:px-16 overflow-hidden">
       <div className="max-w-7xl mx-auto">
         <div className="flex items-end justify-between mb-8">
           <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }}>
@@ -141,7 +141,7 @@ export default function GalleryPage() {
 
         {!loading && images.length > 0 && (
           <motion.div
-            initial={{ opacity: 0 }}
+             initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
             className={`${mono.className} flex items-center gap-2 mt-8 text-xs text-green-600/60`}
@@ -153,7 +153,7 @@ export default function GalleryPage() {
       </div>
 
       <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
-        <DialogContent className="max-w-4xl w-[95vw] p-2 md:p-4 bg-gray-950 border border-green-500/30 rounded-none">
+        <DialogContent className="max-w-4xl w-[95vw] p-2 md:p-4 bg-background border border-green-500/30 rounded-none">
           {selectedImage && (
             <>
               <DialogHeader className="sr-only">

@@ -113,7 +113,7 @@ export default function BlogPage() {
   ));
 
   return (
-    <section id="blog" className="bg-gray-950 py-16 px-4">
+    <section id="blog" className="bg-background py-16 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-end justify-between mb-8">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>

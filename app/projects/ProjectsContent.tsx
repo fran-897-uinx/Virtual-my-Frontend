@@ -90,10 +90,10 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
         <section className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             className="mb-12"
           >
@@ -104,7 +104,7 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
               <span>~/projects $</span>
             </div>
             <motion.h1
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
               className={`${mono.className} text-4xl md:text-5xl font-bold text-green-400 mb-2`}
@@ -112,7 +112,7 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
               $ ls ./repos/
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
               className={`${mono.className} text-green-600/70 text-sm`}
@@ -122,7 +122,7 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 max-w-2xl mb-10"
@@ -205,7 +205,7 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
                         className="object-cover transition-transform duration-500 group-hover:scale-105"
                       />
                       <div
-                        className={`${mono.className} absolute top-3 right-3 text-xs bg-gray-950/80 text-green-500 px-2 py-1 border border-green-500/30`}
+                        className={`${mono.className} absolute top-3 right-3 text-xs bg-background/80 text-green-500 px-2 py-1 border border-green-500/30`}
                       >
                         {getStateIndicator(project.state)}{" "}
                         {project.state.replace("_", " ")}
@@ -304,7 +304,7 @@ export default function ProjectsContent({ initialProjects }: { initialProjects: 
         open={!!selectedProject}
         onOpenChange={(open) => !open && setSelectedProject(null)}
       >
-        <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto p-6 bg-gray-950 border border-green-500/30 rounded-none">
+        <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto p-6 bg-background border border-green-500/30 rounded-none">
           {selectedProject && (
             <>
               <DialogHeader>

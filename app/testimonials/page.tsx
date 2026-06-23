@@ -70,18 +70,18 @@ export default function TestimonialsPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
         <section className="max-w-7xl mx-auto px-4 md:px-8">
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-10">
+          <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} className="mb-10">
             <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
               <Terminal size={14} />
               <span>~/testimonials $</span>
             </div>
-            <motion.h1 initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
+            <motion.h1 initial={{ opacity: 1, x: 0 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.1 }}
               className={`${mono.className} text-4xl md:text-5xl font-bold text-green-400 mb-2`}>
               $ cat ./reviews/*
             </motion.h1>
-            <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
+            <motion.p initial={{ opacity: 1 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}
               className={`${mono.className} text-green-600/70 text-sm`}>
               # what people say about working with me
             </motion.p>
@@ -101,13 +101,13 @@ export default function TestimonialsPage() {
             <motion.div
               initial="hidden"
               animate="visible"
-              variants={{ hidden: { opacity: 0 }, visible: { transition: { staggerChildren: 0.08 } } }}
+              variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.08 } } }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {testimonials.map((t) => (
                 <motion.div
                   key={t.id}
-                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                  variants={{ hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }}
                   className="bg-gray-900/40 border border-green-500/20 hover:border-green-400/40 p-6 flex flex-col text-center transition-all duration-300"
                 >
                   <p className={`${mono.className} text-green-600/80 italic line-clamp-3 mb-4 text-sm leading-relaxed`}>
@@ -130,7 +130,7 @@ export default function TestimonialsPage() {
                 </Button>
               </DialogTrigger>
             </div>
-            <DialogContent className="bg-gray-950 border border-green-500/30 text-green-400 rounded-none">
+            <DialogContent className="bg-background border border-green-500/30 text-foreground rounded-none">
               <DialogHeader>
                 <DialogTitle className={`${mono.className} text-2xl font-bold text-green-400`}>
                   $ echo &quot;your_thought&quot; &gt;&gt; ./reviews

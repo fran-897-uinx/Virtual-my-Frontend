@@ -104,10 +104,10 @@ export default function BlogPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
         <section className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             className="mb-12"
           >
@@ -116,7 +116,7 @@ export default function BlogPage() {
               <span>~/blog $</span>
             </div>
             <motion.h1
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
               className={`${mono.className} text-4xl md:text-5xl font-bold text-green-400 mb-2`}
@@ -124,7 +124,7 @@ export default function BlogPage() {
               $ cat ./posts/*
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
               className={`${mono.className} text-green-600/70 text-sm`}
@@ -134,7 +134,7 @@ export default function BlogPage() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="flex flex-col sm:flex-row gap-4 max-w-2xl mb-10"
@@ -180,13 +180,13 @@ export default function BlogPage() {
             <motion.div
               initial="hidden"
               animate="visible"
-              variants={{ hidden: { opacity: 0 }, visible: { transition: { staggerChildren: 0.08 } } }}
+              variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.08 } } }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filtered.map((blog, index) => (
                 <motion.article
                   key={blog.id || index}
-                  variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0 } }}
+                  variants={{ hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }}
                   className="group border border-green-500/20 hover:border-green-400/50 bg-gray-900/30 transition-all duration-300"
                 >
                   {typeof blog.slug === "string" && blog.slug.startsWith("http") ? (

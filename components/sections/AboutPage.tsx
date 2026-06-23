@@ -66,7 +66,7 @@ export default function About() {
   }, []);
 
   return (
-    <section id="about" className="w-full py-20 bg-gray-950">
+    <section id="about" className="w-full py-20 bg-background">
       <main className="max-w-7xl mx-auto px-6 md:px-12 lg:px-16">
         <motion.div
           initial={{ opacity: 0 }}

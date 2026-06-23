@@ -73,7 +73,7 @@ export default function AboutPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
         <section className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-10">
             <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>

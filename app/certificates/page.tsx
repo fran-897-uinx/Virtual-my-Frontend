@@ -48,10 +48,10 @@ export default function CertificatesPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
         <section className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             className="mb-12"
           >
@@ -60,7 +60,7 @@ export default function CertificatesPage() {
               <span>~/certificates $</span>
             </div>
             <motion.h1
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
               className={`${mono.className} text-4xl md:text-5xl font-bold text-green-400 mb-2`}
@@ -68,7 +68,7 @@ export default function CertificatesPage() {
               $ ls ./credentials/
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
               className={`${mono.className} text-green-600/70 text-sm`}
@@ -78,7 +78,7 @@ export default function CertificatesPage() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="relative max-w-md mb-12"
@@ -109,7 +109,7 @@ export default function CertificatesPage() {
             <motion.div
               initial="hidden"
               animate="visible"
-              variants={{ hidden: { opacity: 0 }, visible: { transition: { staggerChildren: 0.08 } } }}
+              variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.08 } } }}
               className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filtered.map((cert, index) => (
@@ -152,14 +152,14 @@ export default function CertificatesPage() {
       </main>
 
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-950/95 transition-opacity duration-300 ${selectedCert ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-background/95 transition-opacity duration-300 ${selectedCert ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={() => setSelectedCert(null)}
       >
         {selectedCert && (
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 1, opacity: 1 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="relative max-w-4xl w-[95vw] max-h-[90vh] p-4 border border-green-500/30 bg-gray-950"
+            className="relative max-w-4xl w-[95vw] max-h-[90vh] p-4 border border-green-500/30 bg-background"
             onClick={(e) => e.stopPropagation()}
           >
             <div className={`${mono.className} text-green-500/60 text-xs mb-3 px-1`}>

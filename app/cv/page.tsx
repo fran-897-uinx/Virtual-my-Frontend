@@ -13,7 +13,7 @@ export default function CVPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
         <section className="max-w-5xl mx-auto px-4 md:px-8">
           <motion.div
             initial={{ opacity: 0 }}

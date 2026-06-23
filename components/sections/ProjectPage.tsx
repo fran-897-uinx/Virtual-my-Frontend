@@ -126,7 +126,7 @@ export default function ProjectPage() {
   ));
 
   return (
-    <section id="projects" className="bg-gray-950 py-16 px-4">
+    <section id="projects" className="bg-background py-16 px-4">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-end justify-between mb-8">
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -164,7 +164,7 @@ export default function ProjectPage() {
                         {project.image ? (
                           <div className="relative h-44 w-full overflow-hidden border-b border-green-500/10">
                             <Image src={project.image} alt={project.title} width={800} height={400} className="w-full h-full object-cover transition-transform duration-500 hover:scale-105" />
-                            <div className={`${mono.className} absolute top-3 right-3 text-[10px] bg-gray-950/80 text-green-500 px-2 py-1 border border-green-500/30`}>
+                            <div className={`${mono.className} absolute top-3 right-3 text-[10px] bg-background/80 text-green-500 px-2 py-1 border border-green-500/30`}>
                               {getStateIndicator(project.state)}
                             </div>
                           </div>
@@ -213,7 +213,7 @@ export default function ProjectPage() {
                               <DialogTrigger className={`${mono.className} ml-auto text-xs text-green-500/70 hover:text-green-400 bg-transparent flex items-center gap-1 cursor-pointer`}>
                                 $ cat ./README
                               </DialogTrigger>
-                              <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto p-6 bg-gray-950 border border-green-500/30 rounded-none">
+                              <DialogContent className="max-w-3xl h-[80vh] overflow-y-auto p-6 bg-background border border-green-500/30 rounded-none">
                                 <DialogHeader>
                                   <div className={`${mono.className} text-green-500/60 text-xs mb-1`}>$ cat ./repos/{project.id}/README</div>
                                   <DialogTitle className={`${mono.className} text-2xl font-bold text-green-400`}>{project.title}</DialogTitle>

@@ -40,8 +40,8 @@ export default function CertificateSection() {
   const skeletonCount = 6;
 
   return (
-    <section id="cert" className="bg-gray-950 py-16 px-6 md:px-12 lg:px-24">
-      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-8">
+    <section id="cert" className="bg-background py-16 px-6 md:px-12 lg:px-24">
+      <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} className="mb-8">
         <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
           <Terminal size={14} />
           <span>~/certificates $</span>
@@ -106,14 +106,14 @@ export default function CertificateSection() {
       </div>
 
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-gray-950/95 transition-opacity duration-300 ${selectedCert ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-background/95 transition-opacity duration-300 ${selectedCert ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}
         onClick={() => setSelectedCert(null)}
       >
         {selectedCert && (
           <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
+            initial={{ scale: 1, opacity: 1 }}
             animate={{ scale: 1, opacity: 1 }}
-            className="relative max-w-4xl w-[95vw] max-h-[90vh] p-4 border border-green-500/30 bg-gray-950"
+            className="relative max-w-4xl w-[95vw] max-h-[90vh] p-4 border border-green-500/30 bg-background"
             onClick={(e) => e.stopPropagation()}
           >
             <div className={`${mono.className} text-green-500/60 text-xs mb-3 px-1`}>

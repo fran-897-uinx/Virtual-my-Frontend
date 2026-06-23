@@ -49,10 +49,10 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
 
   return (
     <>
-      <main className="min-h-screen pt-24 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-24 pb-16 bg-background text-foreground">
         <section className="max-w-7xl mx-auto px-4 md:px-8">
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             className="mb-12"
           >
@@ -61,7 +61,7 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
               <span>~/gallery $</span>
             </div>
             <motion.h1
-              initial={{ opacity: 0, x: -20 }}
+              initial={{ opacity: 1, x: 0 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ delay: 0.1 }}
               className={`${mono.className} text-4xl md:text-5xl font-bold text-green-400 mb-2`}
@@ -69,7 +69,7 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
               $ ls ./events/
             </motion.h1>
             <motion.p
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.2 }}
               className={`${mono.className} text-green-600/70 text-sm`}
@@ -79,7 +79,7 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 1, y: 0 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
             className="relative max-w-md mb-12"
@@ -98,7 +98,7 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
             <motion.div
               initial="hidden"
               animate="visible"
-              variants={{ hidden: { opacity: 0 }, visible: { transition: { staggerChildren: 0.08 } } }}
+              variants={{ hidden: { opacity: 1 }, visible: { transition: { staggerChildren: 0.08 } } }}
               className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-5 auto-rows-[180px] sm:auto-rows-[220px] md:auto-rows-[260px] lg:auto-rows-[280px]"
             >
               {filtered.map((item, idx) => {
@@ -160,7 +160,7 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
 
           {images.length > 0 && (
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
               className={`${mono.className} flex items-center gap-2 mt-12 text-xs text-green-600/60`}
@@ -173,7 +173,7 @@ export default function GalleryContent({ initialImages }: { initialImages: Galle
       </main>
 
       <Dialog open={!!selectedImage} onOpenChange={(open) => !open && setSelectedImage(null)}>
-        <DialogContent className="max-w-4xl w-[95vw] p-2 md:p-4 bg-gray-950 border border-green-500/30 rounded-none">
+        <DialogContent className="max-w-4xl w-[95vw] p-2 md:p-4 bg-background border border-green-500/30 rounded-none">
           {selectedImage && (
             <>
               <DialogHeader className="sr-only">

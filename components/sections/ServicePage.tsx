@@ -42,9 +42,9 @@ export default function ServicesPage() {
   ));
 
   return (
-    <section id="services" className="bg-gray-950 py-16 px-4">
+    <section id="services" className="bg-background py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-6">
+        <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} className="mb-6">
           <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
             <Terminal size={14} />
             <span>~/services $</span>
@@ -76,7 +76,7 @@ export default function ServicesPage() {
                       <CarouselItem key={service.id} className="basis-full sm:basis-1/2 md:basis-1/3">
                         <motion.div
                           className="bg-gray-900/40 border border-green-500/20 hover:border-green-400/40 p-6 flex flex-col items-center text-center transition-all duration-300 h-full"
-                          initial={{ opacity: 0, y: 50 }}
+                          initial={{ opacity: 1, y: 0 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.5 }}
                         >

@@ -78,10 +78,10 @@ export default function BlogDetailPage() {
   return (
     <>
       <Navbar />
-      <main className="min-h-screen pt-28 pb-16 bg-gray-950 text-green-400">
+      <main className="min-h-screen pt-28 pb-16 bg-background text-foreground">
         <section className="max-w-4xl mx-auto px-4 md:px-8">
           <motion.div
-            initial={{ opacity: 0 }}
+            initial={{ opacity: 1 }}
             animate={{ opacity: 1 }}
             className="mb-8"
           >
@@ -112,7 +112,7 @@ export default function BlogDetailPage() {
             </div>
           ) : error ? (
             <motion.div
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               className="text-center py-20"
             >
@@ -128,12 +128,12 @@ export default function BlogDetailPage() {
             </motion.div>
           ) : post ? (
             <motion.article
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
             >
               <motion.h1
-                initial={{ opacity: 0, x: -20 }}
+                initial={{ opacity: 1, x: 0 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.15 }}
                 className={`${mono.className} text-3xl md:text-4xl font-bold text-green-300 mb-4 leading-tight`}
@@ -142,7 +142,7 @@ export default function BlogDetailPage() {
               </motion.h1>
 
               <motion.div
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 1 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.2 }}
                 className={`${mono.className} flex flex-wrap items-center gap-4 text-xs text-green-600/60 mb-8 pb-4 border-b border-green-500/10`}
@@ -172,7 +172,7 @@ export default function BlogDetailPage() {
 
               {post.image && (
                 <motion.div
-                  initial={{ opacity: 0, scale: 0.98 }}
+                  initial={{ opacity: 1, scale: 1 }}
                   animate={{ opacity: 1, scale: 1 }}
                   transition={{ delay: 0.25 }}
                   className="relative h-56 md:h-72 w-full mb-8 border border-green-500/20 overflow-hidden"
@@ -188,7 +188,7 @@ export default function BlogDetailPage() {
               )}
 
               <motion.div
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 1 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
                 className={`${mono.className} prose prose-invert max-w-none`}
@@ -210,7 +210,7 @@ export default function BlogDetailPage() {
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0 }}
+                initial={{ opacity: 1 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.4 }}
                 className="mt-12 pt-6 border-t border-green-500/10"

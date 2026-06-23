@@ -98,9 +98,9 @@ export default function TestimonialsPage() {
   };
 
   return (
-    <section id="testi" className="bg-gray-950 py-16 px-4">
+    <section id="testi" className="bg-background py-16 px-4">
       <div className="max-w-6xl mx-auto">
-        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mb-6">
+        <motion.div initial={{ opacity: 1 }} animate={{ opacity: 1 }} className="mb-6">
           <div className={`${mono.className} flex items-center gap-2 text-sm text-green-500/60 mb-2`}>
             <Terminal size={14} />
             <span>~/testimonials $</span>
@@ -123,7 +123,7 @@ export default function TestimonialsPage() {
               <CarouselItem key={t.id} className="basis-full sm:basis-1/2 md:basis-1/3">
                 <motion.div
                   className="bg-gray-900/40 border border-green-500/20 hover:border-green-400/40 p-6 flex flex-col text-center h-full transition-all duration-300"
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 1, y: 0 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 1.2 }}
                 >
@@ -152,7 +152,7 @@ export default function TestimonialsPage() {
               </Button>
             </DialogTrigger>
           </div>
-          <DialogContent className="bg-gray-950 border border-green-500/30 text-green-400 rounded-none">
+          <DialogContent className="bg-background border border-green-500/30 text-foreground rounded-none">
             <DialogHeader>
               <DialogTitle className={`${mono.className} text-2xl font-bold text-green-400`}>
                 $ echo &quot;your_thought&quot; &gt;&gt; ./reviews

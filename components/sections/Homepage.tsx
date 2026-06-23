@@ -82,7 +82,7 @@ export default function Home() {
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col md:flex-row justify-center items-center gap-10 md:gap-20 bg-gray-950 px-6 pt-20 md:pt-0 pb-5"
+      className="min-h-screen flex flex-col md:flex-row justify-center items-center gap-10 md:gap-20 bg-background px-6 pt-20 md:pt-0 pb-5"
     >
       {/* Left Content */}
       <motion.div
